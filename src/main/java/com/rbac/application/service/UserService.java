@@ -25,6 +25,18 @@ public class UserService {
         userList.add(xiaohong);
     }
 
+    public User findUserOne(Integer uid) {
+        User userOne = null;
+        for (User user : userList) {
+            if (uid.equals(user.getId())) {
+                userOne = user;
+                break;
+            }
+        }
+
+        return userOne;
+    }
+
     public User findUserByName(String name) {
         User findUser = null;
         for (User user : userList) {

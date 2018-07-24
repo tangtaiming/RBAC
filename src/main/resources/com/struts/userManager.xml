@@ -8,11 +8,13 @@
                 method="userManagement">
             <result name="success">/design/template/userManagement.ftl</result>
         </action>
-
         <action name="vlogin" class="com.rbac.application.action.UserManagementAction"
                 method="vlogin">
             <result name="success">/design/template/vlogin-success.ftl</result>
             <result name="input">/design/template/vlogin-fail.ftl</result>
+        </action>
+        <action name="signOut" class="com.rbac.application.action.UserManagementAction" method="signOut">
+            <result name="success">/design/template/sign-out-success.ftl</result>
         </action>
     </package>
 </struts>

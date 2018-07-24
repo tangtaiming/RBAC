@@ -61,12 +61,29 @@ public class UserManagementAction extends ActionSupport {
         LOG.info("Secret key: " + secretKey);
         //创建Cookie
         Cookie cookie = new Cookie("User", user.getName());
+        cookie.setPath("/");
         Cookie cookieToken = new Cookie("SecretKey", secretKey);
-        //设置Cookie的生命周期
-        cookie.setMaxAge(60*60*24*365);
-        cookieToken.setMaxAge(60*60*24*365);
+        cookieToken.setPath("/");
+
         ServletActionContext.getResponse().addCookie(cookie);
         ServletActionContext.getResponse().addCookie(cookieToken);
+        return SUCCESS;
+    }
+
+    /**
+     * 退出登录
+     * @return
+     */
+    public String signOut() {
+        Cookie[] cookies = ServletActionContext.getRequest().getCookies();
+        for (Cookie cookie : cookies) {
+            String cookieName = cookie.getName();
+            if ("User".equals(cookieName) || "SecretKey".equals(cookieName)) {
+                cookie.setValue(null);
+                cookie.setPath("/");
+                ServletActionContext.getResponse().addCookie(cookie);
+            }
+        }
         return SUCCESS;
     }
 
