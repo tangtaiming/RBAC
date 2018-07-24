@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="roleManager" namespace="/role" extends="rbac">
+        <action name="roleManagement" class="com.rbac.application.action.RoleManagementAction"
+                method="roleManagement">
+            <result name="success">/design/template/roleManagement.ftl</result>
+        </action>
+        <action name="createRole" class="com.rbac.application.action.RoleManagementAction" method="createRole">
+            <result name="success">/design/template/create-role.ftl</result>
+        </action>
+        <action name="saveRole" class="com.rbac.application.action.RoleManagementAction" method="saveRole">
+            <result name="success">/design/template/create-role.ftl</result>
+        </action>
+    </package>
+</struts>
