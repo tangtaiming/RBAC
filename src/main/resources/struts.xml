@@ -1,0 +1,46 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <constant name="struts.action.extension" value=","/>
+    <constant name="struts.ognl.allowStaticMethodAccess" value="true" />
+    <constant name="struts.multipart.maxSize" value="12585760"/>
+    <package name="rbac" namespace="/" extends="struts-default">
+        <result-types>
+            <result-type name="freemarker"
+                         class="org.apache.struts2.views.freemarker.FreemarkerResult"
+                         default="true"/>
+        </result-types>
+        <interceptors>
+            <interceptor name="interceptor" class="com.system.core.interceptor.AuthenticationInterceptor"/>
+            <interceptor-stack name="mydefault">
+                <interceptor-ref name="interceptor" />
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="mydefault"></default-interceptor-ref>
+        <global-results>
+            <result name="index" type="redirect">/rbac/index</result>
+            <result name="error">/design/template/error.ftl</result>
+        </global-results>
+        <!--<global-results>-->
+            <!--<result name="login" type="redirect">-->
+                <!--/authenticate/LoginForm-->
+            <!--</result>-->
+            <!--<result name="home" type="redirect">-->
+                <!--/myerp/home-->
+            <!--</result>-->
+            <!--<result name="error">/design/template/page/error.ftl</result>-->
+            <!--<result name="ignore">/design/template/page/ignore.ftl</result>-->
+            <!--<result name="timeout">/design/template/page/timeout.ftl</result>-->
+            <!--<result name="denied" type="redirect">-->
+                <!--/authenticate/denied-->
+            <!--</result>-->
+        <!--</global-results>-->
+    </package>
+
+    <include file="com/struts/*/*/*.xml"/>
+    <include file="com/struts/*/*.xml"/>
+    <include file="com/struts/*.xml"/>
+</struts>

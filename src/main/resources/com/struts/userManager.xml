@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="userManager" namespace="/admin" extends="rbac">
+        <action name="userManagement" class="com.rbac.application.action.UserManagementAction"
+                method="userManagement">
+            <result name="success">/design/template/userManagement.ftl</result>
+        </action>
+
+        <action name="vlogin" class="com.rbac.application.action.UserManagementAction"
+                method="vlogin">
+            <result name="success">/design/template/vlogin-success.ftl</result>
+            <result name="input">/design/template/vlogin-fail.ftl</result>
+        </action>
+    </package>
+</struts>
