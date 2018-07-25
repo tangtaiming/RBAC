@@ -3,6 +3,7 @@ package com.rbac.application.action;
 import com.opensymphony.xwork2.ActionSupport;
 import com.rbac.application.orm.Role;
 import com.rbac.application.service.RoleService;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,6 +45,22 @@ public class RoleManagementAction extends ActionSupport {
      */
     public String createRole() {
         return SUCCESS;
+    }
+
+    /**
+     * 验证数据
+     */
+    public void validateSaveRole() {
+        if (StringUtils.isEmpty(role.getName())) {
+            addFieldError(ERROR_KEY, "角色名称不能为空");
+            return;
+        }
+
+        Role findRole = roleService.findRoleByName(role.getName());
+        if (null != findRole) {
+            addFieldError(ERROR_KEY, "角色名称已经存在, 保存失败");
+            return;
+        }
     }
 
     public String saveRole() {

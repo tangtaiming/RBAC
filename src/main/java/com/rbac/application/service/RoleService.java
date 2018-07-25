@@ -65,4 +65,15 @@ public class RoleService {
         return role;
     }
 
+    public Role findRoleByName(String name) {
+        Role role = null;
+        for (Role row : roleList) {
+            if (row.getName().equals(name)) {
+                role = row;
+                break;
+            }
+        }
+        return role;
+    }
+
 }

@@ -16,5 +16,12 @@
         <action name="signOut" class="com.rbac.application.action.UserManagementAction" method="signOut">
             <result name="success">/design/template/sign-out-success.ftl</result>
         </action>
+        <action name="createUser" class="com.rbac.application.action.UserManagementAction" method="createUser">
+            <result name="success">/design/template/create-user.ftl</result>
+        </action>
+        <action name="saveUser" class="com.rbac.application.action.UserManagementAction" method="saveUser">
+            <result name="success">/design/template/save-result.ftl</result>
+            <result name="input">/design/template/ajax-fail.ftl</result>
+        </action>
     </package>
 </struts>
