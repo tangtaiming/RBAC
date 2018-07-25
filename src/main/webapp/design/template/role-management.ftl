@@ -8,15 +8,15 @@
         <th>操作</th>
     </tr>
     <#if roleList??>
-        <tr>
         <#list roleList as role>
+        <tr>
             <td>${role["name"]}</td>
             <td>
-                <a href="#">编辑</a>
+                <a href="/role/editRole?id=${role["id"]}">编辑</a>
                 <a href="#">设置权限</a>
             </td>
-        </#list>
         </tr>
+        </#list>
     </#if>
 </table>
 </body>

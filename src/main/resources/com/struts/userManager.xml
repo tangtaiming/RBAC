@@ -6,7 +6,7 @@
     <package name="userManager" namespace="/admin" extends="rbac">
         <action name="userManagement" class="com.rbac.application.action.UserManagementAction"
                 method="userManagement">
-            <result name="success">/design/template/userManagement.ftl</result>
+            <result name="success">/design/template/user-management.ftl</result>
         </action>
         <action name="vlogin" class="com.rbac.application.action.UserManagementAction"
                 method="vlogin">

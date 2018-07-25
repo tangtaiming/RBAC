@@ -29,14 +29,40 @@ public class RoleService {
     }
 
     public boolean saveRole(Role role) {
+        Integer roleId = role.getId();
         String format = "yyyy-MM-dd hh:mm:ss";
         String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(format));
-        role.setId(roleList.size());
-        role.setCreateDate(currentTime);
-        role.setUpdateDate(currentTime);
-        role.setStatus(1);
-        roleList.add(role);
-        return true;
+        if (null != roleId) {
+            Role findRole = findRoleOne(roleId);
+            if (null != findRole) {
+                Integer index = roleList.indexOf(findRole);
+                findRole.setName(role.getName());
+                findRole.setUpdateDate(currentTime);
+                roleList.set(index, findRole);
+                return true;
+            }
+        } else {
+            role.setId((roleList.size() + 1));
+            role.setCreateDate(currentTime);
+            role.setUpdateDate(currentTime);
+            role.setStatus(1);
+            roleList.add(role);
+            return true;
+        }
+
+        return false;
+    }
+
+    public Role findRoleOne(Integer rid) {
+        Role role = null;
+        for (Role row : roleList) {
+            if (row.getId().equals(rid)) {
+                role = row;
+                break;
+            }
+        }
+
+        return role;
     }
 
 }

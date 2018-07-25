@@ -6,13 +6,17 @@
     <package name="roleManager" namespace="/role" extends="rbac">
         <action name="roleManagement" class="com.rbac.application.action.RoleManagementAction"
                 method="roleManagement">
-            <result name="success">/design/template/roleManagement.ftl</result>
+            <result name="success">/design/template/role-management.ftl</result>
         </action>
         <action name="createRole" class="com.rbac.application.action.RoleManagementAction" method="createRole">
             <result name="success">/design/template/create-role.ftl</result>
         </action>
         <action name="saveRole" class="com.rbac.application.action.RoleManagementAction" method="saveRole">
-            <result name="success">/design/template/create-role.ftl</result>
+            <result name="success">/design/template/save-result.ftl</result>
+        </action>
+        <action name="editRole" class="com.rbac.application.action.RoleManagementAction" method="editRole">
+            <result name="success">/design/template/edit-role.ftl</result>
+            <result name="input">/design/template/fail.ftl</result>
         </action>
     </package>
 </struts>

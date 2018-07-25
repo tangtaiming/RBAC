@@ -24,6 +24,10 @@ public class RoleManagementAction extends ActionSupport {
 
     private String result;
 
+    private Integer id;
+
+    private static final String ERROR_KEY = "error";
+
     /**
      * 角色管理
      * @return
@@ -49,6 +53,21 @@ public class RoleManagementAction extends ActionSupport {
         return SUCCESS;
     }
 
+    /**
+     * 编辑角色
+     * @return
+     */
+    public String editRole() {
+        Role role = roleService.findRoleOne(getId());
+        if (null == role) {
+            addFieldError(ERROR_KEY, "编辑异常, 查询角色为空");
+            return INPUT;
+        }
+
+        setRole(role);
+        return SUCCESS;
+    }
+
     public List<Role> getRoleList() {
         return roleList;
     }
@@ -71,5 +90,13 @@ public class RoleManagementAction extends ActionSupport {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
