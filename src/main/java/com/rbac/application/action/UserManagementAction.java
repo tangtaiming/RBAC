@@ -1,7 +1,6 @@
 package com.rbac.application.action;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.rbac.application.orm.Role;
 import com.rbac.application.orm.User;
 import com.rbac.application.service.UserService;
 import com.system.util.base.MD5Utils;
@@ -123,6 +122,17 @@ public class UserManagementAction extends ActionSupport {
     public String saveUser() {
         userService.saveUser(user);
         setResult("success");
+        return SUCCESS;
+    }
+
+    public String editUser() {
+        User user = userService.findStaticUserOne(getId());
+        if (null == user) {
+            addFieldError(ERROR_KEY, "编辑异常, 查询用户为空");
+            return INPUT;
+        }
+
+        setUser(user);
         return SUCCESS;
     }
 

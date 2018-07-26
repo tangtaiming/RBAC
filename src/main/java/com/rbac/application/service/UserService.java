@@ -56,6 +56,18 @@ public class UserService {
         return findUser;
     }
 
+    public User findStaticUserOne(Integer id) {
+        User findUser = null;
+        for (User user : staticUserList) {
+            if (user.getId().equals(id)) {
+                findUser = user;
+                break;
+            }
+        }
+
+        return findUser;
+    }
+
     public User findUserByName(String name) {
         User findUser = null;
         for (User user : userList) {
@@ -85,12 +97,12 @@ public class UserService {
         //1 代表对于账号开启使用状态， 0 表示账号冻结
         Integer status = 1;
         if (null != userId) {
-            User findUser = findUserOne(userId);
+            User findUser = findStaticUserOne(userId);
             if (null != findUser) {
                 Integer index = staticUserList.indexOf(findUser);
-                user.setUpdateDate(currentTime);
-                user.setName(user.getName());
-                user.setEmail(user.getEmail());
+                findUser.setUpdateDate(currentTime);
+                findUser.setName(user.getName());
+                findUser.setEmail(user.getEmail());
                 staticUserList.set(index, findUser);
                 return true;
             }
