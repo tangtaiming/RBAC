@@ -1,7 +1,11 @@
 package com.rbac.application.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.rbac.application.action.dto.RoleDto;
+import com.rbac.application.action.dto.UserDto;
+import com.rbac.application.action.dto.UserRsDto;
 import com.rbac.application.orm.User;
+import com.rbac.application.service.RoleService;
 import com.rbac.application.service.UserService;
 import com.system.util.base.MD5Utils;
 import org.apache.commons.lang.StringUtils;
@@ -23,11 +27,15 @@ public class UserManagementAction extends ActionSupport {
 
     private UserService userService = new UserService();
 
+    private RoleService roleService = new RoleService();
+
     private static final String ERROR_KEY = "error";
 
     private List<User> userList;
 
-    private User user;
+    private UserDto user;
+
+    private UserRsDto userRs;
 
     private Integer id;
 
@@ -99,20 +107,23 @@ public class UserManagementAction extends ActionSupport {
     }
 
     public String createUser() {
+        user = new UserDto();
+        List<RoleDto> roles = roleService.findRoleDtoList();
+        user.setRoles(roles);
         return SUCCESS;
     }
 
     public void validateSaveUser() {
-        if (StringUtils.isEmpty(user.getName())) {
+        if (StringUtils.isEmpty(userRs.getName())) {
             addFieldError(ERROR_KEY, "保存用户名称不能为空");
             return;
         }
-        if (StringUtils.isEmpty(user.getEmail())) {
+        if (StringUtils.isEmpty(userRs.getEmail())) {
             addFieldError(ERROR_KEY, "保存用户邮箱不能为空");
             return;
         }
 
-        User findUser = userService.findStaticUserByName(user.getName());
+        User findUser = userService.findStaticUserByName(userRs.getName());
         if (null != findUser) {
             addFieldError(ERROR_KEY, "保存用户名称已经存在，请进行数据修改!");
             return;
@@ -120,18 +131,20 @@ public class UserManagementAction extends ActionSupport {
     }
 
     public String saveUser() {
-        userService.saveUser(user);
+        userService.saveUser(userRs);
         setResult("success");
         return SUCCESS;
     }
 
     public String editUser() {
-        User user = userService.findStaticUserOne(getId());
+        UserDto user = userService.findStaticUserDtoOne(getId());
         if (null == user) {
             addFieldError(ERROR_KEY, "编辑异常, 查询用户为空");
             return INPUT;
         }
 
+        List<RoleDto> roles = roleService.findRoleDtoList();
+        user.setRoles(roles);
         setUser(user);
         return SUCCESS;
     }
@@ -152,11 +165,11 @@ public class UserManagementAction extends ActionSupport {
         this.userList = userList;
     }
 
-    public User getUser() {
+    public UserDto getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserDto user) {
         this.user = user;
     }
 
@@ -174,5 +187,13 @@ public class UserManagementAction extends ActionSupport {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public UserRsDto getUserRs() {
+        return userRs;
+    }
+
+    public void setUserRs(UserRsDto userRs) {
+        this.userRs = userRs;
     }
 }

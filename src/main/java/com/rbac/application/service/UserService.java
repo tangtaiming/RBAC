@@ -1,5 +1,8 @@
 package com.rbac.application.service;
 
+import com.rbac.application.action.dto.RoleDto;
+import com.rbac.application.action.dto.UserDto;
+import com.rbac.application.action.dto.UserRsDto;
 import com.rbac.application.orm.User;
 
 import java.time.LocalDateTime;
@@ -42,6 +45,34 @@ public class UserService {
         }
 
         return userOne;
+    }
+
+    public User findStaticUserOne(Integer uid) {
+        User userOne = null;
+        for (User user : staticUserList) {
+            if (user.getId().equals(uid)) {
+                userOne = user;
+                break;
+            }
+        }
+
+        return userOne;
+    }
+
+    public UserDto findStaticUserDtoOne(Integer uid) {
+        User userOne = findStaticUserOne(uid);
+        if (null != userOne) {
+            Integer id = userOne.getId();
+            String email = userOne.getEmail();
+            String name = userOne.getName();
+            UserDto userDto = new UserDto();
+            userDto.setId(id);
+            userDto.setEmail(email);
+            userDto.setName(name);
+            return userDto;
+        }
+
+        return null;
     }
 
     public User findStaticUserByName(String name) {
@@ -88,7 +119,7 @@ public class UserService {
         return staticUserList;
     }
 
-    public boolean saveUser(User user) {
+    public boolean saveUser(UserRsDto user) {
         Integer userId = user.getId();
         String format = "yyyy-MM-dd hh:mm:ss";
         String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(format));
@@ -107,12 +138,18 @@ public class UserService {
                 return true;
             }
         } else {
-            user.setId(staticUserList.size() + 1);
-            user.setAdmin(admin);
-            user.setStatus(status);
-            user.setCreateDate(currentTime);
-            user.setUpdateDate(currentTime);
-            staticUserList.add(user);
+            User createUser = new User();
+            String email = user.getEmail();
+            String name = user.getName();
+            List<Integer> roles = user.getRoles();
+            createUser.setId(staticUserList.size() + 1);
+            createUser.setEmail(email);
+            createUser.setName(name);
+            createUser.setAdmin(admin);
+            createUser.setStatus(status);
+            createUser.setCreateDate(currentTime);
+            createUser.setUpdateDate(currentTime);
+            staticUserList.add(createUser);
             return true;
         }
 

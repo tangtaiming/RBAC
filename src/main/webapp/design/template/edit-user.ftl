@@ -9,10 +9,15 @@
 <form id="form-user" action="/role/saveUser" method="post">
     <#assign userId = user['id']/>
     <#if userId??>
-        <input type="hidden" name="user.id" value="${userId}"/>
+        <input type="hidden" name="userRs.id" value="${userId}" />
     </#if>
-    <div>名称: <input type="text" name="user.name" value="${user['name']}"/></div>
-    <div>邮箱: <input type="text" name="user.email" value="${user['email']}"/></div>
+    <div>名称: <input type="text" name="userRs.name" value="${user['name']!''}"/></div>
+    <div>邮箱: <input type="text" name="userRs.email" value="${user['email']!''}"/></div>
+    <div>角色:
+        <#list user['roles'] as role>
+            <input type="checkbox" name="userRs.roles" value="${role['id']!''}"/>${role['name']!''}&nbsp;&nbsp;
+        </#list>
+    </div>
     <div><input id="save-user" type="button" value="提交"/></div>
 </form>
 </body>

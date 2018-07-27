@@ -1,6 +1,8 @@
 package com.rbac.application.service;
 
+import com.rbac.application.action.dto.RoleDto;
 import com.rbac.application.orm.Role;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,6 +76,20 @@ public class RoleService {
             }
         }
         return role;
+    }
+
+    public List<RoleDto> findRoleDtoList() {
+        List<RoleDto> roleDtoList = new ArrayList<>();
+        List<Role> roleList = findRoleList();
+        if (CollectionUtils.isNotEmpty(roleList)) {
+            for (Role role : roleList) {
+                RoleDto createRoleDto = new RoleDto();
+                createRoleDto.setId(role.getId());
+                createRoleDto.setName(role.getName());
+                roleDtoList.add(createRoleDto);
+            }
+        }
+        return roleDtoList;
     }
 
 }

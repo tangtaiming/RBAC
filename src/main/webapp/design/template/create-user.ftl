@@ -7,8 +7,13 @@
 <body>
 <h2>创建用户</h2>
 <form id="form-user" action="/role/saveUser" method="post">
-    <div>名称: <input type="text" name="user.name"/></div>
-    <div>邮箱: <input type="text" name="user.email"/></div>
+    <div>名称: <input type="text" name="userRs.name"/></div>
+    <div>邮箱: <input type="text" name="userRs.email"/></div>
+    <div>角色:
+        <#list user['roles'] as role>
+            <input type="checkbox" name="userRs.roles" value="${role['id']!''}"/>${role['name']!''}&nbsp;&nbsp;
+        </#list>
+    </div>
     <div><input id="save-user" type="button" value="提交"/></div>
 </form>
 </body>

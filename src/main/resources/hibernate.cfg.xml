@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='gb2312'?>
+<!--表明解析本XML文件的DTD文档位置，DTD是Document Type Definition 的缩写,即文档类型的定义,XML解析器使用DTD文档来检查XML文件的合法性。hibernate.sourceforge.net/hibernate-configuration-3.0dtd可以在Hibernate3.1.3软件包中的src\org\hibernate目录中找到此文件-->
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<!--声明Hibernate配置文件的开始-->
+<hibernate-configuration>
+    <session-factory>
+        
+    </session-factory>
+</hibernate-configuration>
