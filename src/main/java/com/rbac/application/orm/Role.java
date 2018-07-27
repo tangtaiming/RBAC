@@ -1,11 +1,13 @@
 package com.rbac.application.orm;
 
+import java.io.Serializable;
+
 /**
  * 角色
  * @auther ttm
  * @date 2018/7/25 0025
  **/
-public class Role {
+public class Role implements Serializable {
 
     private Integer id;
 

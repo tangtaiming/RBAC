@@ -1,7 +1,9 @@
 package com.rbac.application.service;
 
 import com.rbac.application.action.dto.RoleDto;
+import com.rbac.application.dao.RoleDao;
 import com.rbac.application.orm.Role;
+import com.system.core.dao.BaseDao;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,13 +21,16 @@ public class RoleService {
 
     private static final Logger LOG = LoggerFactory.getLogger(RoleService.class);
 
-    private static List<Role> roleList = new ArrayList<>();
+    private List<Role> roleList = new ArrayList<>();
+
+    private RoleDao roleDao = new RoleDao();
 
     /**
      * 获取角色集合
      * @return
      */
     public List<Role> findRoleList() {
+        roleList = roleDao.findAllList();
         LOG.info("Find role size: " + roleList.size());
         return roleList;
     }
@@ -37,10 +42,9 @@ public class RoleService {
         if (null != roleId) {
             Role findRole = findRoleOne(roleId);
             if (null != findRole) {
-                Integer index = roleList.indexOf(findRole);
                 findRole.setName(role.getName());
                 findRole.setUpdateDate(currentTime);
-                roleList.set(index, findRole);
+                roleDao.update(findRole);
                 return true;
             }
         } else {
@@ -48,7 +52,7 @@ public class RoleService {
             role.setCreateDate(currentTime);
             role.setUpdateDate(currentTime);
             role.setStatus(1);
-            roleList.add(role);
+            roleDao.save(role);
             return true;
         }
 
@@ -56,25 +60,12 @@ public class RoleService {
     }
 
     public Role findRoleOne(Integer rid) {
-        Role role = null;
-        for (Role row : roleList) {
-            if (row.getId().equals(rid)) {
-                role = row;
-                break;
-            }
-        }
-
+        Role role = roleDao.findOne(rid);
         return role;
     }
 
     public Role findRoleByName(String name) {
-        Role role = null;
-        for (Role row : roleList) {
-            if (row.getName().equals(name)) {
-                role = row;
-                break;
-            }
-        }
+        Role role = roleDao.findRoleByName(name);
         return role;
     }
 
