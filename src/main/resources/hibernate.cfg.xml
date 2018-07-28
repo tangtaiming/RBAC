@@ -6,6 +6,32 @@
 <!--声明Hibernate配置文件的开始-->
 <hibernate-configuration>
     <session-factory>
-        
+        <!--配置数据库的驱动程序，Hibernate在连接数据库时，需要用到数据库的驱动程序-->
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <!--设置数据库的连接url:jdbc:mysql://localhost/hibernate,其中localhost表示mysql服务器名称，此处为本机，    hibernate是数据库名-->
+        <property name="hibernate.connection.url">jdbc:mysql://localhost/test?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull</property>
+        <!--连接数据库是用户名-->
+        <property name="hibernate.connection.username">root</property>
+        <!--连接数据库是密码-->
+        <property name="hibernate.connection.password">Taiming@123</property>
+        <!--数据库连接池的大小-->
+        <property name="hibernate.connection.pool.size">20</property>
+        <!--是否在后台显示Hibernate用到的SQL语句，开发时设置为true，便于查错，程序运行时可以在Eclipse的控制台显示Hibernate的执行Sql语句。项目部署后可以设置为false，提高运行效率-->
+        <property name="hibernate.show_sql">true</property>
+
+        <!-- C3P0连接池设定-->
+        <!-- 使用c3p0连接池  配置连接池提供的供应商-->
+        <property name="connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</property>
+        <!--在连接池中可用的数据库连接的最少数目 -->
+        <property name="c3p0.min_size">5</property>
+        <!--在连接池中所有数据库连接的最大数目  -->
+        <property name="c3p0.max_size">20</property>
+        <!--设定数据库连接的过期时间,以秒为单位,
+        如果连接池中的某个数据库连接处于空闲状态的时间超过了timeout时间,就会从连接池中清除 -->
+        <property name="c3p0.timeout">120</property>
+        <!--每3000秒检查所有连接池中的空闲连接 以秒为单位-->
+        <property name="c3p0.idle_test_period">3000</property>
+
+        <mapping resource="com/hibernate/role.hbm.xml"></mapping>
     </session-factory>
 </hibernate-configuration>

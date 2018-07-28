@@ -1,6 +1,5 @@
 package com.rbac.application.service;
 
-import com.rbac.application.action.dto.RoleDto;
 import com.rbac.application.action.dto.UserDto;
 import com.rbac.application.action.dto.UserRsDto;
 import com.rbac.application.orm.User;
@@ -79,18 +78,6 @@ public class UserService {
         User findUser = null;
         for (User user : staticUserList) {
             if (name.equals(user.getName())) {
-                findUser = user;
-                break;
-            }
-        }
-
-        return findUser;
-    }
-
-    public User findStaticUserOne(Integer id) {
-        User findUser = null;
-        for (User user : staticUserList) {
-            if (user.getId().equals(id)) {
                 findUser = user;
                 break;
             }
