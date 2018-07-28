@@ -2,12 +2,20 @@ package com.rbac.application.service;
 
 import com.rbac.application.action.dto.UserDto;
 import com.rbac.application.action.dto.UserRsDto;
+import com.rbac.application.dao.UserDao;
+import com.rbac.application.dao.UserRoleDao;
 import com.rbac.application.orm.User;
+import com.rbac.application.orm.UserRole;
+import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @auther ttm
@@ -15,39 +23,20 @@ import java.util.List;
  */
 public class UserService {
 
+    private Logger LOG = LoggerFactory.getLogger(UserService.class);
+
     private List<User> userList;
 
-    /**
-     * 模拟保存操作静态实体集合
-     */
-    private static List<User> staticUserList = new ArrayList<>();
+    private UserDao userDao = new UserDao(User.class);
 
-    public UserService() {
-        initUsers();
-    }
-
-    private void initUsers() {
-        userList = new ArrayList<>();
-        User xiaoming = new User(1, "xiaoming", "xiaoming@qq.com");
-        userList.add(xiaoming);
-        User xiaohong = new User(2, "xiaohong", "xiaohong@qq.com");
-        userList.add(xiaohong);
-    }
+    private UserRoleDao userRoleDao = new UserRoleDao(UserRole.class);
 
     public User findUserOne(Integer uid) {
-        User userOne = null;
-        for (User user : userList) {
-            if (uid.equals(user.getId())) {
-                userOne = user;
-                break;
-            }
-        }
-
-        return userOne;
+        return userDao.findOne(uid);
     }
 
     public UserDto findStaticUserDtoOne(Integer uid) {
-        User userOne = findStaticUserOne(uid);
+        User userOne = findUserOne(uid);
         if (null != userOne) {
             Integer id = userOne.getId();
             String email = userOne.getEmail();
@@ -62,27 +51,8 @@ public class UserService {
         return null;
     }
 
-    public User findStaticUserByName(String name) {
-        User findUser = null;
-        for (User user : staticUserList) {
-            if (name.equals(user.getName())) {
-                findUser = user;
-                break;
-            }
-        }
-
-        return findUser;
-    }
-
     public User findUserByName(String name) {
-        User findUser = null;
-        for (User user : userList) {
-            if (name.equals(user.getName())) {
-                findUser = user;
-                break;
-            }
-        }
-
+        User findUser = userDao.findUserByName(name);
         return findUser;
     }
 
@@ -91,7 +61,7 @@ public class UserService {
      * @return
      */
     public List<User> findUserList() {
-        return staticUserList;
+        return userDao.findAllList();
     }
 
     public boolean saveUser(UserRsDto user) {
@@ -102,40 +72,99 @@ public class UserService {
         Integer admin = -1;
         //1 代表对于账号开启使用状态， 0 表示账号冻结
         Integer status = 1;
+        List<Integer> roles = Optional.ofNullable(user.getRoles()).orElse(new ArrayList<>());
+        boolean saveFalg = false;
         if (null != userId) {
-            User findUser = findStaticUserOne(userId);
+            User findUser = findUserOne(userId);
             if (null != findUser) {
-                Integer index = staticUserList.indexOf(findUser);
                 findUser.setUpdateDate(currentTime);
                 findUser.setName(user.getName());
                 findUser.setEmail(user.getEmail());
-                staticUserList.set(index, findUser);
-                return true;
+                userDao.update(findUser);
+                saveFalg = true;
             }
         } else {
             User createUser = new User();
             String email = user.getEmail();
             String name = user.getName();
-            List<Integer> roles = user.getRoles();
-            createUser.setId(staticUserList.size() + 1);
             createUser.setEmail(email);
             createUser.setName(name);
             createUser.setAdmin(admin);
             createUser.setStatus(status);
             createUser.setCreateDate(currentTime);
             createUser.setUpdateDate(currentTime);
-            staticUserList.add(createUser);
-            return true;
+            Integer guid = userDao.save(createUser);
+            if (null != guid) {
+                saveFalg = true;
+                userId = guid;
+            }
         }
 
-        return false;
+        //保存数据成功之后 获取用户角色进行数据存储
+        if (saveFalg) {
+            /**
+             * 找出删除的角色
+             * 假如已有的角色集合是A，界面传递过得角色集合是B
+             * 角色集合A当中的某个角色不在角色集合B当中，就应该删除
+             * array_diff();计算补集
+             */
+             List<UserRole> userRoleList = findUserRoleByUserId(userId);
+             List<Integer> relatedRoleIds = new ArrayList<>();
+             if (CollectionUtils.isNotEmpty(userRoleList)) {
+                 Iterator<UserRole> it = userRoleList.iterator();
+                 for ( ;it.hasNext(); ) {
+                     UserRole userRole = it.next();
+                     Integer tmpRoleId = userRole.getRoleId();
+                     Integer tmpUserRoleId = userRole.getId();
+                     relatedRoleIds.add(tmpRoleId);
+                     if (!roles.contains(tmpRoleId)) {
+                         boolean deleteFalg = userRoleDao.delete(tmpUserRoleId);
+                         LOG.info("Delete user role relation id: " + tmpUserRoleId + (deleteFalg ? " success" : " fail"));
+                     }
+                 }
+             }
+            /**
+             * 找出添加的角色
+             * 假如已有的角色集合是A，界面传递过得角色集合是B
+             * 角色集合B当中的某个角色不在角色集合A当中，就应该添加
+             */
+            if (CollectionUtils.isNotEmpty(roles)) {
+                String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
+                for (Integer role : roles) {
+                    if (!relatedRoleIds.contains(role)) {
+                        UserRole createUserRole = new UserRole();
+                        createUserRole.setCreateDate(time);
+                        createUserRole.setRoleId(role);
+                        createUserRole.setUserId(userId);
+                        Integer createUserRoleId = userRoleDao.save(createUserRole);
+                        LOG.info("Save user role relation id: " + createUserRoleId + ((null != createUserRoleId) ? " success" : " fail"));
+                    }
+                }
+             }
+
+        }
+        return saveFalg;
     }
 
-    public static List<User> getStaticUserList() {
-        return staticUserList;
+    public List<UserRole> findUserRoleByUserId(Integer userId) {
+        return userRoleDao.findUserRoleByUserId(userId);
     }
 
-    public static void setStaticUserList(List<User> staticUserList) {
-        UserService.staticUserList = staticUserList;
+    /**
+     * 查询用户选中角色
+     * @param userId
+     * @return
+     */
+    public List<Integer> findUserChosenRole(Integer userId) {
+        List<Integer> chosenDtoList = new ArrayList<>();
+        List<UserRole> findUserRoleList = findUserRoleByUserId(userId);
+        if (CollectionUtils.isNotEmpty(findUserRoleList)) {
+            for (UserRole userRole : findUserRoleList) {
+                chosenDtoList.add(userRole.getRoleId());
+            }
+        }
+
+        return chosenDtoList;
     }
+
 }

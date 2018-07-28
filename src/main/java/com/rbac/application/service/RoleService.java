@@ -3,7 +3,6 @@ package com.rbac.application.service;
 import com.rbac.application.action.dto.RoleDto;
 import com.rbac.application.dao.RoleDao;
 import com.rbac.application.orm.Role;
-import com.system.core.dao.BaseDao;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

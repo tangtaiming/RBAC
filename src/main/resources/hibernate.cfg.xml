@@ -33,5 +33,7 @@
 
         <!-- 配置hibernate的映射文件所在的位置 -->
         <mapping resource="com/hibernate/role.hbm.xml"></mapping>
+        <mapping resource="com/hibernate/user.hbm.xml"></mapping>
+        <mapping resource="com/hibernate/user-role.hbm.xml"></mapping>
     </session-factory>
 </hibernate-configuration>

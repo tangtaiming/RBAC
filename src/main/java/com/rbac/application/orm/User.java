@@ -1,10 +1,12 @@
 package com.rbac.application.orm;
 
+import java.io.Serializable;
+
 /**
  * @auther ttm
  * @date 2018/7/24
  */
-public class User {
+public class User implements Serializable {
 
     private Integer id;
 

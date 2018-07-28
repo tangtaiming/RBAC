@@ -1,6 +1,5 @@
 package com.rbac.application.dao;
 
-import com.rbac.application.action.dto.RoleDto;
 import com.rbac.application.orm.Role;
 import com.system.core.dao.BaseDao;
 import com.system.util.base.HibernateUtils;

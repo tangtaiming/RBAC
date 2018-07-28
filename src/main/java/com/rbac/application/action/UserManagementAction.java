@@ -1,6 +1,7 @@
 package com.rbac.application.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.rbac.application.action.dto.EditUserRsDto;
 import com.rbac.application.action.dto.RoleDto;
 import com.rbac.application.action.dto.UserDto;
 import com.rbac.application.action.dto.UserRsDto;
@@ -40,6 +41,8 @@ public class UserManagementAction extends ActionSupport {
     private Integer id;
 
     private String result;
+
+    private EditUserRsDto editUserRsDto;
 
     /**
      * 用户name
@@ -123,10 +126,12 @@ public class UserManagementAction extends ActionSupport {
             return;
         }
 
-        User findUser = userService.findStaticUserByName(userRs.getName());
-        if (null != findUser) {
-            addFieldError(ERROR_KEY, "保存用户名称已经存在，请进行数据修改!");
-            return;
+        if (null == userRs.getId()) {
+            User findUser = userService.findUserByName(userRs.getName());
+            if (null != findUser) {
+                addFieldError(ERROR_KEY, "保存用户名称已经存在，请进行数据修改!");
+                return;
+            }
         }
     }
 
@@ -144,8 +149,9 @@ public class UserManagementAction extends ActionSupport {
         }
 
         List<RoleDto> roles = roleService.findRoleDtoList();
-        user.setRoles(roles);
-        setUser(user);
+        List<Integer> chosenRoleList = userService.findUserChosenRole(user.getId());
+        EditUserRsDto editUserRsDto = new EditUserRsDto(user, roles, chosenRoleList);
+        setEditUserRsDto(editUserRsDto);
         return SUCCESS;
     }
 
@@ -195,5 +201,13 @@ public class UserManagementAction extends ActionSupport {
 
     public void setUserRs(UserRsDto userRs) {
         this.userRs = userRs;
+    }
+
+    public EditUserRsDto getEditUserRsDto() {
+        return editUserRsDto;
+    }
+
+    public void setEditUserRsDto(EditUserRsDto editUserRsDto) {
+        this.editUserRsDto = editUserRsDto;
     }
 }

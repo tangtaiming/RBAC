@@ -4,13 +4,11 @@ import com.system.util.base.HibernateUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 
-import javax.persistence.criteria.*;
-import javax.persistence.metamodel.MapAttribute;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @auther ttm
@@ -113,6 +111,26 @@ public abstract class BaseDao<E extends Serializable> {
         return nextId;
     }
 
+    public boolean delete(Integer id) {
+        boolean deleteFalg = false;
+        try {
+            session = HibernateUtils.getSession();
+            transaction = session.beginTransaction();
+            session.delete(id);
+            transaction.commit();
+            deleteFalg = true;
+        } catch (Exception e) {
+            if (null != transaction) {
+                transaction.rollback();
+            }
+            throw e;
+        } finally {
+            HibernateUtils.closeSession(session);
+        }
+
+        return deleteFalg;
+    }
+
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
@@ -135,5 +153,13 @@ public abstract class BaseDao<E extends Serializable> {
 
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
+    }
+
+    public Class<E> getClasses() {
+        return classes;
+    }
+
+    public void setClasses(Class<E> classes) {
+        this.classes = classes;
     }
 }
