@@ -46,18 +46,6 @@ public class UserService {
         return userOne;
     }
 
-    public User findStaticUserOne(Integer uid) {
-        User userOne = null;
-        for (User user : staticUserList) {
-            if (user.getId().equals(uid)) {
-                userOne = user;
-                break;
-            }
-        }
-
-        return userOne;
-    }
-
     public UserDto findStaticUserDtoOne(Integer uid) {
         User userOne = findStaticUserOne(uid);
         if (null != userOne) {
