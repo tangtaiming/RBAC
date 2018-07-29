@@ -1,7 +1,7 @@
 <html>
 <body>
 <h2>角色管理页面</h2>
-<a href="/role/createRole" target="_blank">添加角色</a>
+<a href="/admin/createRole">添加角色</a>
 <table>
     <tr>
         <th>角色名称</th>
@@ -12,8 +12,8 @@
         <tr>
             <td>${role["name"]}</td>
             <td>
-                <a href="/role/editRole?id=${role["id"]}">编辑</a>
-                <a href="#">设置权限</a>
+                <a href="/admin/editRole?id=${role["id"]}">编辑</a>
+                <a href="/admin/siteAccess?id=${role["id"]}">设置权限</a>
             </td>
         </tr>
         </#list>

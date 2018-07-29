@@ -1,7 +1,11 @@
 package com.rbac.application.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.rbac.application.action.dto.SaveSiteAccessRqDto;
+import com.rbac.application.orm.Access;
 import com.rbac.application.orm.Role;
+import com.rbac.application.orm.RoleAccess;
+import com.rbac.application.service.AccessService;
 import com.rbac.application.service.RoleService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -19,7 +23,11 @@ public class RoleManagementAction extends ActionSupport {
 
     private RoleService roleService = new RoleService();
 
+    private AccessService accessService = new AccessService();
+
     private List<Role> roleList;
+
+    private List<Access> accessList;
 
     private Role role;
 
@@ -28,6 +36,10 @@ public class RoleManagementAction extends ActionSupport {
     private Integer id;
 
     private static final String ERROR_KEY = "error";
+
+    private SaveSiteAccessRqDto siteAccessRqDto;
+
+    private List<RoleAccess> roleAccessList;
 
     /**
      * 角色管理
@@ -85,6 +97,32 @@ public class RoleManagementAction extends ActionSupport {
         return SUCCESS;
     }
 
+    /**
+     * 设置权限
+     * @return
+     */
+    public String siteAccess() {
+        Role role = roleService.findRoleOne(id);
+        if (null == role) {
+            addFieldError(ERROR_KEY, "编辑异常, 查询角色为空");
+            return INPUT;
+        }
+        setRole(role);
+        //循环获取所有权限列表
+        List<Access> accessList = accessService.findAccessAllList();
+        //根据角色查询角色对于权限
+        List<RoleAccess> roleAccessList = roleService.findRoleAccessByRoleId(role.getId());
+        setAccessList(accessList);
+        setRoleAccessList(roleAccessList);
+        return SUCCESS;
+    }
+
+    public String saveSiteAccess() {
+        roleService.saveSiteAccess(siteAccessRqDto);
+        setResult("success");
+        return SUCCESS;
+    }
+
     public List<Role> getRoleList() {
         return roleList;
     }
@@ -115,5 +153,29 @@ public class RoleManagementAction extends ActionSupport {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public List<Access> getAccessList() {
+        return accessList;
+    }
+
+    public void setAccessList(List<Access> accessList) {
+        this.accessList = accessList;
+    }
+
+    public SaveSiteAccessRqDto getSiteAccessRqDto() {
+        return siteAccessRqDto;
+    }
+
+    public void setSiteAccessRqDto(SaveSiteAccessRqDto siteAccessRqDto) {
+        this.siteAccessRqDto = siteAccessRqDto;
+    }
+
+    public List<RoleAccess> getRoleAccessList() {
+        return roleAccessList;
+    }
+
+    public void setRoleAccessList(List<RoleAccess> roleAccessList) {
+        this.roleAccessList = roleAccessList;
     }
 }

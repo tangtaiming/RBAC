@@ -111,12 +111,12 @@ public abstract class BaseDao<E extends Serializable> {
         return nextId;
     }
 
-    public boolean delete(Integer id) {
+    public <T> boolean delete(T entity) {
         boolean deleteFalg = false;
         try {
             session = HibernateUtils.getSession();
             transaction = session.beginTransaction();
-            session.delete(id);
+            session.delete(entity);
             transaction.commit();
             deleteFalg = true;
         } catch (Exception e) {

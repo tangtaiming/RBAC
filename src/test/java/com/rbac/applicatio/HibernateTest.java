@@ -6,6 +6,7 @@ import com.rbac.application.orm.Role;
 import com.rbac.application.service.UserService;
 import com.system.core.dao.BaseDao;
 import com.system.util.enumerate.RoleStatus;
+import org.dozer.DozerBeanMapper;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -53,7 +54,7 @@ public class HibernateTest {
         roleDao.findAllList();
     }
 
-    @Test
+//    @Test
     public void saveUser() {
         UserRsDto user = new UserRsDto();
         user.setName("xiaoming");
@@ -61,5 +62,11 @@ public class HibernateTest {
         UserService userService = new UserService();
         userService.saveUser(user);
     }
+
+//    public void re() {
+//        DozerBeanMapper mapper = new
+//                DozerBeanMapper();
+//        mapper.map()
+//    }
 
 }

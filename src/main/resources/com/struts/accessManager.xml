@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="accessManager" namespace="/admin" extends="rbac">
+        <action name="accessManagement" class="com.rbac.application.action.AccessManagementAction"
+                method="accessManagement">
+            <result name="success">/design/template/access-management.ftl</result>
+        </action>
+        <action name="createAccess" class="com.rbac.application.action.AccessManagementAction"
+                method="createAccess">
+            <result name="success">/design/template/create-access.ftl</result>
+        </action>
+        <action name="saveAccess" class="com.rbac.application.action.AccessManagementAction"
+                method="saveAccess">
+            <result name="success">/design/template/save-result.ftl</result>
+            <result name="input">/design/template/ajax-fail.ftl</result>
+        </action>
+        <action name="editAccess" class="com.rbac.application.action.AccessManagementAction"
+                method="editAccess">
+            <result name="success">/design/template/edit-access.ftl</result>
+            <result name="input">/design/template/fail.ftl</result>
+        </action>
+    </package>
+</struts>

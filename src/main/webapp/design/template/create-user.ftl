@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2>创建用户</h2>
-<form id="form-user" action="/role/saveUser" method="post">
+<form id="form-user" action="/admin/saveUser" method="post">
     <div>名称: <input type="text" name="userRs.name"/></div>
     <div>邮箱: <input type="text" name="userRs.email"/></div>
     <div>角色:

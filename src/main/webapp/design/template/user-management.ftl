@@ -4,7 +4,7 @@
 </head>
 <body>
 <h2>用户管理页面</h2>
-<a href="/admin/createUser" target="_blank">添加用户</a>
+<a href="/admin/createUser">添加用户</a>
 <table>
     <tr>
         <th>名称</th>
@@ -18,7 +18,6 @@
             <td>${user["email"]}</td>
             <td>
                 <a href="/admin/editUser?id=${user["id"]}">编辑</a>
-                <a href="#">设置权限</a>
             </td>
         </tr>
         </#list>

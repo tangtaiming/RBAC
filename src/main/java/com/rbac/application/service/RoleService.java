@@ -1,8 +1,11 @@
 package com.rbac.application.service;
 
 import com.rbac.application.action.dto.RoleDto;
+import com.rbac.application.action.dto.SaveSiteAccessRqDto;
+import com.rbac.application.dao.RoleAccessDao;
 import com.rbac.application.dao.RoleDao;
 import com.rbac.application.orm.Role;
+import com.rbac.application.orm.RoleAccess;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @auther ttm
@@ -23,6 +27,8 @@ public class RoleService {
     private List<Role> roleList = new ArrayList<>();
 
     private RoleDao roleDao = new RoleDao();
+
+    private RoleAccessDao roleAccessDao = new RoleAccessDao(RoleAccess.class);
 
     /**
      * 获取角色集合
@@ -80,6 +86,43 @@ public class RoleService {
             }
         }
         return roleDtoList;
+    }
+
+    public boolean saveSiteAccess(SaveSiteAccessRqDto siteAccessRqDto) {
+        //查询出对应这个角色的所有角色权限关系
+        Integer roleId = siteAccessRqDto.getRoleId();
+        List<Integer> newRoleAccessList = Optional.ofNullable(siteAccessRqDto.getAccessId()).orElse(new ArrayList<>());
+        List<RoleAccess> roleAccessList = findRoleAccessByRoleId(roleId);
+        List<Integer> oldRoleAccessList = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(roleAccessList)) {
+            for (RoleAccess roleAccess : roleAccessList) {
+                Integer tmpAccessId = roleAccess.getAccessId();
+                oldRoleAccessList.add(tmpAccessId);
+                if (!newRoleAccessList.contains(tmpAccessId)) {
+                    boolean deleteFalg = roleAccessDao.delete(roleAccess);
+                    LOG.info("Delete user role relation id: " + tmpAccessId + (deleteFalg ? " success" : " fail"));
+                }
+            }
+        }
+
+        if (CollectionUtils.isNotEmpty(newRoleAccessList)) {
+            String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
+            for (Integer roleAccessId : newRoleAccessList) {
+                if (!oldRoleAccessList.contains(roleAccessId)) {
+                    RoleAccess createRoleAccess = new RoleAccess();
+                    createRoleAccess.setRoleId(roleId);
+                    createRoleAccess.setAccessId(roleAccessId);
+                    createRoleAccess.setCreateDate(time);
+                    Integer createRoleAccessId = roleAccessDao.save(createRoleAccess);
+                    LOG.info("Save user role relation id: " + createRoleAccessId + ((null != createRoleAccessId) ? " success" : " fail"));
+                }
+            }
+        }
+        return true;
+    }
+
+    public List<RoleAccess> findRoleAccessByRoleId(Integer roleId) {
+        return roleAccessDao.findRoleAccessByRoleId(roleId);
     }
 
 }

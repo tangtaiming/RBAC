@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2>创建角色</h2>
-<form id="role-form" action="/role/saveRole" method="post">
+<form id="role-form" action="/admin/saveRole" method="post">
     <div>角色名称: <input type="text" name="role.name"/></div>
     <div><input id="save-role" type="button" value="提交"/></div>
 </form>

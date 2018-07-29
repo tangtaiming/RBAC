@@ -106,7 +106,6 @@ public class UserService {
              * 找出删除的角色
              * 假如已有的角色集合是A，界面传递过得角色集合是B
              * 角色集合A当中的某个角色不在角色集合B当中，就应该删除
-             * array_diff();计算补集
              */
              List<UserRole> userRoleList = findUserRoleByUserId(userId);
              List<Integer> relatedRoleIds = new ArrayList<>();
@@ -118,7 +117,7 @@ public class UserService {
                      Integer tmpUserRoleId = userRole.getId();
                      relatedRoleIds.add(tmpRoleId);
                      if (!roles.contains(tmpRoleId)) {
-                         boolean deleteFalg = userRoleDao.delete(tmpUserRoleId);
+                         boolean deleteFalg = userRoleDao.delete(userRole);
                          LOG.info("Delete user role relation id: " + tmpUserRoleId + (deleteFalg ? " success" : " fail"));
                      }
                  }

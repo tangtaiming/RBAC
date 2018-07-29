@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2>编辑角色</h2>
-<form id="role-form" action="/role/saveRole" method="post">
+<form id="role-form" action="/admin/saveRole" method="post">
     <#assign roleId = role['id']/>
     <#if roleId??>
         <input type="hidden" name="role.id" value="${roleId}"/>
