@@ -148,6 +148,10 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
      */
     private boolean checkoutLoginStatus(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
+        if (null == cookies) {
+            LOG.info("Checkout cookies is null");
+            return false;
+        }
         String secretKey = "";
         for (Cookie cookie : cookies) {
             String cookieName = cookie.getName();

@@ -21,7 +21,7 @@
         </interceptors>
         <default-interceptor-ref name="mydefault"></default-interceptor-ref>
         <global-results>
-            <result name="index" type="redirect">/rbac/index</result>
+            <result name="index" type="redirect">/admin/index</result>
             <result name="error">/design/template/error.ftl</result>
         </global-results>
         <!--<global-results>-->

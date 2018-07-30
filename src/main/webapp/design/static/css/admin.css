@@ -1,0 +1,47 @@
+.layui-layout-admin .layui-body .layadmin-tabsbody-item {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.layadmin-tabsbody-item, [template] {
+    display: none;
+}
+.layui-show {
+    display: block!important;
+}
+.layadmin-tabspage-none .layadmin-header {
+    display: block;
+}
+.layadmin-header .layui-breadcrumb {
+    padding: 0 15px;
+}
+.layadmin-header {
+    height: 50px;
+    line-height: 50px;
+    margin-bottom: 0;
+    border-radius: 0;
+}
+.layui-card {
+    margin-bottom: 15px;
+    border-radius: 2px;
+    background-color: #fff;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
+}
+.layui-fluid {
+    padding: 15px;
+}
+.layui-card-header.layuiadmin-card-header-auto {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    height: auto;
+}
+.layui-card-header {
+    position: relative;
+}
+.layui-form input[type=checkbox], .layui-form input[type=radio], .layui-form select {
+    display: inline-block;
+}
