@@ -5,8 +5,8 @@ import com.rbac.application.dao.RoleDao;
 import com.rbac.application.orm.Role;
 import com.rbac.application.service.UserService;
 import com.system.core.dao.BaseDao;
+import com.system.util.base.JsonUtils;
 import com.system.util.enumerate.RoleStatus;
-import org.dozer.DozerBeanMapper;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * @auther ttm
@@ -63,10 +64,11 @@ public class HibernateTest {
         userService.saveUser(user);
     }
 
-//    public void re() {
-//        DozerBeanMapper mapper = new
-//                DozerBeanMapper();
-//        mapper.map()
-//    }
+    @Test
+    public void findUserColunm() {
+        UserService userService = new UserService();
+        List<Integer> userRoleId = userService.findUserRoleColumnRoleIdByUserId(2);
+        System.out.println("Show: " + JsonUtils.toJson(userRoleId));
+    }
 
 }

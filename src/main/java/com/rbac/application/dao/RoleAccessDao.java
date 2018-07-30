@@ -42,5 +42,22 @@ public class RoleAccessDao extends BaseDao<RoleAccess> {
         return roleAccessList;
     }
 
+    public List<Integer> findRoleAccessColumnAccessIdByRoleId(Integer roleId) {
+        List<Integer> accessList = new ArrayList<>();
+        Session session = null;
+        String hql = "select accessId from RoleAccess ra where ra.roleId=:roleId";
+        try {
+            session = HibernateUtils.getSession();
+            Query query = session.createQuery(hql).setParameter("roleId", roleId);
+            accessList = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            HibernateUtils.closeSession(session);
+        }
+
+        return accessList;
+    }
+
 
 }

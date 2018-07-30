@@ -125,4 +125,8 @@ public class RoleService {
         return roleAccessDao.findRoleAccessByRoleId(roleId);
     }
 
+    public List<Integer> findRoleAccessColumnAccessIdByRoleId(Integer roleId) {
+        return roleAccessDao.findRoleAccessColumnAccessIdByRoleId(roleId);
+    }
+
 }

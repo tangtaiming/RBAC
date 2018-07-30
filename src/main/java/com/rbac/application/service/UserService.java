@@ -166,4 +166,8 @@ public class UserService {
         return chosenDtoList;
     }
 
+    public List<Integer> findUserRoleColumnRoleIdByUserId(Integer userId) {
+        return userRoleDao.findUserRoleColumnRoleIdByUserId(userId);
+    }
+
 }

@@ -2,15 +2,13 @@ package com.rbac.application.service;
 
 import com.rbac.application.action.dto.AccessManagementRsDto;
 import com.rbac.application.action.dto.SaveAccessRsDto;
-import com.rbac.application.action.dto.SaveSiteAccessRqDto;
 import com.rbac.application.dao.AccessDao;
 import com.rbac.application.dao.RoleDao;
 import com.rbac.application.orm.Access;
-import com.rbac.application.orm.Role;
-import com.rbac.application.orm.User;
-import com.system.util.base.HibernateUtils;
+import com.system.util.base.JsonUtils;
 import com.system.util.enumerate.Status;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,10 +57,12 @@ public class AccessService {
         boolean saveFalg = false;
         String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
         Integer accessId = accessRsDto.getId();
+        String[] urls = StringUtils.split(accessRsDto.getUrls(), ",");
+
         if (null != accessId) {
             Access findAccess = accessDao.findOne(accessId);
             if (null != findAccess) {
-                findAccess.setUrls(accessRsDto.getUrls());
+                findAccess.setUrls(JsonUtils.toJson(urls));
                 findAccess.setTitle(accessRsDto.getTitle());
                 findAccess.setUpdateDate(time);
                 accessDao.update(findAccess);
@@ -74,7 +74,7 @@ public class AccessService {
             createAccess.setUpdateDate(time);
             createAccess.setStatus(Status.OPEN.getStatus());
             createAccess.setTitle(accessRsDto.getTitle());
-            createAccess.setUrls(accessRsDto.getUrls());
+            createAccess.setUrls(JsonUtils.toJson(urls));
             Integer createAccessId = accessDao.save(createAccess);
             saveFalg = (null != createAccessId ? true : false);
         }

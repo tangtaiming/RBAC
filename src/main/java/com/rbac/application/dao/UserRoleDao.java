@@ -42,4 +42,21 @@ public class UserRoleDao extends BaseDao<UserRole> {
         return userRoleList;
     }
 
+    public List<Integer> findUserRoleColumnRoleIdByUserId(Integer userId) {
+        List<Integer> userRoleIdList = new ArrayList<>();
+        Session session = null;
+        String hql = "select roleId from UserRole ur where ur.userId=:userId";
+        try {
+            session = HibernateUtils.getSession();
+            Query query = session.createQuery(hql).setParameter("userId", userId);
+            userRoleIdList = query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            HibernateUtils.closeSession(session);
+        }
+
+        return userRoleIdList;
+    }
+
 }
