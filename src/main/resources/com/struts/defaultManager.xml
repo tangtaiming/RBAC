@@ -3,7 +3,7 @@
         "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-    <package name="defaultManager" namespace="/admin" extends="rbac">
+    <package name="defaultManager" namespace="/rbac" extends="rbac">
         <action name="index" class="com.rbac.application.action.DefaultManagementAction"
                 method="index">
             <result name="success">/design/template/index.ftl</result>

@@ -16,8 +16,8 @@
         <div class="layadmin-tabsbody-item layui-show">
             <div class="layui-card layadmin-header">
 				<span class="layui-breadcrumb">
-				  <a href="">首页</a>
-				  <a><cite>用户列表</cite></a>
+				  <a href="/rbac/index">首页</a>
+				  <a><cite>用户管理</cite></a>
 				</span>
             </div>
             <div class="layui-fluid">
@@ -26,12 +26,12 @@
                         <a href="/admin/createUser" class="layui-btn layuiadmin-btn-tags">添加用户</a>
                     </div>
                     <div class="layui-card-body">
-                        <table class="layui-table">
+                        <table class="layui-table" lay-size="sm">
                             <thead>
                                 <tr>
                                     <th>名称</th>
                                     <th>邮箱</th>
-                                    <th>操作</th>
+                                    <th style="width: 6%;">操作</th>
                                 </tr>
                             </thead>
                             <tbody>

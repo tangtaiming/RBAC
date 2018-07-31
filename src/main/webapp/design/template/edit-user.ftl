@@ -16,8 +16,8 @@
         <div class="layadmin-tabsbody-item layui-show">
             <div class="layui-card layadmin-header">
 				<span class="layui-breadcrumb">
-				  <a href="">首页</a>
-                  <a href="">用户管理</a>
+				  <a href="/rbac/index">首页</a>
+                  <a href="/admin/userManagement">用户管理</a>
 				  <a><cite>编辑用户</cite></a>
 				</span>
             </div>

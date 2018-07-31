@@ -1,6 +1,6 @@
 package com.rbac.application.action;
 
-import com.opensymphony.xwork2.ActionSupport;
+import com.rbac.application.action.core.RbacAction;
 import com.rbac.application.action.dto.SaveSiteAccessRqDto;
 import com.rbac.application.orm.Access;
 import com.rbac.application.orm.Role;
@@ -17,7 +17,7 @@ import java.util.List;
  * @auther ttm
  * @date 2018/7/25 0025
  **/
-public class RoleManagementAction extends ActionSupport {
+public class RoleManagementAction extends RbacAction {
 
     private static final Logger LOG = LoggerFactory.getLogger(RoleManagementAction.class);
 
@@ -46,6 +46,7 @@ public class RoleManagementAction extends ActionSupport {
      * @return
      */
     public String roleManagement() {
+        _execute();
         List<Role> roleList = roleService.findRoleList();
         setRoleList(roleList);
         return SUCCESS;
@@ -56,6 +57,7 @@ public class RoleManagementAction extends ActionSupport {
      * @return
      */
     public String createRole() {
+        _execute();
         return SUCCESS;
     }
 
@@ -87,6 +89,7 @@ public class RoleManagementAction extends ActionSupport {
      * @return
      */
     public String editRole() {
+        _execute();
         Role role = roleService.findRoleOne(getId());
         if (null == role) {
             addFieldError(ERROR_KEY, "编辑异常, 查询角色为空");
@@ -102,6 +105,7 @@ public class RoleManagementAction extends ActionSupport {
      * @return
      */
     public String siteAccess() {
+        _execute();
         Role role = roleService.findRoleOne(id);
         if (null == role) {
             addFieldError(ERROR_KEY, "编辑异常, 查询角色为空");

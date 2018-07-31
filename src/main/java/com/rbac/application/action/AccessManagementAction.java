@@ -1,7 +1,6 @@
 package com.rbac.application.action;
 
-import com.opensymphony.xwork2.ActionSupport;
-import com.rbac.application.action.dto.AccessManagementRsDto;
+import com.rbac.application.action.core.RbacAction;
 import com.rbac.application.action.dto.SaveAccessRsDto;
 import com.rbac.application.orm.Access;
 import com.rbac.application.service.AccessService;
@@ -13,7 +12,7 @@ import java.util.List;
  * @auther ttm
  * @date 2018/7/28 0028
  **/
-public class AccessManagementAction extends ActionSupport {
+public class AccessManagementAction extends RbacAction {
 
     private AccessService accessService = new AccessService();
 
@@ -28,12 +27,14 @@ public class AccessManagementAction extends ActionSupport {
     private static final String ERROR_KEY = "error";
 
     public String accessManagement() {
+        _execute();
         List<Access> accessList = accessService.findAccessAllList();
         setAccessList(accessList);
         return SUCCESS;
     }
 
     public String createAccess() {
+        _execute();
         return SUCCESS;
     }
 
@@ -64,6 +65,7 @@ public class AccessManagementAction extends ActionSupport {
     }
 
     public String editAccess() {
+        _execute();
         SaveAccessRsDto findAccessRsDto = accessService.findAccessRsDtoOne(id);
         if (null == findAccessRsDto) {
             addFieldError(ERROR_KEY, "编辑异常, 查询权限为空");

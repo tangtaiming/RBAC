@@ -3,8 +3,8 @@
     <ul class="layui-nav layui-layout-right">
         <li class="layui-nav-item">
             <a href="javascript:;">
-                <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                贤心
+                <img src="/design/static/images/avatar/user2-160x160.jpg" class="layui-nav-img">
+                ${loginName!'未知'}
             </a>
             <dl class="layui-nav-child">
                 <dd><a href="">基本资料</a></dd>

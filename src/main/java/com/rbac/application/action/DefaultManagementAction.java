@@ -1,6 +1,6 @@
 package com.rbac.application.action;
 
-import com.opensymphony.xwork2.ActionSupport;
+import com.rbac.application.action.core.RbacAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * @auther ttm
  * @date 2018/7/24
  */
-public class DefaultManagementAction extends ActionSupport {
+public class DefaultManagementAction extends RbacAction {
 
     private static Logger LOG = LoggerFactory.getLogger(DefaultManagementAction.class);
 
@@ -17,6 +17,7 @@ public class DefaultManagementAction extends ActionSupport {
      * @return
      */
     public String index() {
+        _execute();
         LOG.info("默认首页 Index...");
         return SUCCESS;
     }

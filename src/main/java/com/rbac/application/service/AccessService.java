@@ -88,11 +88,25 @@ public class AccessService {
             SaveAccessRsDto accessRsDto = new SaveAccessRsDto();
             accessRsDto.setId(access.getId());
             accessRsDto.setTitle(access.getTitle());
-            accessRsDto.setUrls(access.getUrls());
+            accessRsDto.setUrls(parseUrls(access.getUrls()));
             return accessRsDto;
         }
 
         return null;
+    }
+
+    private String parseUrls(String urls) {
+        List<String> urlList = (List<String>) JsonUtils.fromJson(urls, List.class);
+        String url = "";
+        for (int x = 0; x < urlList.size(); x++) {
+            if (urlList.size() == (x + 1)) {
+                url += urlList.get(x);
+            } else {
+                url += urlList.get(x) + ",";
+            }
+        }
+
+        return url;
     }
 
     public Access findAccessByTitle(String title) {

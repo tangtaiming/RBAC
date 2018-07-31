@@ -1,6 +1,6 @@
 package com.rbac.application.action;
 
-import com.opensymphony.xwork2.ActionSupport;
+import com.rbac.application.action.core.RbacAction;
 import com.rbac.application.action.dto.EditUserRsDto;
 import com.rbac.application.action.dto.RoleDto;
 import com.rbac.application.action.dto.UserDto;
@@ -22,7 +22,7 @@ import java.util.List;
  * @auther ttm
  * @date 2018/7/24
  */
-public class UserManagementAction extends ActionSupport {
+public class UserManagementAction extends RbacAction {
 
     private final static Logger LOG = LoggerFactory.getLogger(UserManagementAction.class);
 
@@ -50,6 +50,7 @@ public class UserManagementAction extends ActionSupport {
     private String name;
 
     public String userManagement() {
+        _execute();
         LOG.info("User management {}...", System.currentTimeMillis());
         List<User> userList = userService.findUserList();
         setUserList(userList);
@@ -110,6 +111,7 @@ public class UserManagementAction extends ActionSupport {
     }
 
     public String createUser() {
+        _execute();
         user = new UserDto();
         List<RoleDto> roles = roleService.findRoleDtoList();
         user.setRoles(roles);
@@ -142,6 +144,7 @@ public class UserManagementAction extends ActionSupport {
     }
 
     public String editUser() {
+        _execute();
         UserDto user = userService.findStaticUserDtoOne(getId());
         if (null == user) {
             addFieldError(ERROR_KEY, "编辑异常, 查询用户为空");
