@@ -43,3 +43,13 @@ CREATE TABLE IF NOT EXISTS `test`.`rbac_role_access` (
   `create_date` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
+
+CREATE TABLE `orm_country` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `name_en` varchar(100) NOT NULL,
+  `abbreviation` varchar(4) NOT NULL,
+  `three_abbreviation` varchar(6) NOT NULL,
+  `create_date` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=250 DEFAULT CHARSET=utf8;
