@@ -2,6 +2,7 @@ package com.rbac.application.service;
 
 import com.rbac.application.action.dto.RoleDto;
 import com.rbac.application.action.dto.SaveSiteAccessRqDto;
+import com.rbac.application.action.vo.CreateUserRsVo;
 import com.rbac.application.dao.RoleAccessDao;
 import com.rbac.application.dao.RoleDao;
 import com.rbac.application.orm.Role;
@@ -74,6 +75,12 @@ public class RoleService {
         return role;
     }
 
+    public CreateUserRsVo findCreateUserRsVoList() {
+        CreateUserRsVo createUserRsVo = new CreateUserRsVo();
+        return createUserRsVo;
+    }
+
+    @Deprecated
     public List<RoleDto> findRoleDtoList() {
         List<RoleDto> roleDtoList = new ArrayList<>();
         List<Role> roleList = findRoleList();

@@ -61,8 +61,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <#if userList??>
-                            <#list userList as user>
+                        <#if userRsVo??>
+                            <#list userRsVo as user>
                                 <tr>
                                     <td class="layui-table-td">
                                         <div class="layui-table-cell">${user["name"]}</div></td>

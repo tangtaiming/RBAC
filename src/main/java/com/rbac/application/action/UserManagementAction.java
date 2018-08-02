@@ -5,6 +5,7 @@ import com.rbac.application.action.dto.EditUserRsDto;
 import com.rbac.application.action.dto.RoleDto;
 import com.rbac.application.action.dto.UserDto;
 import com.rbac.application.action.dto.UserRsDto;
+import com.rbac.application.action.vo.UserManagementRsVo;
 import com.rbac.application.orm.User;
 import com.rbac.application.service.RoleService;
 import com.rbac.application.service.UserService;
@@ -44,16 +45,17 @@ public class UserManagementAction extends RbacAction {
 
     private EditUserRsDto editUserRsDto;
 
+    private List<UserManagementRsVo> userRsVo;
+
+
     /**
-     * 用户name
+     * 用户列表
      */
     private String name;
 
     public String userManagement() {
         _execute();
-        LOG.info("User management {}...", System.currentTimeMillis());
-        List<User> userList = userService.findUserList();
-        setUserList(userList);
+        userRsVo = userService.findUserManagementRsVo();
         return SUCCESS;
     }
 
@@ -212,5 +214,13 @@ public class UserManagementAction extends RbacAction {
 
     public void setEditUserRsDto(EditUserRsDto editUserRsDto) {
         this.editUserRsDto = editUserRsDto;
+    }
+
+    public List<UserManagementRsVo> getUserRsVo() {
+        return userRsVo;
+    }
+
+    public void setUserRsVo(List<UserManagementRsVo> userRsVo) {
+        this.userRsVo = userRsVo;
     }
 }

@@ -1,7 +1,9 @@
 package com.rbac.application.service;
 
 import com.rbac.application.action.dto.UserDto;
+import com.rbac.application.action.dto.UserManagementRsDto;
 import com.rbac.application.action.dto.UserRsDto;
+import com.rbac.application.action.vo.UserManagementRsVo;
 import com.rbac.application.dao.UserDao;
 import com.rbac.application.dao.UserRoleDao;
 import com.rbac.application.orm.User;
@@ -62,6 +64,23 @@ public class UserService {
      */
     public List<User> findUserList() {
         return userDao.findAllList();
+    }
+
+    /**
+     * 获取所有用户信息
+     * @return
+     */
+    public List<UserManagementRsVo> findUserManagementRsVo() {
+        List<User> userList = userDao.findAllList();
+        List<UserManagementRsVo> userManagementRsVoList = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(userList)) {
+            for (User user : userList) {
+                UserManagementRsVo userRsDto = new UserManagementRsVo(user);
+                userManagementRsVoList.add(userRsDto);
+            }
+        }
+
+        return userManagementRsVoList;
     }
 
     public boolean saveUser(UserRsDto user) {
