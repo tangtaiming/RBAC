@@ -13,16 +13,15 @@
 <#include "core/layui-side.ftl" />
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;">
-            <div class="layui-row">
+        <div class="layui-management-container">
+            <div class="layui-card layadmin-header">
 				<span class="layui-breadcrumb">
 				  <a href="">首页</a>
 				  <a><cite>权限管理</cite></a>
 				</span>
             </div>
-            <hr>
             <div class="layui-row">
-                <div class="layui-btn-group">
+                <div class="layui-btn-group layui-padding-px">
                     <a class="layui-btn layui-btn-sm" href="/admin/createAccess">
                         <i class="layui-icon">&#xe654;</i>新增权限
                     </a>
@@ -34,7 +33,8 @@
                     </a>
                 </div>
             </div>
-            <div class="layui-form layui-border-box layui-table-view">
+            <div class="layui-padding-px">
+                <div class="layui-form layui-border-box layui-table-view">
                 <div class="layui-table-body layui-table-main">
                     <table cellspacing="0" cellpadding="0" border="0" class="layui-table" lay-size="sm">
                         <thead>
@@ -110,6 +110,7 @@
                     </div>
                 </div><!--  layui-table-tool -->
             </div><!-- layui-form layui-border-box layui-table-view -->
+            </div>
         </div>
     </div>
 <#include "core/layui-footer.ftl"/>
