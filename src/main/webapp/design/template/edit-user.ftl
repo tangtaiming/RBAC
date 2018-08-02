@@ -48,7 +48,8 @@
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">角色:</label>
-                            <div class="layui-input-block">
+                            <div class="layui-input-inline layui-input-inline-other">
+                                <div class="checkbox">
                                 <#list editUserRsDto['allRoleDto'] as role>
                                 <#assign chonsen='' />
                                 <#list editUserRsDto['chosenRole'] as chosenRole>
@@ -57,8 +58,9 @@
                                         <#break>
                                     </#if>
                                 </#list>
-                                    <input type="checkbox" ${chonsen} name="userRs.roles" value="${role['id']!''}"/>${role['name']!''}&nbsp;&nbsp;
+                                    <label><input type="checkbox" ${chonsen} name="userRs.roles" value="${role['id']!''}"/>${role['name']!''}</label>
                                 </#list>
+                                </div>
                             </div>
                         </div>
                         <div class="layui-form-item">

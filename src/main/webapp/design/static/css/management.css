@@ -22,7 +22,7 @@
 .layadmin-header {
     height: 50px;
     line-height: 50px;
-    margin-bottom: 0;
+    margin-bottom: 10px;
     border-radius: 0;
 }
 .layui-card {
@@ -46,14 +46,6 @@
     width: 600px;
 }
 
-
-.layui-form input[type=checkbox], .layui-form input[type=radio], .layui-form select {
-    display: inline-block;
-}
-
-.layui-form input[type=checkbox], .layui-form input[type=radio], .layui-form select {
-    display: inline-block;
-}
 .checkbox, .radio {
     position: relative;
     display: block;
@@ -83,6 +75,9 @@
 .layui-table-view .layui-table {
     width:100%;
 }
+.layui-input,.layui-select,.layui-textarea {
+    height: 28px;
+}
 .layui-date-label {
     display: block;
     line-height: 28px;
@@ -110,4 +105,10 @@
     height: auto;
     line-height: normal;
     padding: 0px;
+}
+.layui-row .layui-padding-px {
+    padding: 0 15px;
+}
+.layui-management-container .layui-padding-px {
+    padding: 0 15px;
 }

@@ -21,7 +21,7 @@
 				  <a><cite>创建用户</cite></a>
 				</span>
             </div>
-            <div class="layui-fluid">
+            <div class="layui-row">
                 <div class="layui-col-md8">
                     <form id="form-user" class="layui-form" action="">
                         <div class="layui-form-item">
@@ -48,10 +48,12 @@
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">角色:</label>
-                            <div class="layui-input-block">
-                                <#list user['roles'] as role>
-                                    <input type="checkbox" name="userRs.roles" lay-ignore value="${role['id']!''}"/>${role['name']!''}&nbsp;
-                                </#list>
+                            <div class="layui-input-inline layui-input-inline-other">
+                               <div class="checkbox">
+                                    <#list user['roles'] as role>
+                                        <label><input type="checkbox" name="userRs.roles" lay-ignore value="${role['id']!''}"/>${role['name']!''}</label>
+                                    </#list>
+                                </div>
                             </div>
                         </div>
                         <div class="layui-form-item">

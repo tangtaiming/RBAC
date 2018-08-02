@@ -26,8 +26,8 @@
                     <form id="site-access-form" class="layui-form" action="">
                         <div class="layui-form-item">
                             <label class="layui-form-label">权限:</label>
-                            <div class="layui-input-block">
-                                <div class="layui-col-md7">
+                            <div class="layui-input-inline layui-input-inline-other">
+                                <div class="checkbox">
                                     <#list accessList as access>
                                         <#assign chonsen = ''/>
                                         <#list roleAccessList as chonsenAccess>
@@ -36,7 +36,9 @@
                                                 <#break>
                                             </#if>
                                         </#list>
-                                        <input type="checkbox" ${chonsen} name="siteAccessRqDto.accessId" value="${access['id']}" />${access['title']}
+                                        <label>
+                                            <input type="checkbox" ${chonsen} name="siteAccessRqDto.accessId" value="${access['id']}" />${access['title']}
+                                        </label>
                                     </#list>
                                 </div>
                                 <div class="layui-col-md5">

@@ -21,7 +21,7 @@
 				  <a><cite>编辑权限</cite></a>
 				</span>
             </div>
-            <div class="layui-fluid">
+            <div class="layui-row">
                 <div class="layui-col-md8">
                     <form id="access-form" class="layui-form" action="">
                         <div class="layui-form-item">
