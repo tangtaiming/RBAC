@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>RBAC - 后台管理系统 - 设置${role['name']}权限</title>
+    <title>RBAC - 后台管理系统 - 设置${siteAccessRsVo['name']}权限</title>
     <link rel="stylesheet" href="/design/static/plugins/layui/css/layui.css">
     <link rel="stylesheet" href="/design/static/css/admin.css">
 </head>
@@ -18,7 +18,7 @@
 				<span class="layui-breadcrumb">
 				  <a href="/rbac/index">首页</a>
                   <a href="/admin/roleManagement">角色管理</a>
-				  <a><cite>设置${role['name']}权限</cite></a>
+				  <a><cite>设置${siteAccessRsVo['name']}权限</cite></a>
 				</span>
             </div>
             <div class="layui-fluid">
@@ -28,16 +28,16 @@
                             <label class="layui-form-label">权限:</label>
                             <div class="layui-input-inline layui-input-inline-other">
                                 <div class="checkbox">
-                                    <#list accessList as access>
+                                    <#list siteAccessRsVo['accessList'] as access>
                                         <#assign chonsen = ''/>
-                                        <#list roleAccessList as chonsenAccess>
-                                            <#if access['id']==chonsenAccess['accessId']>
+                                        <#list siteAccessRsVo['chosenAccess'] as chonsenAccess>
+                                            <#if access['id']==chonsenAccess>
                                                 <#assign chonsen='checked="checked"' />
                                                 <#break>
                                             </#if>
                                         </#list>
                                         <label>
-                                            <input type="checkbox" ${chonsen} name="siteAccessRqDto.accessId" value="${access['id']}" />${access['title']}
+                                            <input type="checkbox" ${chonsen} name="saveSiteAccessReVo.accessId" value="${access['id']}" />${access['title']}
                                         </label>
                                     </#list>
                                 </div>
@@ -48,9 +48,9 @@
                         </div>
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <#assign roleId = role['id']/>
+                                <#assign roleId = siteAccessRsVo['id']/>
                                 <#if roleId??>
-                                    <input type="hidden" name="siteAccessRqDto.roleId" value="${role['id']}"/>
+                                    <input type="hidden" name="saveSiteAccessReVo.roleId" value="${roleId}"/>
                                 </#if>
                                 <input type="button" id="site-access-save" class="layui-btn" value="立即提交"/>
                                 <input type="reset" class="layui-btn layui-btn-primary" value="重置"/>

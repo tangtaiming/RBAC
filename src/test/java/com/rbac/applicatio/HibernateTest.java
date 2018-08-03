@@ -1,6 +1,5 @@
 package com.rbac.applicatio;
 
-import com.rbac.application.action.dto.UserRsDto;
 import com.rbac.application.dao.RoleDao;
 import com.rbac.application.orm.Role;
 import com.rbac.application.service.UserService;
@@ -57,11 +56,11 @@ public class HibernateTest {
 
 //    @Test
     public void saveUser() {
-        UserRsDto user = new UserRsDto();
-        user.setName("xiaoming");
-        user.setEmail("1252575758@qq.com");
-        UserService userService = new UserService();
-        userService.saveUser(user);
+//        UserReDto user = new UserReDto();
+//        user.setName("xiaoming");
+//        user.setEmail("1252575758@qq.com");
+//        UserService userService = new UserService();
+//        userService.saveUser(user);
     }
 
     @Test

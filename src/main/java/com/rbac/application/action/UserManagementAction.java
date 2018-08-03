@@ -1,11 +1,11 @@
 package com.rbac.application.action;
 
 import com.rbac.application.action.core.RbacAction;
-import com.rbac.application.action.dto.EditUserRsDto;
-import com.rbac.application.action.dto.RoleDto;
-import com.rbac.application.action.dto.UserDto;
-import com.rbac.application.action.dto.UserRsDto;
+import com.rbac.application.action.vo.CreateUserRsVo;
+import com.rbac.application.action.vo.EditUserRsVo;
+import com.rbac.application.action.vo.SaveUserReVo;
 import com.rbac.application.action.vo.UserManagementRsVo;
+import com.rbac.application.orm.Role;
 import com.rbac.application.orm.User;
 import com.rbac.application.service.RoleService;
 import com.rbac.application.service.UserService;
@@ -33,20 +33,17 @@ public class UserManagementAction extends RbacAction {
 
     private static final String ERROR_KEY = "error";
 
-    private List<User> userList;
-
-    private UserDto user;
-
-    private UserRsDto userRs;
-
     private Integer id;
 
     private String result;
 
-    private EditUserRsDto editUserRsDto;
-
     private List<UserManagementRsVo> userRsVo;
 
+    private CreateUserRsVo createUserRsVo;
+
+    private EditUserRsVo editUserRsVo;
+
+    private SaveUserReVo userReVo;
 
     /**
      * 用户列表
@@ -114,24 +111,23 @@ public class UserManagementAction extends RbacAction {
 
     public String createUser() {
         _execute();
-        user = new UserDto();
-        List<RoleDto> roles = roleService.findRoleDtoList();
-        user.setRoles(roles);
+        List<Role> roleList = roleService.findRoleList();
+        createUserRsVo = new CreateUserRsVo(roleList);
         return SUCCESS;
     }
 
-    public void validateSaveUser() {
-        if (StringUtils.isEmpty(userRs.getName())) {
+    public void validateSaveUserSaveUser() {
+        if (StringUtils.isEmpty(userReVo.getName())) {
             addFieldError(ERROR_KEY, "保存用户名称不能为空");
             return;
         }
-        if (StringUtils.isEmpty(userRs.getEmail())) {
+        if (StringUtils.isEmpty(userReVo.getEmail())) {
             addFieldError(ERROR_KEY, "保存用户邮箱不能为空");
             return;
         }
 
-        if (null == userRs.getId()) {
-            User findUser = userService.findUserByName(userRs.getName());
+        if (null == userReVo.getId()) {
+            User findUser = userService.findUserByName(userReVo.getName());
             if (null != findUser) {
                 addFieldError(ERROR_KEY, "保存用户名称已经存在，请进行数据修改!");
                 return;
@@ -140,23 +136,22 @@ public class UserManagementAction extends RbacAction {
     }
 
     public String saveUser() {
-        userService.saveUser(userRs);
+        userService.saveUser(userReVo);
         setResult("success");
         return SUCCESS;
     }
 
     public String editUser() {
         _execute();
-        UserDto user = userService.findStaticUserDtoOne(getId());
+        User user = userService.findUserOne(getId());
         if (null == user) {
             addFieldError(ERROR_KEY, "编辑异常, 查询用户为空");
             return INPUT;
         }
 
-        List<RoleDto> roles = roleService.findRoleDtoList();
+        List<Role> roleList = roleService.findRoleList();
         List<Integer> chosenRoleList = userService.findUserChosenRole(user.getId());
-        EditUserRsDto editUserRsDto = new EditUserRsDto(user, roles, chosenRoleList);
-        setEditUserRsDto(editUserRsDto);
+        editUserRsVo = new EditUserRsVo(user, roleList, chosenRoleList);
         return SUCCESS;
     }
 
@@ -166,22 +161,6 @@ public class UserManagementAction extends RbacAction {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<User> getUserList() {
-        return userList;
-    }
-
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
-    }
-
-    public UserDto getUser() {
-        return user;
-    }
-
-    public void setUser(UserDto user) {
-        this.user = user;
     }
 
     public Integer getId() {
@@ -200,27 +179,35 @@ public class UserManagementAction extends RbacAction {
         this.result = result;
     }
 
-    public UserRsDto getUserRs() {
-        return userRs;
-    }
-
-    public void setUserRs(UserRsDto userRs) {
-        this.userRs = userRs;
-    }
-
-    public EditUserRsDto getEditUserRsDto() {
-        return editUserRsDto;
-    }
-
-    public void setEditUserRsDto(EditUserRsDto editUserRsDto) {
-        this.editUserRsDto = editUserRsDto;
-    }
-
     public List<UserManagementRsVo> getUserRsVo() {
         return userRsVo;
     }
 
     public void setUserRsVo(List<UserManagementRsVo> userRsVo) {
         this.userRsVo = userRsVo;
+    }
+
+    public CreateUserRsVo getCreateUserRsVo() {
+        return createUserRsVo;
+    }
+
+    public void setCreateUserRsVo(CreateUserRsVo createUserRsVo) {
+        this.createUserRsVo = createUserRsVo;
+    }
+
+    public EditUserRsVo getEditUserRsVo() {
+        return editUserRsVo;
+    }
+
+    public void setEditUserRsVo(EditUserRsVo editUserRsVo) {
+        this.editUserRsVo = editUserRsVo;
+    }
+
+    public SaveUserReVo getUserReVo() {
+        return userReVo;
+    }
+
+    public void setUserReVo(SaveUserReVo userReVo) {
+        this.userReVo = userReVo;
     }
 }

@@ -2,6 +2,7 @@ package com.rbac.application.action;
 
 import com.rbac.application.action.core.RbacAction;
 import com.rbac.application.action.dto.SaveSiteAccessRqDto;
+import com.rbac.application.action.vo.*;
 import com.rbac.application.orm.Access;
 import com.rbac.application.orm.Role;
 import com.rbac.application.orm.RoleAccess;
@@ -29,8 +30,6 @@ public class RoleManagementAction extends RbacAction {
 
     private List<Access> accessList;
 
-    private Role role;
-
     private String result;
 
     private Integer id;
@@ -41,14 +40,23 @@ public class RoleManagementAction extends RbacAction {
 
     private List<RoleAccess> roleAccessList;
 
+    private List<RoleManagementRsVo> roleRsVo;
+
+    private EditRoleRsVo editRoleRsVo;
+
+    private SaveRoleReVo saveRoleReVo;
+
+    private SiteAccessRsVo siteAccessRsVo;
+
+    private SaveSiteAccessReVo saveSiteAccessReVo;
+
     /**
      * 角色管理
      * @return
      */
     public String roleManagement() {
         _execute();
-        List<Role> roleList = roleService.findRoleList();
-        setRoleList(roleList);
+        roleRsVo = roleService.findRoleManagementRsVo();
         return SUCCESS;
     }
 
@@ -65,12 +73,12 @@ public class RoleManagementAction extends RbacAction {
      * 验证数据
      */
     public void validateSaveRole() {
-        if (StringUtils.isEmpty(role.getName())) {
+        if (StringUtils.isEmpty(saveRoleReVo.getName())) {
             addFieldError(ERROR_KEY, "角色名称不能为空");
             return;
         }
 
-        Role findRole = roleService.findRoleByName(role.getName());
+        Role findRole = roleService.findRoleByName(saveRoleReVo.getName());
         if (null != findRole) {
             addFieldError(ERROR_KEY, "角色名称已经存在, 保存失败");
             return;
@@ -78,8 +86,8 @@ public class RoleManagementAction extends RbacAction {
     }
 
     public String saveRole() {
-        LOG.info("Save role show: " + role.toString());
-        roleService.saveRole(role);
+        LOG.info("Save role show: " + saveRoleReVo.toString());
+        roleService.saveRole(saveRoleReVo);
         setResult("success");
         return SUCCESS;
     }
@@ -96,7 +104,7 @@ public class RoleManagementAction extends RbacAction {
             return INPUT;
         }
 
-        setRole(role);
+        editRoleRsVo = new EditRoleRsVo(role);
         return SUCCESS;
     }
 
@@ -111,18 +119,17 @@ public class RoleManagementAction extends RbacAction {
             addFieldError(ERROR_KEY, "编辑异常, 查询角色为空");
             return INPUT;
         }
-        setRole(role);
+
         //循环获取所有权限列表
         List<Access> accessList = accessService.findAccessAllList();
-        //根据角色查询角色对于权限
+        //根据角色查询角色对应权限
         List<RoleAccess> roleAccessList = roleService.findRoleAccessByRoleId(role.getId());
-        setAccessList(accessList);
-        setRoleAccessList(roleAccessList);
+        siteAccessRsVo = new SiteAccessRsVo(role, accessList, roleAccessList);
         return SUCCESS;
     }
 
     public String saveSiteAccess() {
-        roleService.saveSiteAccess(siteAccessRqDto);
+        roleService.saveSiteAccess(saveSiteAccessReVo);
         setResult("success");
         return SUCCESS;
     }
@@ -133,14 +140,6 @@ public class RoleManagementAction extends RbacAction {
 
     public void setRoleList(List<Role> roleList) {
         this.roleList = roleList;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
     public String getResult() {
@@ -181,5 +180,45 @@ public class RoleManagementAction extends RbacAction {
 
     public void setRoleAccessList(List<RoleAccess> roleAccessList) {
         this.roleAccessList = roleAccessList;
+    }
+
+    public List<RoleManagementRsVo> getRoleRsVo() {
+        return roleRsVo;
+    }
+
+    public void setRoleRsVo(List<RoleManagementRsVo> roleRsVo) {
+        this.roleRsVo = roleRsVo;
+    }
+
+    public EditRoleRsVo getEditRoleRsVo() {
+        return editRoleRsVo;
+    }
+
+    public void setEditRoleRsVo(EditRoleRsVo editRoleRsVo) {
+        this.editRoleRsVo = editRoleRsVo;
+    }
+
+    public SaveRoleReVo getSaveRoleReVo() {
+        return saveRoleReVo;
+    }
+
+    public void setSaveRoleReVo(SaveRoleReVo saveRoleReVo) {
+        this.saveRoleReVo = saveRoleReVo;
+    }
+
+    public SiteAccessRsVo getSiteAccessRsVo() {
+        return siteAccessRsVo;
+    }
+
+    public void setSiteAccessRsVo(SiteAccessRsVo siteAccessRsVo) {
+        this.siteAccessRsVo = siteAccessRsVo;
+    }
+
+    public SaveSiteAccessReVo getSaveSiteAccessReVo() {
+        return saveSiteAccessReVo;
+    }
+
+    public void setSaveSiteAccessReVo(SaveSiteAccessReVo saveSiteAccessReVo) {
+        this.saveSiteAccessReVo = saveSiteAccessReVo;
     }
 }

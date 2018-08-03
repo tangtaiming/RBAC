@@ -28,7 +28,7 @@
                             <label class="layui-form-label">名称:</label>
                             <div class="layui-input-block">
                                 <div class="layui-col-md7">
-                                    <input type="text" name="userRs.name" required  lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
+                                    <input type="text" name="userReVo.name" required  lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
                                 </div>
                                 <div class="layui-col-md5">
                                     <div style="margin-left:10px;" class="layui-form-mid layui-word-aux"></div>
@@ -39,7 +39,7 @@
                             <label class="layui-form-label">邮箱:</label>
                             <div class="layui-input-block">
                                 <div class="layui-col-md7">
-                                    <input type="text" name="userRs.email" required lay-verify="required" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+                                    <input type="text" name="userReVo.email" required lay-verify="required" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
                                 </div>
                                 <div class="layui-col-md5">
                                     <div style="margin-left:10px;" class="layui-form-mid layui-word-aux"></div>
@@ -50,9 +50,11 @@
                             <label class="layui-form-label">角色:</label>
                             <div class="layui-input-inline layui-input-inline-other">
                                <div class="checkbox">
-                                    <#list user['roles'] as role>
-                                        <label><input type="checkbox" name="userRs.roles" lay-ignore value="${role['id']!''}"/>${role['name']!''}</label>
-                                    </#list>
+                                   <#if createUserRsVo??>
+                                       <#list createUserRsVo['roleList'] as role>
+                                           <label><input type="checkbox" name="userReVo.roles" lay-ignore value="${role['id']!''}"/>${role['name']!''}</label>
+                                       </#list>
+                                   </#if>
                                 </div>
                             </div>
                         </div>

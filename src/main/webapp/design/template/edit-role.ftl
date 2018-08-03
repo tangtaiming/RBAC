@@ -28,7 +28,7 @@
                             <label class="layui-form-label">角色名称:</label>
                             <div class="layui-input-block">
                                 <div class="layui-col-md7">
-                                    <input type="text" name="role.name" value="${role['name']}" required  lay-verify="required" placeholder="请输入角色名称" autocomplete="off" class="layui-input">
+                                    <input type="text" name="role.name" value="${editRoleRsVo['name']}" required  lay-verify="required" placeholder="请输入角色名称" autocomplete="off" class="layui-input">
                                 </div>
                                 <div class="layui-col-md5">
                                     <div style="margin-left:10px;" class="layui-form-mid layui-word-aux"></div>
@@ -37,7 +37,7 @@
                         </div>
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <#assign roleId = role['id']/>
+                                <#assign roleId = editRoleRsVo['id']/>
                                 <#if roleId??>
                                     <input type="hidden" name="role.id" value="${roleId}"/>
                                 </#if>

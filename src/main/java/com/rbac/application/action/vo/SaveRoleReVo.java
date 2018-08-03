@@ -1,17 +1,13 @@
-package com.rbac.application.action.dto;
+package com.rbac.application.action.vo;
 
 /**
  * @auther ttm
- * @date 2018/7/26 0026
- **/
-@Deprecated
-public class RoleDto {
+ * @date 2018/8/3
+ */
+public class SaveRoleReVo {
 
     private Integer id;
 
-    /**
-     * 角色名称
-     */
     private String name;
 
     public Integer getId() {

@@ -40,7 +40,7 @@
                             <tr>
                                 <th class="layui-col-bottom">
                                     <div class="layui-table-cell"><b>角色名称</b></div></th>
-                                <th class="layui-col-bottom" style="width: 6%;">
+                                <th class="layui-col-bottom" style="width: 12%;">
                                     <div class="layui-table-cell"><b>操作</b></div></th>
                             </tr>
                             <tr id="model-search">
@@ -53,15 +53,19 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <#if roleList??>
-                                <#list roleList as role>
+                            <#if roleRsVo??>
+                                <#list roleRsVo as role>
                                 <tr>
                                     <td class="layui-table-td">
                                         <div class="layui-table-cell">${role["name"]}</div></td>
                                     <td class="layui-table-td">
-                                        <a class="layui-btn layui-btn-xs" href="/admin/siteAccess?id=${role["id"]}">
+                                        <a class="layui-btn layui-btn-xs" href="/admin/editRole?id=${role["id"]}">
                                             <i class="layui-icon">&#xe642;</i>编辑
-                                        </a></td>
+                                        </a>
+                                        <a class="layui-btn layui-btn-xs" href="/admin/siteAccess?id=${role["id"]}">
+                                            <i class="layui-icon">&#xe642;</i>设置权限
+                                        </a>
+                                    </td>
                                 </tr>
                                 </#list>
                             </#if>

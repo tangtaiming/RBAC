@@ -1,8 +1,8 @@
 package com.rbac.application.service;
 
-import com.rbac.application.action.dto.RoleDto;
-import com.rbac.application.action.dto.SaveSiteAccessRqDto;
-import com.rbac.application.action.vo.CreateUserRsVo;
+import com.rbac.application.action.vo.RoleManagementRsVo;
+import com.rbac.application.action.vo.SaveRoleReVo;
+import com.rbac.application.action.vo.SaveSiteAccessReVo;
 import com.rbac.application.dao.RoleAccessDao;
 import com.rbac.application.dao.RoleDao;
 import com.rbac.application.orm.Role;
@@ -41,7 +41,7 @@ public class RoleService {
         return roleList;
     }
 
-    public boolean saveRole(Role role) {
+    public boolean saveRole(SaveRoleReVo role) {
         Integer roleId = role.getId();
         String format = "yyyy-MM-dd hh:mm:ss";
         String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(format));
@@ -54,10 +54,11 @@ public class RoleService {
                 return true;
             }
         } else {
-            role.setId((roleList.size() + 1));
-            role.setCreateDate(currentTime);
-            role.setUpdateDate(currentTime);
-            role.setStatus(1);
+            Role createRole = new Role();
+            createRole.setCreateDate(currentTime);
+            createRole.setUpdateDate(currentTime);
+            createRole.setStatus(1);
+            createRole.setName(role.getName());
             roleDao.save(role);
             return true;
         }
@@ -75,30 +76,10 @@ public class RoleService {
         return role;
     }
 
-    public CreateUserRsVo findCreateUserRsVoList() {
-        CreateUserRsVo createUserRsVo = new CreateUserRsVo();
-        return createUserRsVo;
-    }
-
-    @Deprecated
-    public List<RoleDto> findRoleDtoList() {
-        List<RoleDto> roleDtoList = new ArrayList<>();
-        List<Role> roleList = findRoleList();
-        if (CollectionUtils.isNotEmpty(roleList)) {
-            for (Role role : roleList) {
-                RoleDto createRoleDto = new RoleDto();
-                createRoleDto.setId(role.getId());
-                createRoleDto.setName(role.getName());
-                roleDtoList.add(createRoleDto);
-            }
-        }
-        return roleDtoList;
-    }
-
-    public boolean saveSiteAccess(SaveSiteAccessRqDto siteAccessRqDto) {
+    public boolean saveSiteAccess(SaveSiteAccessReVo siteAccessReVo) {
         //查询出对应这个角色的所有角色权限关系
-        Integer roleId = siteAccessRqDto.getRoleId();
-        List<Integer> newRoleAccessList = Optional.ofNullable(siteAccessRqDto.getAccessId()).orElse(new ArrayList<>());
+        Integer roleId = siteAccessReVo.getRoleId();
+        List<Integer> newRoleAccessList = Optional.ofNullable(siteAccessReVo.getAccessId()).orElse(new ArrayList<>());
         List<RoleAccess> roleAccessList = findRoleAccessByRoleId(roleId);
         List<Integer> oldRoleAccessList = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(roleAccessList)) {
@@ -126,6 +107,19 @@ public class RoleService {
             }
         }
         return true;
+    }
+
+    public List<RoleManagementRsVo> findRoleManagementRsVo() {
+        List<Role> roleList = roleDao.findAllList();
+        List<RoleManagementRsVo> roleRsVoList = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(roleList)) {
+            for (Role role : roleList) {
+                RoleManagementRsVo roleRsVo = new RoleManagementRsVo(role);
+                roleRsVoList.add(roleRsVo);
+            }
+        }
+
+        return roleRsVoList;
     }
 
     public List<RoleAccess> findRoleAccessByRoleId(Integer roleId) {

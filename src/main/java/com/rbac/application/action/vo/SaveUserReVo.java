@@ -1,12 +1,12 @@
-package com.rbac.application.action.dto;
+package com.rbac.application.action.vo;
 
 import java.util.List;
 
 /**
  * @auther ttm
- * @date 2018/7/27 0027
- **/
-public class UserRsDto {
+ * @date 2018/8/3
+ */
+public class SaveUserReVo {
 
     /**
      * id
@@ -60,13 +60,4 @@ public class UserRsDto {
         this.roles = roles;
     }
 
-    @Override
-    public String toString() {
-        return "UserRsDto{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", roles=" + roles +
-                '}';
-    }
 }

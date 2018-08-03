@@ -1,8 +1,6 @@
 package com.rbac.application.service;
 
-import com.rbac.application.action.dto.UserDto;
-import com.rbac.application.action.dto.UserManagementRsDto;
-import com.rbac.application.action.dto.UserRsDto;
+import com.rbac.application.action.vo.SaveUserReVo;
 import com.rbac.application.action.vo.UserManagementRsVo;
 import com.rbac.application.dao.UserDao;
 import com.rbac.application.dao.UserRoleDao;
@@ -27,30 +25,12 @@ public class UserService {
 
     private Logger LOG = LoggerFactory.getLogger(UserService.class);
 
-    private List<User> userList;
-
     private UserDao userDao = new UserDao(User.class);
 
     private UserRoleDao userRoleDao = new UserRoleDao(UserRole.class);
 
     public User findUserOne(Integer uid) {
         return userDao.findOne(uid);
-    }
-
-    public UserDto findStaticUserDtoOne(Integer uid) {
-        User userOne = findUserOne(uid);
-        if (null != userOne) {
-            Integer id = userOne.getId();
-            String email = userOne.getEmail();
-            String name = userOne.getName();
-            UserDto userDto = new UserDto();
-            userDto.setId(id);
-            userDto.setEmail(email);
-            userDto.setName(name);
-            return userDto;
-        }
-
-        return null;
     }
 
     public User findUserByName(String name) {
@@ -83,7 +63,7 @@ public class UserService {
         return userManagementRsVoList;
     }
 
-    public boolean saveUser(UserRsDto user) {
+    public boolean saveUser(SaveUserReVo user) {
         Integer userId = user.getId();
         String format = "yyyy-MM-dd hh:mm:ss";
         String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(format));
@@ -174,15 +154,15 @@ public class UserService {
      * @return
      */
     public List<Integer> findUserChosenRole(Integer userId) {
-        List<Integer> chosenDtoList = new ArrayList<>();
+        List<Integer> chosenVoList = new ArrayList<>();
         List<UserRole> findUserRoleList = findUserRoleByUserId(userId);
         if (CollectionUtils.isNotEmpty(findUserRoleList)) {
             for (UserRole userRole : findUserRoleList) {
-                chosenDtoList.add(userRole.getRoleId());
+                chosenVoList.add(userRole.getRoleId());
             }
         }
 
-        return chosenDtoList;
+        return chosenVoList;
     }
 
     public List<Integer> findUserRoleColumnRoleIdByUserId(Integer userId) {

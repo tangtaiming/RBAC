@@ -28,7 +28,7 @@
                             <label class="layui-form-label">名称:</label>
                             <div class="layui-input-block">
                                 <div class="layui-col-md7">
-                                    <input type="text" name="userRs.name" required value="${editUserRsDto['user']['name']!''}"   lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
+                                    <input type="text" name="userReVo.name" required value="${editUserRsVo['name']!''}"   lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
                                 </div>
                                 <div class="layui-col-md5">
                                     <div style="margin-left:10px;" class="layui-form-mid layui-word-aux"></div>
@@ -39,7 +39,7 @@
                             <label class="layui-form-label">邮箱:</label>
                             <div class="layui-input-block">
                                 <div class="layui-col-md7">
-                                    <input type="text" name="userRs.email" required value="${editUserRsDto['user']['email']!''}" lay-verify="required" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+                                    <input type="text" name="userReVo.email" required value="${editUserRsVo['email']!''}" lay-verify="required" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
                                 </div>
                                 <div class="layui-col-md5">
                                     <div style="margin-left:10px;" class="layui-form-mid layui-word-aux"></div>
@@ -50,24 +50,24 @@
                             <label class="layui-form-label">角色:</label>
                             <div class="layui-input-inline layui-input-inline-other">
                                 <div class="checkbox">
-                                <#list editUserRsDto['allRoleDto'] as role>
-                                <#assign chonsen='' />
-                                <#list editUserRsDto['chosenRole'] as chosenRole>
-                                    <#if chosenRole==role['id']!''>
-                                        <#assign chonsen='checked="checked"' />
-                                        <#break>
-                                    </#if>
-                                </#list>
-                                    <label><input type="checkbox" ${chonsen} name="userRs.roles" value="${role['id']!''}"/>${role['name']!''}</label>
+                                <#list editUserRsVo['roleList'] as role>
+                                    <#assign chonsen='' />
+                                    <#list editUserRsVo['chosenRole'] as chosenRole>
+                                        <#if chosenRole==role['id']!''>
+                                            <#assign chonsen='checked="checked"' />
+                                            <#break>
+                                        </#if>
+                                    </#list>
+                                    <label><input type="checkbox" ${chonsen} name="userReVo.roles" value="${role['id']!''}"/>${role['name']!''}</label>
                                 </#list>
                                 </div>
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <#assign userId = editUserRsDto['user']['id']/>
+                                <#assign userId = editUserRsVo['id']/>
                                 <#if userId??>
-                                    <input type="hidden" name="userRs.id" value="${userId}" />
+                                    <input type="hidden" name="userReVo.id" value="${userId}" />
                                 </#if>
                                 <input type="button" id="save-user" class="layui-btn" value="立即提交"/>
                                 <input type="reset" class="layui-btn layui-btn-primary" value="重置"/>
