@@ -72,13 +72,9 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         String contextPath = request.getContextPath();
         String method = request.getMethod();
         LOG.info("Show requestUri: {}, contextPath: {}, method: {}", requestUri, contextPath, method);
-        //用户时候是登录状态
-        if (!checkoutLoginStatus(request)) {
-            return LOGIN_PAGE;
-        }
         //判断对应的请求url 时候符合
-        if (!allowRequestUrl.contains(requestUri)) {
-            return ERROR_PAGE;
+        if (!allowRequestUrl.contains(requestUri) && !checkoutLoginStatus(request)) {
+            return LOGIN_PAGE;
         }
         //判断是否拥有对应链接权限
         if (!checkPrivilege(requestUri)) {
