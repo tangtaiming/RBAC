@@ -55,10 +55,12 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         allowRequestUrl = new ArrayList<>();
         allowRequestUrl.add("/admin/vlogin");
         allowRequestUrl.add("/admin/signOut");
+        allowRequestUrl.add("/admin/login");
 
         ignoreRequestUrl = new ArrayList<>();
         ignoreRequestUrl.add("/admin/vlogin");
         ignoreRequestUrl.add("/admin/signOut");
+        ignoreRequestUrl.add("/admin/login");
     }
 
     @Override

@@ -57,6 +57,14 @@ public class UserManagementAction extends RbacAction {
     }
 
     /**
+     * 用户登录
+     * @return
+     */
+    public String login() {
+        return SUCCESS;
+    }
+
+    /**
      * 伪登录
      * @return
      */

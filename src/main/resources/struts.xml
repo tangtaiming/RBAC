@@ -20,6 +20,8 @@
             </interceptor-stack>
         </interceptors>
         <default-interceptor-ref name="mydefault"></default-interceptor-ref>
+
+        <default-action-ref name="index"/>
         <global-results>
             <result name="index" type="redirect">/admin/index</result>
             <result name="error">/design/template/error.ftl</result>

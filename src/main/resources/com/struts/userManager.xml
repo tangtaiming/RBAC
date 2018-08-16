@@ -27,5 +27,10 @@
             <result name="success">/design/template/edit-user.ftl</result>
             <result name="input">/design/template/fail.ftl</result>
         </action>
+
+        <action name="login" class="com.rbac.application.action.UserManagementAction" method="login">
+            <result name="success">/design/template/login.ftl</result>
+            <result name="input">/design/template/vlogin-fail.ftl</result>
+        </action>
     </package>
 </struts>
