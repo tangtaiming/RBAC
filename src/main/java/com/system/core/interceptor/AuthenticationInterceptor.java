@@ -34,6 +34,8 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
 
     private final static String ERROR_PAGE = "error";
 
+    private final static String LOGIN_PAGE = "login";
+
     private UserService userService = new UserService();
 
     private RoleService roleService = new RoleService();
@@ -70,11 +72,14 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         String contextPath = request.getContextPath();
         String method = request.getMethod();
         LOG.info("Show requestUri: {}, contextPath: {}, method: {}", requestUri, contextPath, method);
-        //判断对应的请求url 时候符合 并且 用户时候是登录状态
-        if (!allowRequestUrl.contains(requestUri) && !checkoutLoginStatus(request)) {
+        //用户时候是登录状态
+        if (!checkoutLoginStatus(request)) {
+            return LOGIN_PAGE;
+        }
+        //判断对应的请求url 时候符合
+        if (!allowRequestUrl.contains(requestUri)) {
             return ERROR_PAGE;
         }
-
         //判断是否拥有对应链接权限
         if (!checkPrivilege(requestUri)) {
             return ERROR_PAGE;

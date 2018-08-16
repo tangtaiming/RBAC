@@ -21,25 +21,17 @@
         </interceptors>
         <default-interceptor-ref name="mydefault"></default-interceptor-ref>
 
-        <default-action-ref name="index"/>
+        <default-action-ref name="index" />
         <global-results>
             <result name="index" type="redirect">/admin/index</result>
             <result name="error">/design/template/error.ftl</result>
+            <result name="login" type="redirect">/admin/login</result>
         </global-results>
-        <!--<global-results>-->
-            <!--<result name="login" type="redirect">-->
-                <!--/authenticate/LoginForm-->
-            <!--</result>-->
-            <!--<result name="home" type="redirect">-->
-                <!--/myerp/home-->
-            <!--</result>-->
-            <!--<result name="error">/design/template/page/error.ftl</result>-->
-            <!--<result name="ignore">/design/template/page/ignore.ftl</result>-->
-            <!--<result name="timeout">/design/template/page/timeout.ftl</result>-->
-            <!--<result name="denied" type="redirect">-->
-                <!--/authenticate/denied-->
-            <!--</result>-->
-        <!--</global-results>-->
+
+        <action name="index" class="com.rbac.application.action.DefaultManagementAction"
+                method="index">
+            <result name="success">/design/template/index.ftl</result>
+        </action>
     </package>
 
     <include file="com/struts/*/*/*.xml"/>
