@@ -1,75 +1,97 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>layuiAdmin pro - 通用后台管理模板系统（单页面专业版）</title>
-    <link rel="stylesheet" href="/design/static/plugins/layui/css/layui.css">
-    <link rel="stylesheet" href="/design/static/css/rbac-admin.css" />
-    <link rel="stylesheet" href="/design/static/css/login.css" />
-</head>
-<body layadmin-themealias="default" class="layui-layout-body">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminRBAC | 登录</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="/design/static/plugins/admin-lte/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/design/static/plugins/admin-lte/bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="/design/static/plugins/admin-lte/bower_components/Ionicons/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/design/static/plugins/admin-lte/dist/css/AdminLTE.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="/design/static/plugins/admin-lte/plugins/iCheck/square/blue.css">
 
-<div id="LAY_app" class="layadmin-tabspage-none">
-    <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
-        <div class="layadmin-user-login-main">
-            <div class="layadmin-user-login-box layadmin-user-login-header">
-                <h2>layuiAdmin</h2>
-                <p>layui 官方出品的单页面后台管理模板系统</p>
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <div class="login-logo">
+        <a href="../../index2.html"><b>Admin</b>RBAC</a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <p class="login-box-msg">登陆用户</p>
+
+        <form action="../../index2.html" method="post">
+            <div class="form-group has-feedback">
+                <input name="loginName" type="text" class="form-control" placeholder="用户">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
-            <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
-                <div class="layui-form-item">
-                    <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>
-                    <input type="text" name="username" id="LAY-user-login-username" lay-verify="required" placeholder="用户名" class="layui-input">
-                </div>
-                <div class="layui-form-item">
-                    <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
-                    <input type="password" name="password" id="LAY-user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-row">
-                        <div class="layui-col-xs7">
-                            <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>
-                            <input type="text" name="vercode" id="LAY-user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input">
-                        </div>
-                        <div class="layui-col-xs5">
-                            <div style="margin-left: 10px;">
-                                <img src="https://www.oschina.net/action/user/captcha?t=1534424342551" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode">
-                            </div>
-                        </div>
+            <div class="form-group has-feedback">
+                <input name="password" type="password" class="form-control" placeholder="密码">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="checkbox icheck">
+                        <label>
+                            <input type="checkbox"> 记住我
+                        </label>
                     </div>
                 </div>
-                <div class="layui-form-item" style="margin-bottom: 20px;">
-                    <input type="checkbox" name="remember" lay-skin="primary" title="记住密码">
-                    <a lay-href="/user/forget" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">忘记密码？</a>
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <button id="submit-button" type="button" class="btn btn-primary btn-block btn-flat">登陆</button>
                 </div>
-
-                <div class="layui-form-item">
-                    <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="LAY-user-login-submit">登 入</button>
-                </div>
-
-                <div class="layui-trans layui-form-item layadmin-user-login-other">
-                    <label>社交账号登入</label>
-                    <a href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>
-                    <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>
-                    <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>
-
-                    <a lay-href="/user/reg" class="layadmin-user-jump-change layadmin-link">注册帐号</a>
-                </div>
-
+                <!-- /.col -->
             </div>
-        </div>
+        </form>
 
-        <div class="layui-trans layadmin-user-login-footer">
-
-            <p>© 2018 <a href="http://www.layui.com/" target="_blank">layui.com</a></p>
-            <p>
-                <span><a href="http://www.layui.com/admin/#get" target="_blank">获取授权</a></span>
-                <span><a href="http://www.layui.com/admin/pro/" target="_blank">在线演示</a></span>
-                <span><a href="http://www.layui.com/admin/" target="_blank">前往官网</a></span>
-            </p>
+        <div class="social-auth-links text-center">
+            <p>- 或者 -</p>
+            <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> 使用
+                Facebook</a>
+            <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> 使用
+                Google+</a>
         </div>
+        <!-- /.social-auth-links -->
+
+        <a href="#">忘记密码</a><br>
+        <a href="register.html" class="text-center">注册账号</a>
 
     </div>
+    <!-- /.login-box-body -->
 </div>
+<!-- /.login-box -->
 
+<!-- jQuery 3 -->
+<script src="/design/static/plugins/admin-lte/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="/design/static/plugins/admin-lte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- iCheck -->
+<script src="/design/static/plugins/admin-lte/plugins/iCheck/icheck.min.js"></script>
+
+<script src="/design/static/js/login-plugin.js"></script>
+<script>
+    $(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' /* optional */
+        });
+
+        //提交表单
+        $('#submit-button').click(function() {
+            $.fn.loginPlugin('submit');
+        });
+    });
+</script>
 </body>
 </html>

@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,11 +59,13 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         allowRequestUrl.add("/admin/vlogin");
         allowRequestUrl.add("/admin/signOut");
         allowRequestUrl.add("/admin/login");
+        allowRequestUrl.add("/admin/doLogin");
 
         ignoreRequestUrl = new ArrayList<>();
         ignoreRequestUrl.add("/admin/vlogin");
         ignoreRequestUrl.add("/admin/signOut");
         ignoreRequestUrl.add("/admin/login");
+        ignoreRequestUrl.add("/admin/doLogin");
     }
 
     @Override
@@ -73,7 +76,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         String method = request.getMethod();
         LOG.info("Show requestUri: {}, contextPath: {}, method: {}", requestUri, contextPath, method);
         //判断对应的请求url 时候符合
-        if (!allowRequestUrl.contains(requestUri) && !checkoutLoginStatus(request)) {
+        if (!(checkoutAllowRequestUrl(requestUri)) && !checkoutLoginStatusBySession(request)) {
             return LOGIN_PAGE;
         }
         //判断是否拥有对应链接权限
@@ -82,6 +85,15 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         }
 
         return actionInvocation.invoke();
+    }
+
+    private boolean checkoutAllowRequestUrl(String requestUri) {
+        String[] url = StringUtils.split(requestUri, ";");
+        if (null == url) {
+            return false;
+        }
+
+        return allowRequestUrl.contains(url[0]);
     }
 
     private boolean checkPrivilege(String url) {
@@ -144,6 +156,38 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
     }
 
 
+    private boolean checkoutLoginStatusBySession(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (null == session) {
+            LOG.info("Checkout session is null");
+            return false;
+        }
+
+        String secretKey = (String) session.getAttribute("secretKey");
+        if (StringUtils.isEmpty(secretKey)) {
+            LOG.info("Checkout login status fail, fail result: searetKey is null");
+            return false;
+        }
+
+        String[] splitSecretKey = StringUtils.split(secretKey, "#");
+        String autoToken = splitSecretKey[0];
+        String userId = splitSecretKey[1];
+        user = userService.findUserOne(Integer.valueOf(userId));
+        if (null == user) {
+            LOG.info("Checkout login status, find user is null");
+            return false;
+        }
+
+        String createAutoToken = createAutoToken(user, request);
+        if (!autoToken.equals(createAutoToken)) {
+            LOG.info("Checkout login status, auto token not equals");
+            return false;
+        }
+
+        LOG.info("Checkout Login status: " + secretKey + " success");
+        return true;
+    }
+
     /**
      * 判断登录状态
      * @param request
@@ -190,7 +234,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
     }
 
     private String createAutoToken(User user, HttpServletRequest request) {
-        String encode = user.getId() + user.getName() + user.getEmail() + request.getHeader("user-agent");
+        String encode = user.getId() + user.getName() + user.getPassword() + request.getHeader("user-agent");
         return MD5Utils.encoder(encode);
     }
 

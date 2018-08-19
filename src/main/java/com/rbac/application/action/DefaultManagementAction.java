@@ -16,7 +16,7 @@ public class DefaultManagementAction extends RbacAction {
      * 默认首页
      * @return
      */
-    public String index() {
+    public String home() {
         _execute();
         LOG.info("默认首页 Index...");
         return SUCCESS;

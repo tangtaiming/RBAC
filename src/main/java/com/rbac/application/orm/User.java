@@ -34,6 +34,11 @@ public class User implements Serializable {
 
     private String updateDate;
 
+    /**
+     * 密码
+     */
+    private String password;
+
     public User() {}
 
     public User(Integer id, String name, String email) {
@@ -96,5 +101,13 @@ public class User implements Serializable {
 
     public void setUpdateDate(String updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

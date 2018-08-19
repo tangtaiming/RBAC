@@ -31,8 +31,6 @@ public class UserManagementAction extends RbacAction {
 
     private RoleService roleService = new RoleService();
 
-    private static final String ERROR_KEY = "error";
-
     private Integer id;
 
     private String result;
@@ -45,6 +43,8 @@ public class UserManagementAction extends RbacAction {
 
     private SaveUserReVo userReVo;
 
+    private static final String ERROR_KEY = "error";
+
     /**
      * 用户列表
      */
@@ -53,67 +53,6 @@ public class UserManagementAction extends RbacAction {
     public String userManagement() {
         _execute();
         userRsVo = userService.findUserManagementRsVo();
-        return SUCCESS;
-    }
-
-    /**
-     * 用户登录
-     * @return
-     */
-    public String login() {
-        return SUCCESS;
-    }
-
-    /**
-     * 伪登录
-     * @return
-     */
-    public String vlogin() {
-        //传入登录名是否为空
-        if (StringUtils.isEmpty(name)) {
-            addFieldError(ERROR_KEY, "登录失败,登录名称不能为空!");
-            return INPUT;
-        }
-
-        //查下用户是否存在
-        User user = userService.findUserByName(name);
-        if (null == user) {
-            addFieldError(ERROR_KEY, "登录失败,用户不存在,请重新输入登录名称!");
-            return INPUT;
-        }
-
-        HttpServletRequest request = ServletActionContext.getRequest();
-        String userAgent = request.getHeader("user-agent");
-        Integer userId = user.getId();
-        String userInfoToString = userId + user.getName() + user.getEmail() + userAgent;
-        String autoToken = MD5Utils.encoder(userInfoToString);
-        String secretKey = autoToken + "#" + userId;
-        LOG.info("Secret key: " + secretKey);
-        //创建Cookie
-        Cookie cookie = new Cookie("User", user.getName());
-        cookie.setPath("/");
-        Cookie cookieToken = new Cookie("SecretKey", secretKey);
-        cookieToken.setPath("/");
-
-        ServletActionContext.getResponse().addCookie(cookie);
-        ServletActionContext.getResponse().addCookie(cookieToken);
-        return SUCCESS;
-    }
-
-    /**
-     * 退出登录
-     * @return
-     */
-    public String signOut() {
-        Cookie[] cookies = ServletActionContext.getRequest().getCookies();
-        for (Cookie cookie : cookies) {
-            String cookieName = cookie.getName();
-            if ("User".equals(cookieName) || "SecretKey".equals(cookieName)) {
-                cookie.setValue(null);
-                cookie.setPath("/");
-                ServletActionContext.getResponse().addCookie(cookie);
-            }
-        }
         return SUCCESS;
     }
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="loginManager" namespace="/admin" extends="rbac">
+        <action name="vlogin" class="com.rbac.application.action.LoginAction"
+                method="vlogin">
+            <result name="success">/design/template/vlogin-success.ftl</result>
+            <result name="input">/design/template/vlogin-fail.ftl</result>
+        </action>
+        <action name="signOut" class="com.rbac.application.action.LoginAction" method="signOut">
+            <result name="success">/design/template/sign-out-success.ftl</result>
+        </action>
+        <action name="login" class="com.rbac.application.action.LoginAction" method="login">
+            <result name="success">/design/template/login.ftl</result>
+            <result name="input">/design/template/vlogin-fail.ftl</result>
+        </action>
+        <action name="doLogin" class="com.rbac.application.action.LoginAction" method="doLogin">
+            <result name="success">/design/template/result/success.ftl</result>
+            <result name="input">/design/template/vlogin-fail.ftl</result>
+        </action>
+    </package>
+</struts>

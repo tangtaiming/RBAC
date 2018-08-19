@@ -25,5 +25,6 @@
         <property name="status" column="status"></property>
         <property name="createDate" column="create_date"></property>
         <property name="updateDate" column="update_date"></property>
+        <property name="password" column="password"></property>
     </class>
 </hibernate-mapping>
