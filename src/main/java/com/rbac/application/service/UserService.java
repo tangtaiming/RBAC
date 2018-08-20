@@ -122,12 +122,14 @@ public class UserService {
             User createUser = new User();
             String email = user.getEmail();
             String name = user.getName();
+            String password = user.getPassword();
             createUser.setEmail(email);
             createUser.setName(name);
             createUser.setAdmin(admin);
             createUser.setStatus(status);
             createUser.setCreateDate(currentTime);
             createUser.setUpdateDate(currentTime);
+            createUser.setPassword(password);
             Integer guid = userDao.save(createUser);
             if (null != guid) {
                 saveFalg = true;

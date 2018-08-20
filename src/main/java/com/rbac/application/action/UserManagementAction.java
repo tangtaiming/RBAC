@@ -63,7 +63,7 @@ public class UserManagementAction extends RbacAction {
         return SUCCESS;
     }
 
-    public void validateSaveUserSaveUser() {
+    public void validateSaveUser() {
         if (StringUtils.isEmpty(userReVo.getName())) {
             addFieldError(ERROR_KEY, "保存用户名称不能为空");
             return;
@@ -83,6 +83,7 @@ public class UserManagementAction extends RbacAction {
     }
 
     public String saveUser() {
+        LOG.info(userReVo.toString());
         userService.saveUser(userReVo);
         setResult("success");
         return SUCCESS;

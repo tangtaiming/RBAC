@@ -1,5 +1,7 @@
 package com.rbac.application.action.vo;
 
+import com.system.util.base.MD5Utils;
+
 import java.util.List;
 
 /**
@@ -27,6 +29,11 @@ public class SaveUserReVo {
      * 角色
      */
     private List<Integer> roles;
+
+    /**
+     * 密码
+     */
+    private String password;
 
     public Integer getId() {
         return id;
@@ -60,4 +67,22 @@ public class SaveUserReVo {
         this.roles = roles;
     }
 
+    public String getPassword() {
+        return MD5Utils.encoder(password);
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "SaveUserReVo{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", roles=" + roles +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
