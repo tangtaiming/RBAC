@@ -57,6 +57,8 @@ public class RoleManagementAction extends RbacAction {
     public String roleManagement() {
         _execute();
         roleRsVo = roleService.findRoleManagementRsVo();
+        int count = roleService.findRoleAllListCount();
+        setTotalRows(count);
         return SUCCESS;
     }
 

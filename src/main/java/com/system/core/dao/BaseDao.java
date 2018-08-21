@@ -56,6 +56,11 @@ public abstract class BaseDao<E extends Serializable> {
         return findOne((Serializable) id);
     }
 
+    public int findAllListCount(Class classes) {
+        setClasses(classes);
+        return findAllListCount();
+    }
+
     public int findAllListCount() {
         int count = 0;
         try {

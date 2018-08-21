@@ -24,6 +24,10 @@ public class RoleDao extends BaseDao<Role> {
         this.classes = Role.class;
     }
 
+    public int findRoleAllListCount() {
+        return findAllListCount();
+    }
+
     public Role findRoleByName(String name) {
         Role role = null;
         Session session = HibernateUtils.getSession();
