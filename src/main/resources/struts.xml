@@ -6,6 +6,7 @@
     <constant name="struts.action.extension" value=","/>
     <constant name="struts.ognl.allowStaticMethodAccess" value="true" />
     <constant name="struts.multipart.maxSize" value="12585760"/>
+    <constant name="struts.custom.i18n.resources" value="package"></constant>
     <package name="rbac" namespace="/" extends="struts-default">
         <result-types>
             <result-type name="freemarker"

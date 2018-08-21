@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<navigator>
+    <!-- 基本设置 -->
+    <basic.site>
+        <!-- 用户管理 -->
+        <user.management link="/admin/userManagement">
+            <create link="/admin/createUser"></create>
+            <edit link="/admin/editUser"></edit>
+            <save link="/admin/saveUser"></save>
+            <delete link="/admin/deleteUser"></delete>
+        </user.management>
+    </basic.site>
+</navigator>
