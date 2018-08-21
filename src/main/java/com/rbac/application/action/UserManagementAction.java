@@ -9,14 +9,10 @@ import com.rbac.application.orm.Role;
 import com.rbac.application.orm.User;
 import com.rbac.application.service.RoleService;
 import com.rbac.application.service.UserService;
-import com.system.util.base.MD5Utils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -53,6 +49,8 @@ public class UserManagementAction extends RbacAction {
     public String userManagement() {
         _execute();
         userRsVo = userService.findUserManagementRsVo();
+        int count = userService.findAllUserListCount();
+        setTotalRows(count);
         return SUCCESS;
     }
 

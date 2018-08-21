@@ -1,5 +1,6 @@
 package com.system.core.interceptor;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import com.rbac.application.orm.Access;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @auther ttm
@@ -51,6 +53,8 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
 
     public List<String> privilegeUrls;
 
+    private static final String propertyName = "zh";
+
     /**
      * 初始化允许请求的URL
      */
@@ -74,6 +78,13 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         String requestUri = request.getRequestURI();
         String contextPath = request.getContextPath();
         String method = request.getMethod();
+        ActionContext actionContext = actionInvocation.getInvocationContext();
+        Locale locale = actionContext.getLocale();
+        if (null == locale) {
+            locale = new Locale("zh", "CN");
+            actionContext.setLocale(locale);
+            actionContext.getSession().put("WW_TRANS_I18N_LOCALE", actionContext.getLocale());
+        }
         LOG.info("Show requestUri: {}, contextPath: {}, method: {}", requestUri, contextPath, method);
         //判断对应的请求url 时候符合
         if (!(checkoutAllowRequestUrl(requestUri)) && !checkoutLoginStatusBySession(request)) {

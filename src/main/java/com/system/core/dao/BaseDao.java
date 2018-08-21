@@ -4,11 +4,13 @@ import com.system.util.base.HibernateUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @auther ttm
@@ -52,6 +54,25 @@ public abstract class BaseDao<E extends Serializable> {
 
     public E findOne(Integer id) {
         return findOne((Serializable) id);
+    }
+
+    public int findAllListCount() {
+        int count = 0;
+        try {
+            String countQuery = String.format("select count(*) from %s", classes.getSimpleName());
+            session = HibernateUtils.getSession();
+            Query query = session.createQuery(countQuery);
+            Optional optional = query.uniqueResultOptional();
+            if (optional.isPresent()) {
+                count = Integer.valueOf(optional.get().toString());
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            HibernateUtils.closeSession(session);
+        }
+
+        return count;
     }
 
     /**
