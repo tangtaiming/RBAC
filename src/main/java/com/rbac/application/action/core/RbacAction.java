@@ -2,6 +2,7 @@ package com.rbac.application.action.core;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.system.core.vo.NavigatorRsVo;
+import com.system.util.base.PageUtils;
 import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,11 +20,19 @@ public class RbacAction extends ActionSupport {
     private NavigatorRsVo nav;
 
     /**
+     * 分页
+     */
+    private PageUtils page;
+
+    /**
      * 登录用户
      */
     private String loginName;
 
-    private static String propertyName = "package";
+    /**
+     * 总共数量
+     */
+    private int totalRows;
 
     public void _execute() {
         HttpServletRequest request = ServletActionContext.getRequest();
@@ -50,6 +59,28 @@ public class RbacAction extends ActionSupport {
 
     public void setNav(NavigatorRsVo nav) {
         this.nav = nav;
+    }
+
+    public PageUtils getPage() {
+        return page;
+    }
+
+    public void setPage(PageUtils page) {
+        this.page = page;
+    }
+
+    public int getTotalRows() {
+        return totalRows;
+    }
+
+    public void setTotalRows(int totalRows) {
+        initPage(totalRows);
+        this.totalRows = totalRows;
+    }
+
+    private void initPage(int totalRows) {
+        PageUtils page = new PageUtils(totalRows);
+        setPage(page);
     }
 
 }

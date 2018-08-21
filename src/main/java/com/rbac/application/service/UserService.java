@@ -38,6 +38,10 @@ public class UserService {
         return userDao.findOne(uid);
     }
 
+    public int findAllUserListCount() {
+        return userDao.findAllListCount();
+    }
+
     public String findUserByLoginVo(LoginVo userVo) {
         String loginName = userVo.getLoginName();
         String voPassowd = userVo.getPassword();

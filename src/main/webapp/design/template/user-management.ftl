@@ -82,22 +82,27 @@
                     <div class="layui-inline layui-table-page" id="layui-table-page1">
                         <div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-1">
                             <a href="javascript:;" class="layui-laypage-prev layui-disabled" data-page="0"><i class="layui-icon">&#xe603;</i></a>
-                            <span class="layui-laypage-curr">
-								<em class="layui-laypage-em"></em>
-								<em>1</em>
-							</span>
-                            <a href="javascript:;" data-page="2">2</a>
-                            <a href="javascript:;" data-page="3">3</a>
+                            <#assign pageNumber=page.pageNumber />
+                            <#list page.linkPages as link>
+                                <#if pageNumber==link>
+                                    <span class="layui-laypage-curr">
+                                        <em class="layui-laypage-em"></em>
+                                        <em>${link}</em>
+                                    </span>
+                                    <#else>
+                                    <a href="javascript:;" data-page="${link}">${link}</a>
+                                </#if>
+                            </#list>
                             <a href="javascript:;" class="layui-laypage-next" data-page="2"><i class="layui-icon">&#xe602;</i></a>
-                            <span class="layui-laypage-skip">到第<input type="text" min="1" value="1" class="layui-input">页
+                            <span class="layui-laypage-skip">到第<input type="text" min="${page.pageNumber}" value="${page.pageNumber}" class="layui-input">页
 								<button type="button" class="layui-laypage-btn">确定</button>
 							</span>
-                            <span class="layui-laypage-count">共 1000 条</span>
+                            <span class="layui-laypage-count">共 ${page.totalRows} 条</span>
                             <span class="layui-laypage-limits">
 								<select lay-ignore="">
 									<option value="10">10 条/页</option>
-									<option value="20">20 条/页</option>
-									<option value="30" selected="">30 条/页</option>
+									<option value="20" selected="">20 条/页</option>
+									<option value="30">30 条/页</option>
 									<option value="40">40 条/页</option>
 									<option value="50">50 条/页</option>
 									<option value="60">60 条/页</option>
