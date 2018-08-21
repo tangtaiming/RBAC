@@ -80,9 +80,14 @@
                 </div><!-- layui-table-body layui-table-main -->
                 <div class="layui-table-tool">
                     <div class="layui-inline layui-table-page" id="layui-table-page1">
+                        <#-- 当前页 -->
+                        <#assign pageNumber=page.pageNumber />
+                        <#-- 下一页 -->
+                        <#assign downRow=page.downRow />
+                        <#-- 上一页 -->
+                        <#assign upRow=page.upRow />
                         <div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-1">
                             <a href="javascript:;" class="layui-laypage-prev layui-disabled" data-page="0"><i class="layui-icon">&#xe603;</i></a>
-                            <#assign pageNumber=page.pageNumber />
                             <#list page.linkPages as link>
                                 <#if pageNumber==link>
                                     <span class="layui-laypage-curr">
