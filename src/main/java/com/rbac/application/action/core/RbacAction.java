@@ -4,8 +4,8 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.system.core.vo.NavigatorRsVo;
 import org.apache.struts2.ServletActionContext;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @auther ttm
@@ -27,13 +27,10 @@ public class RbacAction extends ActionSupport {
 
     public void _execute() {
         HttpServletRequest request = ServletActionContext.getRequest();
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            String name = cookie.getName();
-            if ("User".equals(name)) {
-                setLoginName(cookie.getValue());
-                break;
-            }
+        HttpSession session = request.getSession(false);
+        if (!(null == session)) {
+            String loginName = (String) session.getAttribute("name");
+            setLoginName(loginName);
         }
         //实例化导航
         nav = new NavigatorRsVo();

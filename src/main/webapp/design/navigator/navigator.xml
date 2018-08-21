@@ -9,5 +9,19 @@
             <save link="/admin/saveUser"></save>
             <delete link="/admin/deleteUser"></delete>
         </user.management>
+        <!-- 角色管理 -->
+        <role.management link="/admin/roleManagement">
+            <create link="/admin/createRole"></create>
+            <edit link="/admin/editRole"></edit>
+            <save link="/admin/saveRole"></save>
+            <delete link="/admin/deleteRole"></delete>
+        </role.management>
+        <!--权限管理-->
+        <access.management link="/admin/accessManagement">
+            <create link="/admin/createAccess"></create>
+            <edit link="/admin/editAccess"></edit>
+            <save link="/admin/saveAccess"></save>
+            <delete link="/admin/deleteAccess"></delete>
+        </access.management>
     </basic.site>
 </navigator>
