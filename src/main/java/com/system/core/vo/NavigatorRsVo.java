@@ -48,7 +48,8 @@ public class NavigatorRsVo {
     private LinkedList navigator(boolean all) throws ParsingException, IOException {
         LinkedList navigatorTree = new LinkedList<>();
         Builder builder = new Builder();
-        Document rootDocument = builder.build(new File(SYSTEM_NAVAGATOR_RBAC_PATH));
+        File file = new File(SYSTEM_NAVAGATOR_RBAC_PATH);
+        Document rootDocument = builder.build(file);
         Element rootElement = rootDocument.getRootElement();
         if (existRootNavigator(rootElement)) {
             navigatorTree = parseXml(rootElement, all);
