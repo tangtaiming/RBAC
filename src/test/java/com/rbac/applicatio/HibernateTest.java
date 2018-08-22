@@ -63,7 +63,7 @@ public class HibernateTest {
 //    @Test
     public void findUserColunm() {
         UserService userService = new UserService();
-        userService.findAllUserListCount();
+        userService.findUserAllListCount();
 //        String countQuery = String.format("select count(%s) from %s", new Object[]{"*", "%s"});
 //        System.out.println("Show: " + countQuery);
     }

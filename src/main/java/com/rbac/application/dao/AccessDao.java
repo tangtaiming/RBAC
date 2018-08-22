@@ -1,7 +1,6 @@
 package com.rbac.application.dao;
 
 import com.rbac.application.orm.Access;
-import com.rbac.application.orm.Role;
 import com.system.core.dao.BaseDao;
 import com.system.util.base.HibernateUtils;
 import org.apache.commons.collections.CollectionUtils;

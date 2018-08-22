@@ -49,7 +49,7 @@ public class UserManagementAction extends RbacAction {
     public String userManagement() {
         _execute();
         userRsVo = userService.findUserManagementRsVo();
-        int count = userService.findAllUserListCount();
+        int count = userService.findUserAllListCount();
         setTotalRows(count);
         return SUCCESS;
     }

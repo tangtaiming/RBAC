@@ -38,7 +38,7 @@ public class UserService {
         return userDao.findOne(uid);
     }
 
-    public int findAllUserListCount() {
+    public int findUserAllListCount() {
         return userDao.findAllListCount();
     }
 

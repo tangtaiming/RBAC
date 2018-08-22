@@ -1,32 +1,37 @@
 <!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>RBAC - 后台管理系统</title>
-    <link rel="stylesheet" href="/design/static/plugins/layui/css/layui.css">
-</head>
-<body class="layui-layout-body">
-<div class="layui-layout layui-layout-admin">
-    <#include "core/layui-header.ftl" />
-    <#include "core/layui-side.ftl" />
+<#include "core/adminlte-head.ftl"/>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!-- Main Header -->
+    <#include "core/adminlte-header.ftl"/>
+    <!-- Left side column. contains the logo and sidebar -->
+    <#include "core/adminlte-side.ftl"/>
 
-    <div class="layui-body">
-        <!-- 内容主体区域 -->
-        <div style="padding: 15px;">RABC 权限管理系统欢迎您!</div>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Main content -->
+        <div class="content container-fluid">
+            <div class="white-box">
+                RBAC系统 欢迎您!
+            </div><!-- white-box -->
+        </div>
+        <!-- /.content -->
     </div>
+    <!-- /.content-wrapper -->
 
-    <div class="layui-footer">
-        <!-- 底部固定区域 -->
-        © RBAC
-    </div>
+    <!-- Main Footer -->
+    <#include "core/adminlte-footer.ftl"/>
+
+    <!-- Control Sidebar -->
+    <#include "core/adminlte-control-sidebar.ftl">
 </div>
-<script src="/design/static/plugins/layui/layui.js"></script>
-<script>
-    //JavaScript代码区域
-    layui.use('element', function(){
-        var element = layui.element;
-    });
-</script>
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. -->
 </body>
 </html>

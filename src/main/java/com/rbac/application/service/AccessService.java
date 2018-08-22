@@ -113,4 +113,8 @@ public class AccessService {
         return accessDao.findAccessByTitle(title);
     }
 
+    public int findAccessAllListCount() {
+        return accessDao.findAllListCount();
+    }
+
 }

@@ -1,126 +1,93 @@
 <!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>RBAC - 后台管理系统</title>
-    <link rel="stylesheet" href="/design/static/plugins/layui/css/layui.css">
-    <link rel="stylesheet" href="/design/static/css/management.css">
-</head>
-<body class="layui-layout-body">
-<div class="layui-layout layui-layout-admin">
-<#include "core/layui-header.ftl" />
-<#include "core/layui-side.ftl" />
-    <div class="layui-body">
-        <!-- 内容主体区域 -->
-        <div class="layui-management-container">
-            <div class="layui-card layadmin-header">
-				<span class="layui-breadcrumb">
-				  <a href="">首页</a>
-				  <a><cite>权限管理</cite></a>
-				</span>
+<#include "core/adminlte-head.ftl"/>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!-- Main Header -->
+<#include "core/adminlte-header.ftl"/>
+    <!-- Left side column. contains the logo and sidebar -->
+<#include "core/adminlte-side.ftl"/>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="row content-header" style="background: #ffffff;">
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                <h4 class="page-title"><i class="fa fa-list"></i> 权限管理</h4>
             </div>
-            <div class="layui-row">
-                <div class="layui-btn-group layui-padding-px">
-                    <a class="layui-btn layui-btn-sm" href="/admin/createAccess">
-                        <i class="layui-icon">&#xe654;</i>新增权限
-                    </a>
-                    <a class="layui-btn layui-btn-sm">
-                        <i class="layui-icon">&#xe615;</i>搜索
-                    </a>
-                    <a class="layui-btn layui-btn-sm">
-                        <i class="layui-icon">&#xe735;</i>重置
-                    </a>
-                </div>
+            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+                    <li class="active">权限管理</li>
+                </ol>
             </div>
-            <div class="layui-padding-px">
-                <div class="layui-form layui-border-box layui-table-view">
-                <div class="layui-table-body layui-table-main">
-                    <table cellspacing="0" cellpadding="0" border="0" class="layui-table" lay-size="sm">
-                        <thead>
-                        <tr>
-                            <th class="layui-col-bottom">
-                                <div class="layui-table-cell"><b>名称</b></div></th>
-                            <th class="layui-col-bottom">
-                                <div class="layui-table-cell"><b>URLS</b><div></th>
-                            <th class="layui-col-bottom" style="width: 6%;">
-                                <div class="layui-table-cell"><b>操作</b></div></th>
-                        </tr>
-                        <tr id="model-search">
-                            <th class="layui-col-top">
-                                <div class="layui-row layui-date-row">
-                                    <input type="text" name="name" class="layui-input layui-filter">
-                                </div>
-                            </th>
-                            <th class="layui-col-top">
-                                <div class="layui-row layui-date-row">
-                                    <input type="text" name="text" class="layui-input layui-filter">
-                                </div>
-                            </th>
-                            <th class="layui-col-top"></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <#if accessList??>
-                            <#list accessList as access>
-                            <tr>
-                                <td class="layui-table-td">
-                                    <div class="layui-table-cell">${access["title"]}</div></td>
-                                <td class="layui-table-td">
-                                    <div class="layui-table-cell">${access["urls"]}</div></td>
-                                <td class="layui-table-td">
-                                    <a class="layui-btn layui-btn-xs" href="/admin/editAccess?id=${access["id"]}">
-                                        <i class="layui-icon">&#xe642;</i>编辑
-                                    </a></td>
-                            </tr>
-                            </#list>
-                        </#if>
-                        </tbody>
-                    </table>
-                </div><!-- layui-table-body layui-table-main -->
-                <div class="layui-table-tool">
-                    <div class="layui-inline layui-table-page" id="layui-table-page1">
-                        <div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-1">
-                            <a href="javascript:;" class="layui-laypage-prev layui-disabled" data-page="0"><i class="layui-icon">&#xe603;</i></a>
-                            <span class="layui-laypage-curr">
-								<em class="layui-laypage-em"></em>
-								<em>1</em>
-							</span>
-                            <a href="javascript:;" data-page="2">2</a>
-                            <a href="javascript:;" data-page="3">3</a>
-                            <a href="javascript:;" class="layui-laypage-next" data-page="2"><i class="layui-icon">&#xe602;</i></a>
-                            <span class="layui-laypage-skip">到第<input type="text" min="1" value="1" class="layui-input">页
-								<button type="button" class="layui-laypage-btn">确定</button>
-							</span>
-                            <span class="layui-laypage-count">共 1000 条</span>
-                            <span class="layui-laypage-limits">
-								<select lay-ignore="">
-									<option value="10">10 条/页</option>
-									<option value="20">20 条/页</option>
-									<option value="30" selected="">30 条/页</option>
-									<option value="40">40 条/页</option>
-									<option value="50">50 条/页</option>
-									<option value="60">60 条/页</option>
-									<option value="70">70 条/页</option>
-									<option value="80">80 条/页</option>
-									<option value="90">90 条/页</option>
-								</select>
-							</span>
-                        </div>
-                    </div>
-                </div><!--  layui-table-tool -->
-            </div><!-- layui-form layui-border-box layui-table-view -->
-            </div>
+            <!-- /.col-lg-12 -->
         </div>
+        <!-- Main content -->
+        <div class="content container-fluid">
+            <div class="white-box">
+                <p class="text-muted m-b-30">
+                <div>
+                    <a href="/admin/createAccess" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus-square-o"></i> 新增</a>
+                </div>
+                </p>
+                <div class="table-responsive">
+                    <div id="" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <!-- 表格 -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="layui-table">
+                                    <thead>
+                                    <tr>
+                                        <th>名称</th>
+                                        <th>URLS</th>
+                                        <th class="layui-edit-last">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <#if accessList??>
+                                        <#list accessList as access>
+                                        <tr>
+                                            <td class="layui-table-td">
+                                                <div class="layui-table-cell">${access["title"]}</div></td>
+                                            <td class="layui-table-td">
+                                                <div class="layui-table-cell">${access["urls"]}</div></td>
+                                            <td class="layui-table-td">
+                                                <div class="layui-edit-last">
+                                                    <a href="/admin/editAccess?id=${access["id"]}"
+                                                       class="btn btn-primary btn-xs btn-flat"><i class="fa fa-pencil-square-o"></i> 编辑</a>
+                                                    <a class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash-o"></i> 删除</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </#list>
+                                    </#if>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div><!-- 表格 END -->
+                        <!-- 分页 -->
+                    <#include "core/adminlte-page.ftl"/>
+                    </div>
+                </div><!-- table-responsive -->
+            </div><!-- white-box -->
+        </div>
+        <!-- /.content -->
     </div>
-<#include "core/layui-footer.ftl"/>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <#include "core/adminlte-footer.ftl"/>
+
+    <!-- Control Sidebar -->
+    <#include "core/adminlte-control-sidebar.ftl">
 </div>
-<script src="/design/static/plugins/layui/layui.js"></script>
-<script>
-    //JavaScript代码区域
-    layui.use('element', function(){
-        var element = layui.element;
-    });
-</script>
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. -->
 </body>
 </html>

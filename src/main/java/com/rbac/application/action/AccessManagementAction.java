@@ -30,6 +30,8 @@ public class AccessManagementAction extends RbacAction {
         _execute();
         List<Access> accessList = accessService.findAccessAllList();
         setAccessList(accessList);
+        int count = accessService.findAccessAllListCount();
+        setTotalRows(count);
         return SUCCESS;
     }
 
