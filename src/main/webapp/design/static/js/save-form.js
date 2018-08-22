@@ -9,8 +9,8 @@ $(document).ready(function () {
 });
 
 function saveSiteAccess() {
-    $("#site-access-save").click(function () {
-        var role = $('#site-access-form').serialize();
+    $("#save-site-access").click(function () {
+        var role = $('#form-site-access').serialize();
         console.log(role);
         $.ajax({
             url : "/admin/saveSiteAccess",
@@ -79,7 +79,7 @@ function saveUser() {
 
 function saveRole() {
     $("#save-role").click(function () {
-        var role = $('#role-form').serialize();
+        var role = $('#form-role').serialize();
         console.log(role);
         $.ajax({
             url : "/admin/saveRole",

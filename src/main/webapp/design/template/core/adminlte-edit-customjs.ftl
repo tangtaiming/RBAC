@@ -1,0 +1,1 @@
+<#include "adminlte-create-customjs.ftl"/>

@@ -1,32 +1,42 @@
 <!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>RBAC - 后台管理系统 - 设置${siteAccessRsVo['name']}权限</title>
-    <link rel="stylesheet" href="/design/static/plugins/layui/css/layui.css">
-    <link rel="stylesheet" href="/design/static/css/admin.css">
-</head>
-<body class="layui-layout-body">
-<div class="layui-layout layui-layout-admin">
-<#include "core/layui-header.ftl" />
-<#include "core/layui-side.ftl" />
-    <div class="layui-body">
-        <!-- 内容主体区域 -->
-        <div class="layadmin-tabsbody-item layui-show">
-            <div class="layui-card layadmin-header">
-				<span class="layui-breadcrumb">
-				  <a href="/rbac/index">首页</a>
-                  <a href="/admin/roleManagement">角色管理</a>
-				  <a><cite>设置${siteAccessRsVo['name']}权限</cite></a>
-				</span>
+<#include "core/adminlte-head.ftl" />
+<#include "core/adminlte-edit-customjs.ftl" />
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!-- Main Header -->
+    <#include "core/adminlte-header.ftl" />
+    <!-- Left side column. contains the logo and sidebar -->
+    <#include "core/adminlte-side.ftl" />
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="row content-header" style="background: #ffffff;">
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                <h4 class="page-title"><i class="fa fa-pencil-square-o"></i> 设置( ${siteAccessRsVo['name']} )权限</h4>
             </div>
-            <div class="layui-fluid">
-                <div class="layui-col-md8">
-                    <form id="site-access-form" class="layui-form" action="">
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">权限:</label>
-                            <div class="layui-input-inline layui-input-inline-other">
+            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+                    <li class="active">设置${siteAccessRsVo['name']}权限</li>
+                </ol>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- Main content -->
+        <div class="content container-fluid">
+            <!-- white-box -->
+            <div class="white-box">
+                <form id="form-site-access" class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <label for="email" class="col-sm-2 control-label">角色</label>
+                            <div class="col-sm-10">
                                 <div class="checkbox">
                                     <#list siteAccessRsVo['accessList'] as access>
                                         <#assign chonsen = ''/>
@@ -41,36 +51,37 @@
                                         </label>
                                     </#list>
                                 </div>
-                                <div class="layui-col-md5">
-                                    <div style="margin-left:10px;" class="layui-form-mid layui-word-aux"></div>
-                                </div>
                             </div>
                         </div>
-                        <div class="layui-form-item">
-                            <div class="layui-input-block">
+                    </div>
+                    <div class="form-group m-b-0">
+                        <div class="col-xs-6">
+                            <div class="col-sm-10 col-md-offset-2">
                                 <#assign roleId = siteAccessRsVo['id']/>
                                 <#if roleId??>
                                     <input type="hidden" name="saveSiteAccessReVo.roleId" value="${roleId}"/>
                                 </#if>
-                                <input type="button" id="site-access-save" class="layui-btn" value="立即提交"/>
-                                <input type="reset" class="layui-btn layui-btn-primary" value="重置"/>
+                                <input id ="save-site-access" type="button" class="btn btn-primary btn-sm btn-flat" value="保 存" />
+                                <input type="reset" class="btn btn-primary btn-sm btn-flat" value="重 置" />
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
+                    </div>
+                </form>
+            </div><!-- white-box END -->
         </div>
+        <!-- /.content -->
     </div>
-<#include "core/layui-footer.ftl"/>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <#include "core/adminlte-footer.ftl" />
+
+    <!-- Control Sidebar -->
+    <#include "core/adminlte-control-sidebar.ftl" />
 </div>
-<script src="/design/static/plugins/layui/layui.js"></script>
-<script src="/design/static/js/jQuery-2.2.0.min.js" type="text/javascript"></script>
-<script src="/design/static/js/save-form.js"></script>
-<script>
-    //JavaScript代码区域
-    layui.use('element', function(){
-        var element = layui.element;
-    });
-</script>
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. -->
 </body>
 </html>
+

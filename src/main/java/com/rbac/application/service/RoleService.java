@@ -59,7 +59,7 @@ public class RoleService {
             createRole.setUpdateDate(currentTime);
             createRole.setStatus(1);
             createRole.setName(role.getName());
-            roleDao.save(role);
+            roleDao.save(createRole);
             return true;
         }
 

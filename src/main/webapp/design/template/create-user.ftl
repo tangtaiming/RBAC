@@ -5,6 +5,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
 <#include "core/adminlte-head.ftl"/>
+<#include "core/adminlte-create-customjs.ftl" />
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
     <!-- Main Header -->
@@ -89,7 +90,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <#include "core/adminlte-footer.ftl"/>
 
     <!-- Control Sidebar -->
-    <#include "core/adminlte-control-sidebar.ftl">
+    <#include "core/adminlte-control-sidebar.ftl" />
 </div>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
