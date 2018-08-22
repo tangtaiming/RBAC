@@ -17,12 +17,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <div class="row content-header" style="background: #ffffff;">
-            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <div class="col-lg-6 col-md-4 col-sm-4 col-xs-12">
                 <h4 class="page-title"><i class="fa fa-plus-square-o"></i> 新增用户</h4>
             </div>
-            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+            <div class="col-lg-6 col-sm-8 col-md-8 col-xs-12">
                 <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+                    <li><a href="/"><i class="fa fa-dashboard"></i> 首页</a></li>
+                    <li><a href="/admin/userManagement"> 用户管理</a></li>
                     <li class="active">新增用户</li>
                 </ol>
             </div>
@@ -37,7 +38,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="col-xs-6">
                             <label for="loginName" class="col-sm-2 control-label">账号</label>
                             <div class="col-sm-10">
-                                <input name="userReVo.name" type="text" class="form-control" id="loginName" placeholder="请输入账号">
+                                <input id="loginName" name="userReVo.name" type="text" class="form-control" placeholder="请输入账号">
                             </div>
                         </div>
                     </div>
@@ -45,7 +46,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="col-xs-6">
                             <label for="password" class="col-sm-2 control-label">密码</label>
                             <div class="col-sm-10">
-                                <input name="userReVo.password" type="text" class="form-control" id="password" placeholder="请输入密码">
+                                <input id="password"  name="userReVo.password" type="password" class="form-control" placeholder="请输入密码">
                             </div>
                         </div>
                     </div>

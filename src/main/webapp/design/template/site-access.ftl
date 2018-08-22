@@ -17,12 +17,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <div class="row content-header" style="background: #ffffff;">
-            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <div class="col-lg-6 col-md-4 col-sm-4 col-xs-12">
                 <h4 class="page-title"><i class="fa fa-pencil-square-o"></i> 设置( ${siteAccessRsVo['name']} )权限</h4>
             </div>
-            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+            <div class="col-lg-6 col-sm-8 col-md-8 col-xs-12">
                 <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+                    <li><a href="/"><i class="fa fa-dashboard"></i> 首页</a></li>
+                    <li><a href="/admin/accessManagement"> 权限管理</a></li>
                     <li class="active">设置${siteAccessRsVo['name']}权限</li>
                 </ol>
             </div>
@@ -35,7 +36,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <form id="form-site-access" class="form-horizontal">
                     <div class="form-group">
                         <div class="col-xs-6">
-                            <label for="email" class="col-sm-2 control-label">角色</label>
+                            <label for="email" class="col-sm-2 control-label">权限</label>
                             <div class="col-sm-10">
                                 <div class="checkbox">
                                     <#list siteAccessRsVo['accessList'] as access>

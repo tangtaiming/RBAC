@@ -17,12 +17,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <div class="row content-header" style="background: #ffffff;">
-            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <div class="col-lg-6 col-md-4 col-sm-4 col-xs-12">
                 <h4 class="page-title"><i class="fa fa-plus-square-o"></i> 新增角色</h4>
             </div>
-            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+            <div class="col-lg-6 col-sm-8 col-md-8 col-xs-12">
                 <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+                    <li><a href="/"><i class="fa fa-dashboard"></i> 首页</a></li>
+                    <li><a href="/admin/roleManagement"> 角色管理</a></li>
                     <li class="active">新增角色</li>
                 </ol>
             </div>
@@ -35,9 +36,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <form id="form-role" class="form-horizontal">
                     <div class="form-group">
                         <div class="col-xs-6">
-                            <label for="loginName" class="col-sm-2 control-label">角色名称</label>
+                            <label for="loginName" class="col-sm-2 control-label">名称</label>
                             <div class="col-sm-10">
-                                <input name="saveRoleReVo.name" type="text" class="form-control" id="loginName" placeholder="请输入角色名称">
+                                <input name="saveRoleReVo.name" type="text" class="form-control" id="loginName" placeholder="请输入名称">
                             </div>
                         </div>
                     </div>

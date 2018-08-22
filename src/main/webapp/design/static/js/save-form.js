@@ -32,8 +32,8 @@ function saveSiteAccess() {
 }
 
 function saveAccess() {
-    $("#access-save").click(function () {
-        var role = $('#access-form').serialize();
+    $("#save-access").click(function () {
+        var role = $('#form-access').serialize();
         console.log(role);
         $.ajax({
             url : "/admin/saveAccess",
