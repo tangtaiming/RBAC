@@ -16,11 +16,8 @@ import java.util.List;
  */
 public class UserDao extends BaseDao<User> {
 
-    private Class classes;
-
     public UserDao(Class classes) {
         super(classes);
-        this.classes = classes;
     }
 
     public User findUserByName(String name) {
@@ -29,8 +26,8 @@ public class UserDao extends BaseDao<User> {
         try {
             session = HibernateUtils.getSession();
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(classes);
-            Root root = criteriaQuery.from(classes);
+            CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(getClasses());
+            Root root = criteriaQuery.from(getClasses());
             Expression expression = root.get("name").as(String.class);
             Predicate predicate = criteriaBuilder.equal(expression, name);
             criteriaQuery.where(predicate);

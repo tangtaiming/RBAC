@@ -16,8 +16,8 @@ import java.util.List;
  **/
 public class RoleAccessDao extends BaseDao<RoleAccess> {
 
-    public RoleAccessDao(Class classes) {
-        super(classes);
+    public RoleAccessDao() {
+        super(RoleAccess.class);
     }
 
     public List<RoleAccess> findRoleAccessByRoleId(Integer roleId) {

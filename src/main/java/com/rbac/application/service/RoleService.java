@@ -29,7 +29,7 @@ public class RoleService {
 
     private RoleDao roleDao = new RoleDao();
 
-    private RoleAccessDao roleAccessDao = new RoleAccessDao(RoleAccess.class);
+    private RoleAccessDao roleAccessDao = new RoleAccessDao();
 
     /**
      * 获取角色集合
@@ -74,6 +74,10 @@ public class RoleService {
     public Role findRoleByName(String name) {
         Role role = roleDao.findRoleByName(name);
         return role;
+    }
+
+    public int findRoleAllListCount() {
+        return roleDao.findAllListCount();
     }
 
     public boolean saveSiteAccess(SaveSiteAccessReVo siteAccessReVo) {
@@ -128,10 +132,6 @@ public class RoleService {
 
     public List<Integer> findRoleAccessColumnAccessIdByRoleId(Integer roleId) {
         return roleAccessDao.findRoleAccessColumnAccessIdByRoleId(roleId);
-    }
-
-    public int findRoleAllListCount() {
-        return roleAccessDao.findAllListCount();
     }
 
 }

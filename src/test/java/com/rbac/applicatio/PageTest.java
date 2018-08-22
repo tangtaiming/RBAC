@@ -11,7 +11,7 @@ public class PageTest {
 
     @Test
     public void pageTest() {
-        PageUtils pageUtils = new PageUtils(1, 20, 2);
+        PageUtils pageUtils = new PageUtils(1, 20, 1000);
         System.out.println("Show: " + pageUtils.toString());
     }
 

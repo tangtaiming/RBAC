@@ -17,11 +17,8 @@ import java.util.List;
  **/
 public class RoleDao extends BaseDao<Role> {
 
-    private Class<Role> classes;
-
     public RoleDao() {
         super(Role.class);
-        this.classes = Role.class;
     }
 
     public int findRoleAllListCount() {
@@ -35,8 +32,8 @@ public class RoleDao extends BaseDao<Role> {
             SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
             CriteriaBuilder criteriaBuilder = sessionFactory.getCriteriaBuilder();
             setSession(HibernateUtils.getSession());
-            CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(classes);
-            Root root = criteriaQuery.from(classes);
+            CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(getClasses());
+            Root root = criteriaQuery.from(getClasses());
             Expression expression = root.get("name").as(String.class);
             Predicate predicate = criteriaBuilder.equal(expression, name);
             criteriaQuery.where(predicate);

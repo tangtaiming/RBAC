@@ -17,12 +17,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Content Header (Page header) -->
         <div class="row content-header" style="background: #ffffff;">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title"><i class="fa fa-list"></i> 用户管理</h4>
+                <h4 class="page-title"><i class="fa fa-list"></i> 角色管理</h4>
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 <ol class="breadcrumb">
                     <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
-                    <li class="active">用户管理</li>
+                    <li class="active">角色管理</li>
                 </ol>
             </div>
             <!-- /.col-lg-12 -->
@@ -32,7 +32,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="white-box">
                 <p class="text-muted m-b-30">
                 <div>
-                    <a href="/admin/createUser" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus-square-o"></i> 新增</a>
+                    <a href="/admin/createRole" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus-square-o"></i> 新增</a>
                 </div>
                 </p>
                 <div class="table-responsive">
@@ -56,11 +56,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             </td>
                                             <td class="layui-table-td">
                                                 <div class="layui-edit-last">
-                                                    <a class="layui-btn layui-btn-xs" href="/admin/editRole?id=${role["id"]}">
-                                                        <i class="layui-icon">&#xe642;</i>编辑
+                                                    <a class="btn btn-primary btn-xs btn-flat" href="/admin/editRole?id=${role["id"]}">
+                                                        <i class="fa fa-pencil-square-o"></i> 编辑
                                                     </a>
-                                                    <a class="layui-btn layui-btn-xs" href="/admin/siteAccess?id=${role["id"]}">
-                                                        <i class="layui-icon">&#xe642;</i>设置权限
+                                                    <a class="btn btn-danger btn-xs btn-flat" href="/admin/siteAccess?id=${role["id"]}">
+                                                        <i class="fa fa-trash-o"></i> 设置权限
                                                     </a>
                                                 </div>
                                             </td>
