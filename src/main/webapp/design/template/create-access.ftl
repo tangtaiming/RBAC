@@ -6,6 +6,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html>
 <#include "core/adminlte-head.ftl" />
 <#include "core/adminlte-create-customjs.ftl" />
+<link href="/design/static/plugins/jstree/dist/themes/default/style.css" type="text/css" rel="stylesheet"/>
+<script src="/design/static/plugins/jstree/dist/jstree.js" type="application/javascript"></script>
+<script type="application/javascript">
+    $(function() {
+        $('#jstree_access_div').jstree({
+            "plugins" : ["checkbox"],
+            'core' : {
+                'data' : ${accessRsVo.navAll!'[]'}
+            }
+        });
+    })
+</script>
+
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
     <!-- Main Header -->
@@ -46,7 +59,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="col-xs-6">
                             <label for="urls" class="col-sm-2 control-label">URLS</label>
                             <div class="col-sm-10">
-                                <textarea id="urls" name="accessRsDto.urls" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                                <div id="jstree_access_div"></div>
                             </div>
                         </div>
                     </div>

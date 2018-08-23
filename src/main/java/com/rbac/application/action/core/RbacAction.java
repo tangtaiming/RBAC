@@ -7,6 +7,7 @@ import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @auther ttm
@@ -33,6 +34,11 @@ public class RbacAction extends ActionSupport {
      * 总共数量
      */
     private int totalRows;
+
+    /**
+     * 获取数据
+     */
+    private List<?> dataList;
 
     public void _execute() {
         HttpServletRequest request = ServletActionContext.getRequest();
@@ -81,6 +87,14 @@ public class RbacAction extends ActionSupport {
     private void initPage(int totalRows) {
         PageUtils page = new PageUtils(totalRows);
         setPage(page);
+    }
+
+    public List<?> getDataList() {
+        return dataList;
+    }
+
+    public void setDataList(List<?> dataList) {
+        this.dataList = dataList;
     }
 
 }

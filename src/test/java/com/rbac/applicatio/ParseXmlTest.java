@@ -1,10 +1,8 @@
 package com.rbac.applicatio;
 
-import com.system.core.vo.NavigatorRsVo;
+import com.rbac.application.action.vo.CreateAccessRsVo;
 import com.system.util.base.JsonUtils;
 import org.junit.Test;
-
-import java.util.LinkedList;
 
 /**
  * @auther ttm
@@ -14,10 +12,11 @@ public class ParseXmlTest {
 
     @Test
     public void xmlTest() {
-        NavigatorRsVo navigatorRsVo = new NavigatorRsVo();
-        LinkedList navigator = navigatorRsVo.getNavAll();
-        System.out.println("Show: " + JsonUtils.toJson(navigator));
-
+//        NavigatorRsVo navigatorRsVo = new NavigatorRsVo();
+//        LinkedList navigator = navigatorRsVo.getNavAll();
+//        System.out.println("Show: " + JsonUtils.toJson(navigator));
+        CreateAccessRsVo menuAccessRsVo = new CreateAccessRsVo();
+        System.out.println("Show: " + JsonUtils.toJson(menuAccessRsVo.getNavAll()));
     }
 
 

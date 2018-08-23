@@ -2,6 +2,7 @@ package com.rbac.application.action;
 
 import com.rbac.application.action.core.RbacAction;
 import com.rbac.application.action.dto.SaveAccessRsDto;
+import com.rbac.application.action.vo.CreateAccessRsVo;
 import com.rbac.application.orm.Access;
 import com.rbac.application.service.AccessService;
 import org.apache.commons.lang.StringUtils;
@@ -24,6 +25,8 @@ public class AccessManagementAction extends RbacAction {
 
     private Integer id;
 
+    private CreateAccessRsVo accessRsVo;
+
     private static final String ERROR_KEY = "error";
 
     public String accessManagement() {
@@ -37,6 +40,7 @@ public class AccessManagementAction extends RbacAction {
 
     public String createAccess() {
         _execute();
+        accessRsVo = new CreateAccessRsVo();
         return SUCCESS;
     }
 
@@ -108,5 +112,13 @@ public class AccessManagementAction extends RbacAction {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public CreateAccessRsVo getAccessRsVo() {
+        return accessRsVo;
+    }
+
+    public void setAccessRsVo(CreateAccessRsVo accessRsVo) {
+        this.accessRsVo = accessRsVo;
     }
 }

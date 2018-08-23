@@ -64,8 +64,6 @@ public class NavigatorRsVo {
      * @return
      */
     private LinkedList parseXml(Element root, boolean all) {
-//        TreeMap<Integer, ArrayList> navigatorTree = new TreeMap<>();
-
         LinkedList navigatorTree = new LinkedList<>();
         //frist navigator elments
         Elements fristNavElements = root.getChildElements();
@@ -111,43 +109,6 @@ public class NavigatorRsVo {
 
         return navigatorTree;
     }
-
-    private void parseSecondXml(LinkedHashMap<String, LinkedHashMap<String, LinkedHashSet<HashMap>>> firstNavData, Element firstElement, boolean all) {
-        Elements secondNavElements = firstElement.getChildElements();
-        String firstNavName = firstElement.getLocalName().toLowerCase();
-        LOG.info("First nav name: " + firstNavName);
-        //second navigator data
-        LinkedHashMap<String, LinkedHashSet<HashMap>> secondNavData = new LinkedHashMap<>();
-        for (int y = 0; y < secondNavElements.size(); y++) {
-            Element secondNav = secondNavElements.get(y);
-            //third navigator elements
-//            parseThirdXml(secondNavData , secondNav, all);
-        }
-    }
-
-//    private void parseThirdXml(LinkedHashMap<String, LinkedHashSet<HashMap>> secondNavData, Element secondNav, boolean all) {
-//        String secondNavName = secondNav.getLocalName();
-//        Elements thirdNavElements = secondNav.getChildElements();
-//        String secondLink = secondNav.getAttributeValue("link");
-//        LOG.info("Second nav: " + secondNavName + " link: " + secondLink);
-//
-//        //third navigator data
-//        LinkedHashSet<HashMap> thirdNavData = new LinkedHashSet<>();
-//        for (int z = 0; z < thirdNavElements.size(); z++) {
-//            HashMap<String, String> linkHashMap = new HashMap<>();
-//            Element thirdNav = thirdNavElements.get(z);
-//            String thirdNavName = thirdNav.getLocalName();
-//            String link = thirdNav.getAttributeValue("link");
-//            if (!StringUtils.isEmpty(link)) {
-//                link = link.trim();
-//            }
-//            LOG.info("Link: " + link);
-//            linkHashMap.put("title", thirdNavName);
-//            linkHashMap.put("link", link);
-//            thirdNavData.add(linkHashMap);
-//        }
-//        secondNavData.put(secondNavName, thirdNavData);
-//    }
 
     /**
      * 是否存在导航
