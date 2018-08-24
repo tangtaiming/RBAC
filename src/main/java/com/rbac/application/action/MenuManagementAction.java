@@ -20,6 +20,8 @@ public class MenuManagementAction extends RbacAction {
 
     private SaveMenuRsVo saveMenuRsVo;
 
+    private String result;
+
     /**
      * 菜单管理
      * @return
@@ -45,6 +47,8 @@ public class MenuManagementAction extends RbacAction {
 
     public String saveMenu() {
         LOG.info(saveMenuReVo.toString());
+        menuService.saveMenu(saveMenuReVo);
+        setResult("success");
         return SUCCESS;
     }
 
@@ -62,5 +66,13 @@ public class MenuManagementAction extends RbacAction {
 
     public void setSaveMenuRsVo(SaveMenuRsVo saveMenuRsVo) {
         this.saveMenuRsVo = saveMenuRsVo;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 }

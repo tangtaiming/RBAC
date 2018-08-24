@@ -1,11 +1,13 @@
 package com.rbac.application.action.vo;
 
+import java.io.Serializable;
+
 /**
  * 菜单VO
  * @auther ttm
  * @date 2018/8/24
  */
-public class SaveMenuReVo {
+public class SaveMenuReVo implements Serializable {
 
     /**
      * 菜单ID
@@ -46,6 +48,11 @@ public class SaveMenuReVo {
      * 图标
      */
     private String icon;
+
+    /**
+     * 菜单类型
+     */
+    private String type;
 
     public Long getMenuId() {
         return menuId;
@@ -111,6 +118,14 @@ public class SaveMenuReVo {
         this.icon = icon;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "SaveMenuReVo{" +
@@ -120,8 +135,9 @@ public class SaveMenuReVo {
                 ", parentName='" + parentName + '\'' +
                 ", url='" + url + '\'' +
                 ", perms='" + perms + '\'' +
-                ", orderNum='" + orderNum + '\'' +
+                ", orderNum=" + orderNum +
                 ", icon='" + icon + '\'' +
+                ", type=" + type +
                 '}';
     }
 }

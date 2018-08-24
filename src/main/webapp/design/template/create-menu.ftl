@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="/design/static/js/ztree.plugin.js" type="application/javascript"></script>
 <script>
     $(function() {
-        $.fn.zTree.init($("#ztree-parent-id"), zrteeSetting, ${saveMenuRsVo.menuJson!'[]'});
+        $.fn.zTree.init($("#ztree-parent-id"), zrteeSetting, ${saveMenuRsVo.menuJson![]});
     })
 </script>
 <link rel="stylesheet" href="/design/static/plugins/zTree_v3/css/zTreeStyle/zTreeStyle.css" type="text/css" />
