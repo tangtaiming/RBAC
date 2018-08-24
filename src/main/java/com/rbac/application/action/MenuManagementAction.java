@@ -1,6 +1,8 @@
 package com.rbac.application.action;
 
 import com.rbac.application.action.core.RbacAction;
+import com.rbac.application.action.vo.SaveMenuReVo;
+import com.rbac.application.action.vo.SaveMenuRsVo;
 import com.rbac.application.orm.Menu;
 import com.rbac.application.service.MenuService;
 
@@ -13,6 +15,10 @@ import java.util.List;
 public class MenuManagementAction extends RbacAction {
 
     private MenuService menuService = new MenuService();
+
+    private SaveMenuReVo saveMenuReVo;
+
+    private SaveMenuRsVo saveMenuRsVo;
 
     /**
      * 菜单管理
@@ -33,7 +39,28 @@ public class MenuManagementAction extends RbacAction {
      */
     public String createMenu() {
         _execute();
+        saveMenuRsVo = menuService.findNoButtonMenuList();
         return SUCCESS;
     }
 
+    public String saveMenu() {
+        LOG.info(saveMenuReVo.toString());
+        return SUCCESS;
+    }
+
+    public SaveMenuReVo getSaveMenuReVo() {
+        return saveMenuReVo;
+    }
+
+    public void setSaveMenuReVo(SaveMenuReVo saveMenuReVo) {
+        this.saveMenuReVo = saveMenuReVo;
+    }
+
+    public SaveMenuRsVo getSaveMenuRsVo() {
+        return saveMenuRsVo;
+    }
+
+    public void setSaveMenuRsVo(SaveMenuRsVo saveMenuRsVo) {
+        this.saveMenuRsVo = saveMenuRsVo;
+    }
 }

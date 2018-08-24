@@ -40,6 +40,8 @@ public class RbacAction extends ActionSupport {
      */
     private List<?> dataList;
 
+    private String time;
+
     public void _execute() {
         HttpServletRequest request = ServletActionContext.getRequest();
         HttpSession session = request.getSession(false);
@@ -97,4 +99,11 @@ public class RbacAction extends ActionSupport {
         this.dataList = dataList;
     }
 
+    public String getTime() {
+        return String.valueOf(System.currentTimeMillis());
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 }

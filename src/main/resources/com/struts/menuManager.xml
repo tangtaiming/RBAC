@@ -10,5 +10,9 @@
         <action name="createMenu" class="com.rbac.application.action.MenuManagementAction" method="createMenu">
             <result name="success">/design/template/create-menu.ftl</result>
         </action>
+        <action name="saveMenu" class="com.rbac.application.action.MenuManagementAction" method="saveMenu">
+            <result name="success">/design/template/save-result.ftl</result>
+            <result name="input">/design/template/ajax-fail.ftl</result>
+        </action>
     </package>
 </struts>
