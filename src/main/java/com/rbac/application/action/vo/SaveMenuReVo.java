@@ -22,7 +22,7 @@ public class SaveMenuReVo implements Serializable {
     /**
      * 父菜单ID，一级菜单为0
      */
-    private String parentId;
+    private Long parentId;
 
     /**
      * 父菜单名称，一级菜单为0
@@ -42,7 +42,7 @@ public class SaveMenuReVo implements Serializable {
     /**
      * 排序
      */
-    private String orderNum;
+    private Integer orderNum;
 
     /**
      * 图标
@@ -52,7 +52,7 @@ public class SaveMenuReVo implements Serializable {
     /**
      * 菜单类型
      */
-    private String type;
+    private Integer type;
 
     public Long getMenuId() {
         return menuId;
@@ -70,11 +70,11 @@ public class SaveMenuReVo implements Serializable {
         this.name = name;
     }
 
-    public String getParentId() {
+    public Long getParentId() {
         return parentId;
     }
 
-    public void setParentId(String parentId) {
+    public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
 
@@ -102,11 +102,11 @@ public class SaveMenuReVo implements Serializable {
         this.perms = perms;
     }
 
-    public String getOrderNum() {
+    public Integer getOrderNum() {
         return orderNum;
     }
 
-    public void setOrderNum(String orderNum) {
+    public void setOrderNum(Integer orderNum) {
         this.orderNum = orderNum;
     }
 
@@ -118,11 +118,11 @@ public class SaveMenuReVo implements Serializable {
         this.icon = icon;
     }
 
-    public String getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 

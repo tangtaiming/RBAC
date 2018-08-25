@@ -152,14 +152,6 @@ public class RoleManagementAction extends RbacAction {
         this.result = result;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public List<Access> getAccessList() {
         return accessList;
     }

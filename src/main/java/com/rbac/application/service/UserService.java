@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -34,8 +35,8 @@ public class UserService {
 
     private UserRoleDao userRoleDao = new UserRoleDao(UserRole.class);
 
-    public User findUserOne(Integer uid) {
-        return userDao.findOne(uid);
+    public User findUserOne(Serializable uid) {
+        return userDao.findOne(Integer.valueOf(uid.toString()));
     }
 
     public int findUserAllListCount() {
@@ -134,7 +135,7 @@ public class UserService {
             createUser.setCreateDate(currentTime);
             createUser.setUpdateDate(currentTime);
             createUser.setPassword(password);
-            Integer guid = userDao.save(createUser);
+            Integer guid = (Integer) userDao.save(createUser);
             if (null != guid) {
                 saveFalg = true;
                 userId = guid;
@@ -176,7 +177,7 @@ public class UserService {
                         createUserRole.setCreateDate(time);
                         createUserRole.setRoleId(role);
                         createUserRole.setUserId(userId);
-                        Integer createUserRoleId = userRoleDao.save(createUserRole);
+                        Integer createUserRoleId = (Integer) userRoleDao.save(createUserRole);
                         LOG.info("Save user role relation id: " + createUserRoleId + ((null != createUserRoleId) ? " success" : " fail"));
                     }
                 }

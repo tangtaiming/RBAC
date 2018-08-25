@@ -27,8 +27,6 @@ public class UserManagementAction extends RbacAction {
 
     private RoleService roleService = new RoleService();
 
-    private Integer id;
-
     private String result;
 
     private List<UserManagementRsVo> userRsVo;
@@ -107,14 +105,6 @@ public class UserManagementAction extends RbacAction {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getResult() {

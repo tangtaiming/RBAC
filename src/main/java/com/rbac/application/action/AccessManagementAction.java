@@ -23,8 +23,6 @@ public class AccessManagementAction extends RbacAction {
 
     private String result;
 
-    private Integer id;
-
     private CreateAccessRsVo accessRsVo;
 
     private static final String ERROR_KEY = "error";
@@ -72,7 +70,7 @@ public class AccessManagementAction extends RbacAction {
 
     public String editAccess() {
         _execute();
-        SaveAccessRsDto findAccessRsDto = accessService.findAccessRsDtoOne(id);
+        SaveAccessRsDto findAccessRsDto = accessService.findAccessRsDtoOne(getId());
         if (null == findAccessRsDto) {
             addFieldError(ERROR_KEY, "编辑异常, 查询权限为空");
             return INPUT;
@@ -104,14 +102,6 @@ public class AccessManagementAction extends RbacAction {
 
     public void setResult(String result) {
         this.result = result;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public CreateAccessRsVo getAccessRsVo() {

@@ -53,7 +53,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </script>
 
 <body class="hold-transition skin-blue sidebar-mini">
-    <div class="wrapper">
+<div class="wrapper">
     <!-- Main Header -->
     <#include "core/adminlte-header.ftl" />
     <!-- Left side column. contains the logo and sidebar -->
@@ -148,6 +148,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="form-group m-b-0">
                         <div class="col-xs-6">
                             <div class="col-sm-10 col-md-offset-2">
+                                <input name="saveMenuReVo.menuId" type="hidden" value=""/>
                                 <input id ="save-menu" type="button" class="btn btn-primary btn-sm btn-flat" value="保 存" />
                                 <input type="reset" class="btn btn-primary btn-sm btn-flat" value="重 置" />
                             </div>

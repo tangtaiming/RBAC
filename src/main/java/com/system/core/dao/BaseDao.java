@@ -118,12 +118,12 @@ public abstract class BaseDao<E extends Serializable> {
 
     }
 
-    public <T> Integer save(T obc) {
-        Integer nextId = null;
+    public <T> Serializable save(T obc) {
+        Serializable nextId;
         try {
             session = HibernateUtils.getSession();
             transaction = session.beginTransaction();
-            nextId = (Integer) session.save(obc);
+            nextId = session.save(obc);
             transaction.commit();
         } catch (Exception e) {
             if (null != transaction) {
@@ -136,6 +136,25 @@ public abstract class BaseDao<E extends Serializable> {
 
         return nextId;
     }
+
+//    public <T> Integer save(T obc) {
+//        Integer nextId = null;
+//        try {
+//            session = HibernateUtils.getSession();
+//            transaction = session.beginTransaction();
+//            nextId = (Integer) session.save(obc);
+//            transaction.commit();
+//        } catch (Exception e) {
+//            if (null != transaction) {
+//                transaction.rollback();
+//            }
+//            throw e;
+//        } finally {
+//            HibernateUtils.closeSession(session);
+//        }
+//
+//        return nextId;
+//    }
 
     public <T> boolean delete(T entity) {
         boolean deleteFalg = false;

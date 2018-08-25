@@ -4,7 +4,7 @@ var zrteeSetting = {
             enable: true,
             idKey: "menuId",
             pIdKey: "parentId",
-            rootPId: -1
+            rootPId: 0
         },
         key: {
             url:"nourl"

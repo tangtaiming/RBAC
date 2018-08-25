@@ -45,6 +45,12 @@ public class MenuManagementAction extends RbacAction {
         return SUCCESS;
     }
 
+    public String editMenu() {
+        _execute();
+        saveMenuRsVo = menuService.findEditPageData(getId());
+        return SUCCESS;
+    }
+
     public String saveMenu() {
         LOG.info(saveMenuReVo.toString());
         menuService.saveMenu(saveMenuReVo);

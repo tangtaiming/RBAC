@@ -12,6 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -75,15 +76,15 @@ public class AccessService {
             createAccess.setStatus(Status.OPEN.getStatus());
             createAccess.setTitle(accessRsDto.getTitle());
             createAccess.setUrls(JsonUtils.toJson(urls));
-            Integer createAccessId = accessDao.save(createAccess);
+            Integer createAccessId = (Integer) accessDao.save(createAccess);
             saveFalg = (null != createAccessId ? true : false);
         }
 
         return saveFalg;
     }
 
-    public SaveAccessRsDto findAccessRsDtoOne(Integer aid) {
-        Access access = findAccessOne(aid);
+    public SaveAccessRsDto findAccessRsDtoOne(Serializable aid) {
+        Access access = findAccessOne(Integer.valueOf(aid.toString()));
         if (null != access) {
             SaveAccessRsDto accessRsDto = new SaveAccessRsDto();
             accessRsDto.setId(access.getId());

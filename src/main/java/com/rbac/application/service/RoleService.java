@@ -11,6 +11,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -66,8 +67,8 @@ public class RoleService {
         return false;
     }
 
-    public Role findRoleOne(Integer rid) {
-        Role role = roleDao.findOne(rid);
+    public Role findRoleOne(Serializable rid) {
+        Role role = roleDao.findOne(Integer.valueOf(rid.toString()));
         return role;
     }
 
@@ -105,7 +106,7 @@ public class RoleService {
                     createRoleAccess.setRoleId(roleId);
                     createRoleAccess.setAccessId(roleAccessId);
                     createRoleAccess.setCreateDate(time);
-                    Integer createRoleAccessId = roleAccessDao.save(createRoleAccess);
+                    Integer createRoleAccessId = (Integer) roleAccessDao.save(createRoleAccess);
                     LOG.info("Save user role relation id: " + createRoleAccessId + ((null != createRoleAccessId) ? " success" : " fail"));
                 }
             }

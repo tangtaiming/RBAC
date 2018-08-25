@@ -59,21 +59,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <#list dataList as data>
                                         <tr>
                                             <td class="layui-table-td">
-                                                <div class="layui-table-cell">${data["menuId"]}</div></td>
+                                                <div class="layui-table-cell">${data["menuId"]!''}</div></td>
                                             <td class="layui-table-td">
-                                                <div class="layui-table-cell">${data["name"]}</div></td>
+                                                <div class="layui-table-cell">${data["name"]!''}</div></td>
                                             <td class="layui-table-td">
-                                                <div class="layui-table-cell">${data["parentName"]}</div></td>
+                                                <div class="layui-table-cell">${data["parentName"]!''}</div></td>
                                             <td class="layui-table-td">
-                                                <div class="layui-table-cell">${data["icon"]}</div></td>
+                                                <div class="layui-table-cell">${data["icon"]!''}</div></td>
                                             <td class="layui-table-td">
-                                                <div class="layui-table-cell">${data["type"]}</div></td>
+                                                <div class="layui-table-cell">${data["type"]!''}</div></td>
                                             <td class="layui-table-td">
-                                                <div class="layui-table-cell">${data["orderNum"]}</div></td>
+                                                <div class="layui-table-cell">${data["orderNum"]!''}</div></td>
                                             <td class="layui-table-td">
-                                                <div class="layui-table-cell">${data["url"]}</div></td>
+                                                <div class="layui-table-cell">${data["url"]!''}</div></td>
                                             <td class="layui-table-td">
-                                                <div class="layui-table-cell">${data["perms"]}</div></td>
+                                                <div class="layui-table-cell">${data["perms"]!''}</div></td>
                                             <td class="layui-table-td">
                                                 <div class="layui-edit-last">
                                                     <a href="/admin/editMenu?id=${data["menuId"]}"

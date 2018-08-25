@@ -7,13 +7,14 @@ import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @auther ttm
  * @date 2018/7/31
  */
-public class RbacAction extends ActionSupport {
+public class RbacAction<E> extends ActionSupport {
 
     /**
      * 导航菜单
@@ -41,6 +42,8 @@ public class RbacAction extends ActionSupport {
     private List<?> dataList;
 
     private String time;
+
+    private String id;
 
     public void _execute() {
         HttpServletRequest request = ServletActionContext.getRequest();
@@ -105,5 +108,13 @@ public class RbacAction extends ActionSupport {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

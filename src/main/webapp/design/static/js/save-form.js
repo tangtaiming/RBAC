@@ -33,18 +33,15 @@ function saveMenu() {
             var menuChecked = this.checked;
             if (menuChecked) {
                 var typeKey = $(this).attr("name");
-                var typeValue = true;
+                var typeValue = $(this).val();
                 putParams(params, typeKey, typeValue);
             }
         });
         //菜单名称
         putInput(params, "saveMenuReVo.name");
         //上级菜单
-        // putInput(params, "saveMenuReVo.parentId");
-        // var parentMenu = $('select[name="saveMenuReVo.parentId"]');
-        // var menuNameKey = 'saveMenuReVo.parentName';
-        // var menuNameValue = parentMenu.find("option:selected").text();
-        // putParams(params, menuNameKey, menuNameValue);
+        putInputById(params, "parentId");
+        putInputById(params, "parentName");
         //菜单URL
         putInput(params, "saveMenuReVo.url");
         //授权
@@ -73,6 +70,17 @@ function saveMenu() {
     });
 }
 
+function putInputById(params, id) {
+    var nameKey = '#' + id;
+    var obj = $(nameKey);
+    if (obj.length < 0) {
+        return;
+    }
+    var key = obj.attr("name");
+    var value = obj.val();
+    putParams(params, key, value);
+}
+
 function putInput(params, name) {
     var nameKey = 'input[name="' + name + '"]';
     var obj = $(nameKey);
@@ -81,7 +89,9 @@ function putInput(params, name) {
     }
     var key = obj.attr("name");
     var value = obj.val();
-    putParams(params, key, value);
+    if (!(null == value) && !("" == value.trim())) {
+        putParams(params, key, value);
+    }
 }
 
 function putParams(params, key, value) {

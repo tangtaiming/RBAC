@@ -5,7 +5,11 @@ import com.rbac.application.action.vo.SaveMenuRsVo;
 import com.rbac.application.dao.MenuDao;
 import com.rbac.application.orm.Menu;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +18,8 @@ import java.util.Optional;
  * @date 2018/8/23
  */
 public class MenuService {
+
+    private Logger LOG = LoggerFactory.getLogger(MenuService.class);
 
     private MenuDao menuDao = new MenuDao();
 
@@ -35,7 +41,7 @@ public class MenuService {
             root.setName("一级菜单");
             root.setParentId(-1L);
             root.setOpen(true);
-            menuList.add(root);
+            menuList.add(0, root);
         }
 
         saveMenuRsVo.setMenuList(menuList);
@@ -45,24 +51,49 @@ public class MenuService {
     public boolean saveMenu(SaveMenuReVo menuReVo) {
         Long menuId = menuReVo.getMenuId();
         if (null == menuId) {
-            Long parentId = Long.valueOf(Optional.ofNullable(menuReVo.getParentId()).orElse("0"));
-            Integer type = Integer.valueOf(menuReVo.getType());
-            Integer orderNum = Integer.valueOf(Optional.ofNullable(menuReVo.getOrderNum()).orElse("0"));
             Menu menu = new Menu();
             menu.setName(menuReVo.getName());
-            menu.setParentId(parentId);
+
             menu.setParentName("一级菜单");
             menu.setUrl(menuReVo.getUrl());
             menu.setPerms(menuReVo.getPerms());
             menu.setIcon(menuReVo.getIcon());
-            menu.setType(type);
-            menu.setOrderNum(orderNum);
-            Integer createMenuId = menuDao.save(menu);
+            menu.setType(menuReVo.getType());
+            menu.setOrderNum(menuReVo.getOrderNum());
+            Long parentId = menuReVo.getParentId();
+            if (null == parentId) {
+                menu.setParentId(0L);
+            } else {
+                menu.setParentId(menuReVo.getParentId());
+            }
+            String parentName = menuReVo.getParentName();
+            if (StringUtils.isEmpty(parentName)) {
+                menu.setParentName("一级菜单");
+            } else {
+                menu.setParentName(parentName);
+            }
+            Long createMenuId = (Long) menuDao.save(menu);
             return (null == createMenuId) ? false : true;
         } else {
 
         }
         return true;
+    }
+
+    public SaveMenuRsVo findEditPageData(Serializable menuId) {
+        Menu menu = menuDao.findOne(Long.valueOf((String) menuId));
+        String parentName = "";
+        if (!(null == menu)) {
+            Menu parentMenu = menuDao.findOne(menu.getParentId());
+            if (!(null == parentMenu)) {
+                parentName = parentMenu.getName();
+                LOG.info("Parent menu, menu id: {}, name: {}", parentMenu.getMenuId(), parentName);
+            }
+        }
+        menu.setParentName(parentName);
+        //加入 菜单
+        SaveMenuRsVo noButtonMenu = findNoButtonMenuList();
+        return new SaveMenuRsVo(menu, noButtonMenu.getMenuList());
     }
 
 }
