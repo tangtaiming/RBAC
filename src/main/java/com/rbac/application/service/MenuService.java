@@ -4,14 +4,12 @@ import com.rbac.application.action.vo.SaveMenuReVo;
 import com.rbac.application.action.vo.SaveMenuRsVo;
 import com.rbac.application.dao.MenuDao;
 import com.rbac.application.orm.Menu;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @auther ttm
@@ -34,15 +32,13 @@ public class MenuService {
     public SaveMenuRsVo findNoButtonMenuList() {
         SaveMenuRsVo saveMenuRsVo = new SaveMenuRsVo();
         List<Menu> menuList = menuDao.queryNotButtonMenuList();
-        if (!CollectionUtils.isEmpty(menuList)) {
-            //默认添加顶级类目
-            Menu root = new Menu();
-            root.setMenuId(0L);
-            root.setName("一级菜单");
-            root.setParentId(-1L);
-            root.setOpen(true);
-            menuList.add(0, root);
-        }
+        //默认添加顶级类目
+        Menu root = new Menu();
+        root.setMenuId(0L);
+        root.setName("一级菜单");
+        root.setParentId(-1L);
+        root.setOpen(true);
+        menuList.add(0, root);
 
         saveMenuRsVo.setMenuList(menuList);
         return saveMenuRsVo;
