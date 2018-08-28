@@ -85,22 +85,36 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <label for="loginName" class="col-sm-2 control-label">类型</label>
                             <div class="col-sm-10">
                                 <label class="radio-inline">
-                                    <input type="radio" name="saveMenuReVo.type" value="0"/> 目录
+                                    <#assign typeChecked='' />
+                                    <#if saveMenuRsVo.type?? && saveMenuRsVo.type?string=="0">
+                                        <#assign typeChecked='checked="checked"' />
+                                    </#if>
+                                    <input type="radio" name="saveMenuReVo.type" ${typeChecked} value="0"/> 目录
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="saveMenuReVo.type" value="1"/> 菜单
+                                    <#if saveMenuRsVo.type?? && saveMenuRsVo.type?string=="1">
+                                        <#assign typeChecked='checked="checked"' />
+                                    <#else>
+                                        <#assign typeChecked='' />
+                                    </#if>
+                                    <input type="radio" name="saveMenuReVo.type" ${typeChecked} value="1"/> 菜单
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="saveMenuReVo.type" value="2"/> 按钮
+                                    <#if saveMenuRsVo.type?? && saveMenuRsVo.type?string=="2">
+                                        <#assign typeChecked='checked="checked"' />
+                                    <#else>
+                                        <#assign typeChecked='' />
+                                    </#if>
+                                    <input type="radio" name="saveMenuReVo.type" ${typeChecked} value="2"/> 按钮
                                 </label>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-6">
-                            <label for="loginName" class="col-sm-2 control-label">菜单名称</label>
+                            <label for="name" class="col-sm-2 control-label">菜单名称</label>
                             <div class="col-sm-10">
-                                <input type="text" name="saveMenuReVo.name" class="form-control"/>
+                                <input type="text" name="saveMenuReVo.name" value="${saveMenuRsVo.name!''}" class="form-control"/>
                             </div>
                         </div>
                     </div>
@@ -117,38 +131,38 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="col-xs-6">
                             <label for="loginName" class="col-sm-2 control-label">菜单URL</label>
                             <div class="col-sm-10">
-                                <input type="text" name="saveMenuReVo.url" class="form-control"/>
+                                <input type="text" name="saveMenuReVo.url" value="${saveMenuRsVo.url!''}" class="form-control"/>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-6">
-                            <label for="loginName" class="col-sm-2 control-label">授权标识</label>
+                            <label for="perms" class="col-sm-2 control-label">授权标识</label>
                             <div class="col-sm-10">
-                                <input type="text" name="saveMenuReVo.perms" class="form-control"/>
+                                <input type="text" name="saveMenuReVo.perms" value="${saveMenuRsVo.perms!''}" class="form-control"/>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-6">
-                            <label for="loginName" class="col-sm-2 control-label">排序号</label>
+                            <label for="orderNum" class="col-sm-2 control-label">排序号</label>
                             <div class="col-sm-10">
-                                <input type="text" name="saveMenuReVo.orderNum" class="form-control"/>
+                                <input type="text" name="saveMenuReVo.orderNum" value="${saveMenuRsVo.orderNum!''}" class="form-control"/>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-6">
-                            <label for="loginName" class="col-sm-2 control-label">图标</label>
+                            <label for="icon" class="col-sm-2 control-label">图标</label>
                             <div class="col-sm-10">
-                                <input type="text" name="saveMenuReVo.icon" class="form-control"/>
+                                <input type="text" name="saveMenuReVo.icon" value="${saveMenuRsVo.icon!''}" class="form-control"/>
                             </div>
                         </div>
                     </div>
                     <div class="form-group m-b-0">
                         <div class="col-xs-6">
                             <div class="col-sm-10 col-md-offset-2">
-                                <input name="saveMenuReVo.menuId" type="hidden" value=""/>
+                                <input name="saveMenuReVo.menuId" type="hidden" value="${saveMenuRsVo.menuId!''}"/>
                                 <input id ="save-menu" type="button" class="btn btn-primary btn-sm btn-flat" value="保 存" />
                                 <input type="reset" class="btn btn-primary btn-sm btn-flat" value="重 置" />
                             </div>

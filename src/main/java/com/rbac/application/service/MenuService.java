@@ -4,7 +4,6 @@ import com.rbac.application.action.vo.SaveMenuReVo;
 import com.rbac.application.action.vo.SaveMenuRsVo;
 import com.rbac.application.dao.MenuDao;
 import com.rbac.application.orm.Menu;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +20,11 @@ public class MenuService {
 
     private MenuDao menuDao = new MenuDao();
 
+    private static final Long ROOTID = 0L;
+
+    private static final String ROOTNAME = "一级菜单";
+
+
     public List<Menu> findMenuAllList() {
         return menuDao.findAllList();
     }
@@ -34,8 +38,8 @@ public class MenuService {
         List<Menu> menuList = menuDao.queryNotButtonMenuList();
         //默认添加顶级类目
         Menu root = new Menu();
-        root.setMenuId(0L);
-        root.setName("一级菜单");
+        root.setMenuId(ROOTID);
+        root.setName(ROOTNAME);
         root.setParentId(-1L);
         root.setOpen(true);
         menuList.add(0, root);
@@ -49,29 +53,29 @@ public class MenuService {
         if (null == menuId) {
             Menu menu = new Menu();
             menu.setName(menuReVo.getName());
-
-            menu.setParentName("一级菜单");
             menu.setUrl(menuReVo.getUrl());
             menu.setPerms(menuReVo.getPerms());
             menu.setIcon(menuReVo.getIcon());
             menu.setType(menuReVo.getType());
             menu.setOrderNum(menuReVo.getOrderNum());
-            Long parentId = menuReVo.getParentId();
-            if (null == parentId) {
-                menu.setParentId(0L);
-            } else {
-                menu.setParentId(menuReVo.getParentId());
-            }
-            String parentName = menuReVo.getParentName();
-            if (StringUtils.isEmpty(parentName)) {
-                menu.setParentName("一级菜单");
-            } else {
-                menu.setParentName(parentName);
-            }
+            menu.setParentId(menuReVo.getParentId());
+            menu.setParentName(menuReVo.getParentName());
             Long createMenuId = (Long) menuDao.save(menu);
             return (null == createMenuId) ? false : true;
         } else {
+            Menu findMenu = menuDao.findOne(menuId);
+            if (null == findMenu) {
+                return false;
+            }
 
+            findMenu.setType(menuReVo.getType());
+            findMenu.setName(menuReVo.getName());
+            findMenu.setParentId(menuReVo.getParentId());
+            findMenu.setUrl(menuReVo.getUrl());
+            findMenu.setPerms(menuReVo.getPerms());
+            findMenu.setOrderNum(menuReVo.getOrderNum());
+            findMenu.setIcon(menuReVo.getIcon());
+            menuDao.update(findMenu);
         }
         return true;
     }
@@ -80,10 +84,15 @@ public class MenuService {
         Menu menu = menuDao.findOne(Long.valueOf((String) menuId));
         String parentName = "";
         if (!(null == menu)) {
-            Menu parentMenu = menuDao.findOne(menu.getParentId());
-            if (!(null == parentMenu)) {
-                parentName = parentMenu.getName();
-                LOG.info("Parent menu, menu id: {}, name: {}", parentMenu.getMenuId(), parentName);
+            Long parentId = menu.getParentId();
+            if (parentId == ROOTID) {
+                parentName = ROOTNAME;
+            } else {
+                Menu parentMenu = menuDao.findOne(menu.getParentId());
+                if (!(null == parentMenu)) {
+                    parentName = parentMenu.getName();
+                    LOG.info("Parent menu, menu id: {}, name: {}", parentMenu.getMenuId(), parentName);
+                }
             }
         }
         menu.setParentName(parentName);
