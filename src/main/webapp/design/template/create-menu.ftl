@@ -80,7 +80,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- white-box -->
             <div class="white-box">
                 <form id="form-menu" class="form-horizontal">
-                    <div class="form-group">
+                    <div id="type-group" class="form-group">
                         <div class="col-xs-6">
                             <label for="loginName" class="col-sm-2 control-label">类型</label>
                             <div class="col-sm-10">
@@ -88,7 +88,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <input type="radio" name="saveMenuReVo.type" value="0"/> 目录
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="saveMenuReVo.type" value="1"/> 菜单
+                                    <input type="radio" name="saveMenuReVo.type" checked="checked" value="1"/> 菜单
                                 </label>
                                 <label class="radio-inline">
                                     <input type="radio" name="saveMenuReVo.type" value="2"/> 按钮
@@ -96,52 +96,52 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div id="name-group" class="form-group">
                         <div class="col-xs-6">
-                            <label for="loginName" class="col-sm-2 control-label">菜单名称</label>
+                            <label for="name" class="col-sm-2 control-label">菜单名称</label>
                             <div class="col-sm-10">
-                                <input type="text" name="saveMenuReVo.name" class="form-control"/>
+                                <input id="name" type="text" name="saveMenuReVo.name" class="form-control"/>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div id="parentName-group" class="form-group">
                         <div class="col-xs-6">
-                            <label for="loginName" class="col-sm-2 control-label">上级菜单</label>
+                            <label for="parentName" class="col-sm-2 control-label">上级菜单</label>
                             <div class="col-sm-10">
                                 <input id="parentId" name="saveMenuReVo.parentId" type="hidden" class="form-control" value="${saveMenuRsVo['menuList'][0]['menuId']!''}">
                                 <input id="parentName" name="saveMenuReVo.parentName" type="text" readonly="readonly" style="cursor:pointer" class="form-control" value="${saveMenuRsVo['menuList'][0]['name']!''}">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div id="url-group" class="form-group">
                         <div class="col-xs-6">
-                            <label for="loginName" class="col-sm-2 control-label">菜单URL</label>
+                            <label for="url" class="col-sm-2 control-label">菜单URL</label>
                             <div class="col-sm-10">
-                                <input type="text" name="saveMenuReVo.url" class="form-control"/>
+                                <input id="url" type="text" name="saveMenuReVo.url" class="form-control"/>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div id="perms-group" class="form-group">
                         <div class="col-xs-6">
-                            <label for="loginName" class="col-sm-2 control-label">授权标识</label>
+                            <label for="perms" class="col-sm-2 control-label">授权标识</label>
                             <div class="col-sm-10">
-                                <input type="text" name="saveMenuReVo.perms" class="form-control"/>
+                                <input id="perms" type="text" name="saveMenuReVo.perms" class="form-control"/>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div id="orderNum-group" class="form-group">
                         <div class="col-xs-6">
-                            <label for="loginName" class="col-sm-2 control-label">排序号</label>
+                            <label for="orderNum" class="col-sm-2 control-label">排序号</label>
                             <div class="col-sm-10">
-                                <input type="text" name="saveMenuReVo.orderNum" class="form-control"/>
+                                <input id="orderNum" type="text" name="saveMenuReVo.orderNum" value="0" class="form-control"/>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div id="icon-group" class="form-group">
                         <div class="col-xs-6">
-                            <label for="loginName" class="col-sm-2 control-label">图标</label>
+                            <label for="icon" class="col-sm-2 control-label">图标</label>
                             <div class="col-sm-10">
-                                <input type="text" name="saveMenuReVo.icon" class="form-control"/>
+                                <input id="icon" type="text" name="saveMenuReVo.icon" class="form-control"/>
                             </div>
                         </div>
                     </div>

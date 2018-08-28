@@ -21,6 +21,20 @@ $(document).ready(function () {
     saveAccess();
     saveSiteAccess();
     saveMenu();
+    /**
+     * 菜单操作
+     */
+    $('input[name="saveMenuReVo.type"]').click(function() {
+        var type = $(this).val();
+        if (type == "0") {
+            //隐藏 菜单URL 标识
+            $('#url-group').hide();
+            $('#perms-group').hide();
+        } else if (type == '1') {
+            $('#url-group').show();
+            $('#perms-group').show();
+        }
+    });
 });
 
 
@@ -37,6 +51,8 @@ function saveMenu() {
                 putParams(params, typeKey, typeValue);
             }
         });
+        //菜单名称
+        putInput(params, "saveMenuReVo.menuId");
         //菜单名称
         putInput(params, "saveMenuReVo.name");
         //上级菜单

@@ -73,6 +73,7 @@ public class SaveMenuRsVo {
         this.icon = menu.getIcon();
         this.perms = menu.getPerms();
         this.type = menu.getType();
+        this.orderNum = menu.getOrderNum();
     }
 
     private List<Menu> menuList;
