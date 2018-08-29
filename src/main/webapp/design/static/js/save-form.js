@@ -83,22 +83,22 @@ function saveMenu() {
             putInput(params, "saveMenuReVo.icon");
         }
         console.log(params);
-        // $.ajax({
-        //     url : "/admin/saveMenu",
-        //     data : params,
-        //     type : 'post',
-        //     success : function ( result ) {
-        //         console.log("Show response success" + result);
-        //         if (result && result == "success") {
-        //             window.location.href = "/admin/menuManagement";
-        //         } else {
-        //             alert(result.trim());
-        //         }
-        //     },
-        //     error : function () {
-        //         alert('Save menu error');
-        //     }
-        // });
+        $.ajax({
+            url : "/admin/saveMenu",
+            data : params,
+            type : 'post',
+            success : function ( result ) {
+                console.log("Show response success" + result);
+                if (result && result == "success") {
+                    window.location.href = "/admin/menuManagement";
+                } else {
+                    alert(result.trim());
+                }
+            },
+            error : function () {
+                alert('Save menu error');
+            }
+        });
     });
 }
 
