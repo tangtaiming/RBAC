@@ -97,8 +97,8 @@ public class MenuService {
         }
         menu.setParentName(parentName);
         //加入 菜单
-        SaveMenuRsVo noButtonMenu = findNoButtonMenuList();
-        return new SaveMenuRsVo(menu, noButtonMenu.getMenuList());
+        SaveMenuRsVo saveMenuRsVo = findNoButtonMenuList();
+        return new SaveMenuRsVo(menu, saveMenuRsVo.getMenuList());
     }
 
 }

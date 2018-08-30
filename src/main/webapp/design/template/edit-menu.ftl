@@ -122,8 +122,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="col-xs-6">
                             <label for="loginName" class="col-sm-2 control-label">上级菜单</label>
                             <div class="col-sm-10">
-                                <input id="parentId" name="saveMenuReVo.parentId" type="hidden" class="form-control" value="${saveMenuRsVo['menuList'][0]['menuId']!''}">
-                                <input id="parentName" name="saveMenuReVo.parentName" type="text" readonly="readonly" style="cursor:pointer" class="form-control" value="${saveMenuRsVo['menuList'][0]['name']!''}">
+                                <#assign menuParentId = 0 />
+                                <#assign menuParentName = '一级菜单' />
+                                <#list saveMenuRsVo['menuList'] as menuRow>
+                                    <#if menuRow['menuId']?? && menuRow['menuId']==saveMenuRsVo.parentId>
+                                        <#assign menuParentId = menuRow['menuId'] />
+                                        <#assign menuParentName = menuRow['name'] />
+                                        <#break >
+                                    </#if>
+                                </#list>
+                                <input id="parentId" name="saveMenuReVo.parentId" type="hidden" class="form-control" value="${menuParentId!''}">
+                                <input id="parentName" name="saveMenuReVo.parentName" type="text" readonly="readonly" style="cursor:pointer" class="form-control" value="${menuParentName!''}">
                             </div>
                         </div>
                     </div>
