@@ -101,4 +101,9 @@ public class MenuService {
         return new SaveMenuRsVo(menu, saveMenuRsVo.getMenuList());
     }
 
+    private boolean validateSaveMenuData(SaveMenuReVo saveMenuReVo) {
+
+        return true;
+    }
+
 }

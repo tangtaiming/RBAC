@@ -51,6 +51,11 @@ public class MenuManagementAction extends RbacAction {
         return SUCCESS;
     }
 
+    public void validateSaveMenu() {
+        //菜单名称 + 菜单类型确定唯一
+
+    }
+
     public String saveMenu() {
         LOG.info(saveMenuReVo.toString());
         menuService.saveMenu(saveMenuReVo);
