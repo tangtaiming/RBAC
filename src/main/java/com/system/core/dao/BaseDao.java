@@ -5,7 +5,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -21,6 +24,8 @@ import java.util.Optional;
  * @date 2018/7/27 0027
  **/
 public abstract class BaseDao<E extends Serializable> {
+
+    private Logger LOG = LoggerFactory.getLogger(BaseDao.class);
 
     private SessionFactory sessionFactory;
 
@@ -111,7 +116,7 @@ public abstract class BaseDao<E extends Serializable> {
      * @return
      */
     public List<E> findEqList(Map<String, Object> query) {
-        List<E> datas = null;
+        List<E> datas = new ArrayList<E>();
         try {
             session = HibernateUtils.getSession();
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
@@ -132,6 +137,32 @@ public abstract class BaseDao<E extends Serializable> {
         }
 
         return datas;
+    }
+
+    public E findEqOne(Map<String, Object> query) {
+        E entity = null;
+        try {
+            session = HibernateUtils.getSession();
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(classes);
+            Root root = criteriaQuery.from(classes);
+            List<Predicate> queryPredicateList = new ArrayList<>();
+            for (String key : query.keySet()) {
+                Predicate predicate = criteriaBuilder.equal(root.get(key), query.get(key));
+                queryPredicateList.add(predicate);
+            }
+            criteriaQuery.where(queryPredicateList.toArray(new Predicate[]{}));
+            Query findQuery = session.createQuery(criteriaQuery);
+            entity = (E) findQuery.getSingleResult();
+        } catch (NoResultException noResultEx) {
+            LOG.warn("Find {} {}", classes.getName(), noResultEx.getMessage());
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            HibernateUtils.closeSession(session);
+        }
+
+        return entity;
     }
 
     public <T> void update(T obc) {

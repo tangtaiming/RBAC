@@ -100,6 +100,7 @@ public class HibernateTest {
         System.out.println("Show: " + JsonUtils.toJson(query.getResultList()));
     }
 
+    @Ignore
     @Test
     public void findMapQueryList() {
         MenuService menuService = new MenuService();
@@ -107,6 +108,15 @@ public class HibernateTest {
         query.put("menuId", 1L);
         query.put("name", "商品管理");
         System.out.println("Show: " + JsonUtils.toJson(menuService.findMenuList(query)));
+    }
+
+    @Test
+    public void findMapQueryOne() {
+        MenuService menuService = new MenuService();
+        Map<String, Object> query = new LinkedMap();
+        query.put("type", 2);
+        query.put("name", "商品管理");
+        System.out.println("Show: " + JsonUtils.toJson(menuService.findMenuOne(query)));
     }
 
 }

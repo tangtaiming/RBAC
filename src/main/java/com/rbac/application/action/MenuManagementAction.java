@@ -53,7 +53,11 @@ public class MenuManagementAction extends RbacAction {
 
     public void validateSaveMenu() {
         //菜单名称 + 菜单类型确定唯一
-
+        boolean validateTypeAndNameFalg = menuService.validateSaveMenuData(saveMenuReVo);
+        if (!validateTypeAndNameFalg) {
+            addFieldError(ERROR, "菜单已经存在,请进行菜单名称修改");
+            return;
+        }
     }
 
     public String saveMenu() {
