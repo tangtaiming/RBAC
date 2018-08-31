@@ -8,8 +8,12 @@ import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -101,6 +105,35 @@ public abstract class BaseDao<E extends Serializable> {
         return datas;
     }
 
+    /**
+     * 条件查询只适用于 eq
+     * @param query
+     * @return
+     */
+    public List<E> findEqList(Map<String, Object> query) {
+        List<E> datas = null;
+        try {
+            session = HibernateUtils.getSession();
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(classes);
+            Root root = criteriaQuery.from(classes);
+            List<Predicate> queryPredicateList = new ArrayList<>();
+            for (String key : query.keySet()) {
+                Predicate predicate = criteriaBuilder.equal(root.get(key), query.get(key));
+                queryPredicateList.add(predicate);
+            }
+            criteriaQuery.where(queryPredicateList.toArray(new Predicate[]{}));
+            Query findQuery = session.createQuery(criteriaQuery);
+            datas = findQuery.getResultList();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            HibernateUtils.closeSession(session);
+        }
+
+        return datas;
+    }
+
     public <T> void update(T obc) {
         try {
             session = HibernateUtils.getSession();
@@ -136,25 +169,6 @@ public abstract class BaseDao<E extends Serializable> {
 
         return nextId;
     }
-
-//    public <T> Integer save(T obc) {
-//        Integer nextId = null;
-//        try {
-//            session = HibernateUtils.getSession();
-//            transaction = session.beginTransaction();
-//            nextId = (Integer) session.save(obc);
-//            transaction.commit();
-//        } catch (Exception e) {
-//            if (null != transaction) {
-//                transaction.rollback();
-//            }
-//            throw e;
-//        } finally {
-//            HibernateUtils.closeSession(session);
-//        }
-//
-//        return nextId;
-//    }
 
     public <T> boolean delete(T entity) {
         boolean deleteFalg = false;

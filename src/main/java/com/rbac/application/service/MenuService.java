@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @auther ttm
@@ -104,6 +105,10 @@ public class MenuService {
     private boolean validateSaveMenuData(SaveMenuReVo saveMenuReVo) {
 
         return true;
+    }
+
+    public List<Menu> findMenuList(Map<String, Object> query) {
+        return menuDao.findEqList(query);
     }
 
 }

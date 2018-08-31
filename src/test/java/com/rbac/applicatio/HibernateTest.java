@@ -2,15 +2,14 @@ package com.rbac.applicatio;
 
 import com.rbac.application.dao.RoleDao;
 import com.rbac.application.orm.Menu;
-import com.rbac.application.orm.Role;
+import com.rbac.application.service.MenuService;
 import com.rbac.application.service.UserService;
 import com.system.core.dao.BaseDao;
 import com.system.util.base.HibernateUtils;
 import com.system.util.base.JsonUtils;
-import com.system.util.enumerate.RoleStatus;
+import org.apache.commons.collections.map.LinkedMap;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -22,8 +21,8 @@ import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @auther ttm
@@ -83,13 +82,14 @@ public class HibernateTest {
     }
 
 
+    @Ignore
     @Test
     public void findAllIf() {
         Session session = HibernateUtils.getSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(Menu.class);
         Root root = criteriaQuery.from(Menu.class);
-        Predicate predicate = criteriaBuilder.equal(root.get("menuId"), 3L);
+        Predicate predicate = criteriaBuilder.equal(root.get("menuId"), 1L);
         Predicate predicate1 = criteriaBuilder.equal(root.get("name"), "商品管理");
         List<Predicate> predicates = new ArrayList<>();
         predicates.add(predicate);
@@ -98,6 +98,15 @@ public class HibernateTest {
 //        criteriaBuilder.equal(root.get("name"), "商品管理");
         Query query = session.createQuery(criteriaQuery);
         System.out.println("Show: " + JsonUtils.toJson(query.getResultList()));
+    }
+
+    @Test
+    public void findMapQueryList() {
+        MenuService menuService = new MenuService();
+        Map<String, Object> query = new LinkedMap();
+        query.put("menuId", 1L);
+        query.put("name", "商品管理");
+        System.out.println("Show: " + JsonUtils.toJson(menuService.findMenuList(query)));
     }
 
 }
