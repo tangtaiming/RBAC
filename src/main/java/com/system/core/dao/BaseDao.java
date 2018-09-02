@@ -1,6 +1,8 @@
 package com.system.core.dao;
 
+import com.system.core.exception.RbacException;
 import com.system.util.base.HibernateUtils;
+import org.hibernate.NonUniqueResultException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -139,7 +141,7 @@ public abstract class BaseDao<E extends Serializable> {
         return datas;
     }
 
-    public E findEqOne(Map<String, Object> query) {
+    public E findEqOne(Map<String, Object> query) throws RbacException {
         E entity = null;
         try {
             session = HibernateUtils.getSession();
@@ -155,8 +157,12 @@ public abstract class BaseDao<E extends Serializable> {
             Query findQuery = session.createQuery(criteriaQuery);
             entity = (E) findQuery.getSingleResult();
         } catch (NoResultException noResultEx) {
-            LOG.warn("Find {} {}", classes.getName(), noResultEx.getMessage());
-        } catch (Exception e) {
+            String message = "Find " + classes.getName() + " " + noResultEx.getMessage();
+            LOG.warn(message);
+        } catch (NonUniqueResultException nonUniqueEx) {
+            String message = "Find " + classes.getName() + " " + nonUniqueEx.getMessage();
+            throw new RbacException(message);
+        }catch (Exception e) {
             throw e;
         } finally {
             HibernateUtils.closeSession(session);

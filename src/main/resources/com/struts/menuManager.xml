@@ -17,5 +17,8 @@
         <action name="editMenu" class="com.rbac.application.action.MenuManagementAction" method="editMenu">
             <result name="success">/design/template/edit-menu.ftl</result>
         </action>
+        <action name="deleteMenu" class="com.rbac.application.action.MenuManagementAction" method="deleteMenu">
+            <result name="success">/design/template/save-result.ftl</result>
+        </action>
     </package>
 </struts>

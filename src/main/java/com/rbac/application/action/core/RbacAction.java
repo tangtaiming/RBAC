@@ -45,6 +45,11 @@ public class RbacAction<E> extends ActionSupport {
 
     private String id;
 
+    /**
+     * 结果json
+     */
+    private String result;
+
     public void _execute() {
         HttpServletRequest request = ServletActionContext.getRequest();
         HttpSession session = request.getSession(false);
@@ -116,5 +121,13 @@ public class RbacAction<E> extends ActionSupport {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 }

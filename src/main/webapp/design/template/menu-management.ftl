@@ -5,12 +5,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
 <#include "core/adminlte-head.ftl"/>
+<script src="/design/static/js/list-plugin.js?version=${time!''}" type="text/javascript"></script>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
     <!-- Main Header -->
-<#include "core/adminlte-header.ftl"/>
+    <#include "core/adminlte-header.ftl"/>
     <!-- Left side column. contains the logo and sidebar -->
-<#include "core/adminlte-side.ftl"/>
+    <#include "core/adminlte-side.ftl"/>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -78,7 +79,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <div class="layui-edit-last">
                                                     <a href="/admin/editMenu?id=${data["menuId"]}"
                                                        class="btn btn-primary btn-xs btn-flat"><i class="fa fa-pencil-square-o"></i> 编辑</a>
-                                                    <a class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash-o"></i> 删除</a>
+                                                    <a href="javascript:$.fn.list('del', '/admin/deleteMenu', ${data["menuId"]!''})" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash-o"></i> 删除</a>
                                                 </div>
                                             </td>
                                         </tr>

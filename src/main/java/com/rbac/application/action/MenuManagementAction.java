@@ -3,6 +3,7 @@ package com.rbac.application.action;
 import com.rbac.application.action.core.RbacAction;
 import com.rbac.application.action.vo.SaveMenuReVo;
 import com.rbac.application.action.vo.SaveMenuRsVo;
+import com.rbac.application.action.vo.ValidateSaveMenuRsVo;
 import com.rbac.application.orm.Menu;
 import com.rbac.application.service.MenuService;
 
@@ -51,19 +52,35 @@ public class MenuManagementAction extends RbacAction {
         return SUCCESS;
     }
 
+    /**
+     * 校验菜单
+     */
     public void validateSaveMenu() {
         //菜单名称 + 菜单类型确定唯一
-        boolean validateTypeAndNameFalg = menuService.validateSaveMenuData(saveMenuReVo);
-        if (!validateTypeAndNameFalg) {
-            addFieldError(ERROR, "菜单已经存在,请进行菜单名称修改");
+        ValidateSaveMenuRsVo validateTypeAndNameFalg = menuService.validateSaveMenuData(saveMenuReVo);
+        if (!validateTypeAndNameFalg.getCode().equals(200)) {
+            addFieldError(ERROR, validateTypeAndNameFalg.getMessage());
             return;
         }
     }
 
+    /**
+     * 保存菜单
+     * @return
+     */
     public String saveMenu() {
         LOG.info(saveMenuReVo.toString());
         menuService.saveMenu(saveMenuReVo);
         setResult("success");
+        return SUCCESS;
+    }
+
+    /**
+     * 删除菜单
+     * @return
+     */
+    public String deleteMenu() {
+        menuService.deleteMenu(getId());
         return SUCCESS;
     }
 
