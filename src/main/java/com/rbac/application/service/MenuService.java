@@ -1,5 +1,6 @@
 package com.rbac.application.service;
 
+import com.rbac.application.action.vo.DeleteMenuRsVo;
 import com.rbac.application.action.vo.SaveMenuReVo;
 import com.rbac.application.action.vo.SaveMenuRsVo;
 import com.rbac.application.action.vo.ValidateSaveMenuRsVo;
@@ -115,14 +116,13 @@ public class MenuService {
             try {
                 menu = menuDao.findEqOne(typeAndNameQuery);
             } catch (RbacException e) {
-                LOG.error("Fail result: {}", e.getMessage());
-                return validateVo.fail("菜单已经存在,请进行菜单名称修改");
+                return (ValidateSaveMenuRsVo) validateVo.fail("菜单已经存在,并且有多个菜单数据,数据异常请删除异常数据");
             } catch (Exception ex) {
                 LOG.error("Error result: {}", ex);
-                return validateVo.error("未知异常,请联系管理员");
+                return (ValidateSaveMenuRsVo) validateVo.error("未知异常,请联系管理员");
             }
-            if (null == menu) {
-                return validateVo;
+            if (!(null == menu)) {
+                return (ValidateSaveMenuRsVo) validateVo.fail("菜单已经存在,请进行菜单名称修改");
             }
         }
 
@@ -144,9 +144,15 @@ public class MenuService {
         return null;
     }
 
-    public boolean deleteMenu(String menuId) {
+    public String deleteMenu(String menuId) {
         LOG.warn("Delete {} success", menuId);
-        return true;
+        Menu deleteMenu = menuDao.findOne(Long.valueOf(menuId));
+        DeleteMenuRsVo menuRsVo = new DeleteMenuRsVo();
+        if (!(null == deleteMenu)) {
+            return menuDao.delete(deleteMenu) ? menuRsVo.success() : menuRsVo.menuFailMenu("删除菜单失败!");
+        }
+
+        return menuRsVo.menuFailMenu("删除菜单失败!");
     }
 
 }

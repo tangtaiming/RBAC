@@ -1,1 +1,1 @@
-<#include "fail.ftl" />
+<#include "result/fail.ftl" />

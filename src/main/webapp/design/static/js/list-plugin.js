@@ -7,13 +7,22 @@
          * @param delId
          */
         del : function (uri, delId) {
+            if (!confirm("[警告] 确认删除ID: " + delId + " 数据")) {
+                return;
+            }
             var datas = {};
             datas['id'] = delId;
             $.get(uri, datas, function (data, status) {
                 if ('success' == status) {
-                    alert('delete ' + delId + " success");
+                    var parseData = JSON.parse(data);
+                    if (200 == parseData.code){
+                        alert("ID: " + delId + " " + parseData.message);
+                        location.reload(true);
+                    } else {
+                        alert("ID: " + delId + " " + parseData.message);
+                    }
                 }
-            }, 'json');
+            });
         }
     }
 

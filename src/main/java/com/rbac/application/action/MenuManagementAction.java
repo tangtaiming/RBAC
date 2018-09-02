@@ -1,6 +1,7 @@
 package com.rbac.application.action;
 
 import com.rbac.application.action.core.RbacAction;
+import com.rbac.application.action.vo.DeleteMenuRsVo;
 import com.rbac.application.action.vo.SaveMenuReVo;
 import com.rbac.application.action.vo.SaveMenuRsVo;
 import com.rbac.application.action.vo.ValidateSaveMenuRsVo;
@@ -80,8 +81,15 @@ public class MenuManagementAction extends RbacAction {
      * @return
      */
     public String deleteMenu() {
-        menuService.deleteMenu(getId());
-        return SUCCESS;
+        try {
+            String result = menuService.deleteMenu(getId());
+            setResult(result);
+            return SUCCESS;
+        } catch (Exception e) {
+            LOG.error("Delete error {}", e);
+            addFieldError("error", "删除菜单异常！");
+            return ERROR;
+        }
     }
 
     public SaveMenuReVo getSaveMenuReVo() {
