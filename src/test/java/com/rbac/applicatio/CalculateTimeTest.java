@@ -62,15 +62,15 @@ public class CalculateTimeTest {
 //            localDateTime.plusMinutes(cycle);
 //            System.out.println(localDateTime);
 //        }
-        LocalDateTime localDateTime = LocalDateTime.parse(currentDateTime, DateTimeFormatter.ofPattern(FORMAT));
-        System.out.println(localDateTime.plusMinutes(5).format(DateTimeFormatter.ofPattern(FORMAT)));
-        System.out.println(localDateTime.plusMinutes(30).format(DateTimeFormatter.ofPattern(FORMAT)));
-        System.out.println(localDateTime.plusMinutes(12 * 60).format(DateTimeFormatter.ofPattern(FORMAT)));
-        System.out.println(localDateTime.plusMinutes(1 * 24 * 60).format(DateTimeFormatter.ofPattern(FORMAT)));
-        System.out.println(localDateTime.plusMinutes(2 * 24 * 60).format(DateTimeFormatter.ofPattern(FORMAT)));
-        System.out.println(localDateTime.plusMinutes(4 * 24 * 60).format(DateTimeFormatter.ofPattern(FORMAT)));
-        System.out.println(localDateTime.plusMinutes(7 * 24 * 60).format(DateTimeFormatter.ofPattern(FORMAT)));
-        System.out.println(localDateTime.plusMinutes(15 * 24 * 60).format(DateTimeFormatter.ofPattern(FORMAT)));
+        LocalDateTime localDateTime = LocalDateTime.parse("2018-09-03 06:30:00", DateTimeFormatter.ofPattern(FORMAT));
+        System.out.println("5分钟 " + localDateTime.plusMinutes(5).format(DateTimeFormatter.ofPattern(FORMAT)));
+        System.out.println("30分钟 " + localDateTime.plusMinutes(30).format(DateTimeFormatter.ofPattern(FORMAT)));
+        System.out.println("12小时 " + localDateTime.plusMinutes(12 * 60).format(DateTimeFormatter.ofPattern(FORMAT)));
+        System.out.println("一天 " + localDateTime.plusMinutes(1 * 24 * 60).format(DateTimeFormatter.ofPattern(FORMAT)));
+        System.out.println("二天 " + localDateTime.plusMinutes(2 * 24 * 60).format(DateTimeFormatter.ofPattern(FORMAT)));
+        System.out.println("四天 " + localDateTime.plusMinutes(4 * 24 * 60).format(DateTimeFormatter.ofPattern(FORMAT)));
+        System.out.println("七天 " + localDateTime.plusMinutes(7 * 24 * 60).format(DateTimeFormatter.ofPattern(FORMAT)));
+        System.out.println("十五天 " + localDateTime.plusMinutes(15 * 24 * 60).format(DateTimeFormatter.ofPattern(FORMAT)));
     }
 
 
