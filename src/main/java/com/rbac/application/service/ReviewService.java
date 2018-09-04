@@ -11,7 +11,7 @@ public class ReviewService {
 
     private ReviewDao reviewDao = new ReviewDao();
 
-    private boolean saveReview(Review review) {
+    public boolean saveReview(Review review) {
         reviewDao.save(review);
         return !(null == review.getReviewId()) ? true : false;
     }

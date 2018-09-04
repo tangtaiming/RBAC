@@ -1,8 +1,11 @@
 package com.rbac.applicatio;
 
+import com.rbac.application.dao.ReviewDao;
 import com.rbac.application.dao.RoleDao;
 import com.rbac.application.orm.Menu;
+import com.rbac.application.orm.Review;
 import com.rbac.application.service.MenuService;
+import com.rbac.application.service.ReviewService;
 import com.rbac.application.service.UserService;
 import com.system.core.dao.BaseDao;
 import com.system.util.base.HibernateUtils;
@@ -10,6 +13,7 @@ import com.system.util.base.JsonUtils;
 import org.apache.commons.collections.map.LinkedMap;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -110,6 +114,7 @@ public class HibernateTest {
         System.out.println("Show: " + JsonUtils.toJson(menuService.findMenuList(query)));
     }
 
+    @Ignore
     @Test
     public void findMapQueryOne() {
         MenuService menuService = new MenuService();
@@ -117,6 +122,44 @@ public class HibernateTest {
         query.put("type", 2);
         query.put("name", "商品管理");
         System.out.println("Show: " + JsonUtils.toJson(menuService.findMenuOne(query)));
+    }
+
+    public List<Long> cycleTime = new ArrayList<>();
+
+    private static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+    @Before
+    public void initCycle() {
+        cycleTime.add(5L);
+        cycleTime.add(30L);
+        cycleTime.add(12L * 60);
+        //一天
+        cycleTime.add(1L * 24 * 60);
+        //两天
+        cycleTime.add(2L * 24 * 60);
+        //四天
+        cycleTime.add(4L * 24 * 60);
+        //七天
+        cycleTime.add(7L * 24 * 60);
+        //十五天
+        cycleTime.add(15L * 24 * 60);
+    }
+
+    @Test
+    public void saveReview() {
+        ReviewService reviewService = new ReviewService();
+        String currentDateTime = "2018-09-04 06:00:00";
+        for (int x = 0; x < cycleTime.size(); x++) {
+            LocalDateTime localDateTime = LocalDateTime.parse(currentDateTime, DateTimeFormatter.ofPattern(FORMAT));
+            Long cycle = cycleTime.get(x);
+            System.out.println(localDateTime.plusMinutes(cycle).format(DateTimeFormatter.ofPattern(FORMAT)));
+            String reviseDate = localDateTime.plusMinutes(cycle).format(DateTimeFormatter.ofPattern(FORMAT));
+            Review review = new Review();
+            review.setName("jQuery noConflict用法");
+            review.setReviewDate(reviseDate);
+            review.setCreateDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT)));
+            reviewService.saveReview(review);
+        }
     }
 
 }
