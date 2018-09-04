@@ -49,20 +49,19 @@ public class CalculateTimeTest {
 //            localDateTime.plusMinutes(cycle);
 //            System.out.println(localDateTime);
 //        }
-
     }
 
     @Test
     public void calculateTest() {
         String currentDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT));
-//        calculate(currentDateTime);
-//        for (int x = 0; x < cycleTime.size(); x++) {
-//            LocalDateTime localDateTime = LocalDateTime.parse(currentDateTime, DateTimeFormatter.ofPattern(FORMAT));
-//            Long cycle = cycleTime.get(x);
-//            localDateTime.plusMinutes(cycle);
-//            System.out.println(localDateTime);
-//        }
-        LocalDateTime localDateTime = LocalDateTime.parse("2018-09-03 06:30:00", DateTimeFormatter.ofPattern(FORMAT));
+        calculate(currentDateTime);
+        for (int x = 0; x < cycleTime.size(); x++) {
+            LocalDateTime localDateTime = LocalDateTime.parse(currentDateTime, DateTimeFormatter.ofPattern(FORMAT));
+            Long cycle = cycleTime.get(x);
+            System.out.println(localDateTime.plusMinutes(cycle).format(DateTimeFormatter.ofPattern(FORMAT)));
+        }
+
+        LocalDateTime localDateTime = LocalDateTime.parse("2018-09-04 06:47:00", DateTimeFormatter.ofPattern(FORMAT));
         System.out.println("5分钟 " + localDateTime.plusMinutes(5).format(DateTimeFormatter.ofPattern(FORMAT)));
         System.out.println("30分钟 " + localDateTime.plusMinutes(30).format(DateTimeFormatter.ofPattern(FORMAT)));
         System.out.println("12小时 " + localDateTime.plusMinutes(12 * 60).format(DateTimeFormatter.ofPattern(FORMAT)));

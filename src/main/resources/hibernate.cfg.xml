@@ -38,5 +38,6 @@
         <mapping resource="com/hibernate/access.hbm.xml"></mapping>
         <mapping resource="com/hibernate/role-access.hbm.xml"></mapping>
         <mapping resource="com/hibernate/menu.hbm.xml"></mapping>
+        <mapping resource="com/hibernate/review.hbm.xml"></mapping>
     </session-factory>
 </hibernate-configuration>
