@@ -149,24 +149,34 @@ public class HibernateTest {
     @Test
     public void saveReview() {
         ReviewService reviewService = new ReviewService();
-        String currentDateTime = "2018-09-04 06:00:00";
+        String currentDateTime = "2018-09-06 07:45:00";
         for (int x = 0; x < cycleTime.size(); x++) {
             LocalDateTime localDateTime = LocalDateTime.parse(currentDateTime, DateTimeFormatter.ofPattern(FORMAT));
             Long cycle = cycleTime.get(x);
             System.out.println(localDateTime.plusMinutes(cycle).format(DateTimeFormatter.ofPattern(FORMAT)));
             String reviseDate = localDateTime.plusMinutes(cycle).format(DateTimeFormatter.ofPattern(FORMAT));
             Review review = new Review();
-            review.setName("jQuery noConflict用法");
+            review.setName("印象笔记-结构施工图 识图，读图2");
             review.setReviewDate(reviseDate);
             review.setCreateDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT)));
             reviewService.saveReview(review);
         }
     }
 
+    @Ignore
     @Test
     public void findReivew() {
         ReviewService reviewService = new ReviewService();
-        System.out.println(JsonUtils.toJson(reviewService.findReivewByReviewDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT)))));
+        List<Review> reviewList = reviewService.findReivewByReviewDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT)));
+//        System.out.println(JsonUtils.toJson(reviewService.findReivewByReviewDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT)))));
+        System.out.println("##########复习计划预览##########");
+        for (Review review : reviewList) {
+            System.out.println("复习标题: "
+                    + review.getName()
+                    + ", 今日复习时间: "
+                    + review.getReviewDate());
+            System.out.println();
+        }
     }
 
 }
