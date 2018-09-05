@@ -145,6 +145,7 @@ public class HibernateTest {
         cycleTime.add(15L * 24 * 60);
     }
 
+    @Ignore
     @Test
     public void saveReview() {
         ReviewService reviewService = new ReviewService();
@@ -160,6 +161,12 @@ public class HibernateTest {
             review.setCreateDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT)));
             reviewService.saveReview(review);
         }
+    }
+
+    @Test
+    public void findReivew() {
+        ReviewService reviewService = new ReviewService();
+        System.out.println(JsonUtils.toJson(reviewService.findReivewByReviewDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT)))));
     }
 
 }
