@@ -149,7 +149,7 @@ public class HibernateTest {
     @Test
     public void saveReview() {
         ReviewService reviewService = new ReviewService();
-        String currentDateTime = "2018-09-06 07:45:00";
+        String currentDateTime = "2018-09-07 07:30:00";
         for (int x = 0; x < cycleTime.size(); x++) {
             LocalDateTime localDateTime = LocalDateTime.parse(currentDateTime, DateTimeFormatter.ofPattern(FORMAT));
             Long cycle = cycleTime.get(x);
