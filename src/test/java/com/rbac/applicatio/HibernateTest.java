@@ -9,7 +9,6 @@ import com.rbac.application.service.UserService;
 import com.system.core.dao.BaseDao;
 import com.system.util.base.HibernateUtils;
 import com.system.util.base.JsonUtils;
-import com.system.util.base.MD5Utils;
 import org.apache.commons.collections.map.LinkedMap;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
