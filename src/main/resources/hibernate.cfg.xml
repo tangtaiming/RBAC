@@ -8,9 +8,9 @@
     <session-factory>
         <!-- 配置关于数据库连接的四个项：driverClass  url username password -->
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost/test?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull</property>
-        <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">Taiming@123</property>
+        <property name="hibernate.connection.url">jdbc:mysql://rds3729gs13hax22ipye.mysql.rds.aliyuncs.com:3306/rrjfc3b94z?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull</property>
+        <property name="hibernate.connection.username">rrjfc3b94z</property>
+        <property name="hibernate.connection.password">tangtaiming@123</property>
 
         <!-- 可以将向数据库发送的SQL语句显示出来 -->
         <property name="hibernate.show_sql">true</property>
