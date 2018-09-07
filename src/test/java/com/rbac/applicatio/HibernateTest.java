@@ -1,6 +1,5 @@
 package com.rbac.applicatio;
 
-import com.rbac.application.dao.ReviewDao;
 import com.rbac.application.dao.RoleDao;
 import com.rbac.application.orm.Menu;
 import com.rbac.application.orm.Review;
@@ -10,6 +9,7 @@ import com.rbac.application.service.UserService;
 import com.system.core.dao.BaseDao;
 import com.system.util.base.HibernateUtils;
 import com.system.util.base.JsonUtils;
+import com.system.util.base.MD5Utils;
 import org.apache.commons.collections.map.LinkedMap;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -148,16 +148,18 @@ public class HibernateTest {
     @Test
     public void saveReview() {
         ReviewService reviewService = new ReviewService();
-        String currentDateTime = "2018-09-04 06:00:00";
+        String currentDateTime = "2018-09-03 06:00:00";
         for (int x = 0; x < cycleTime.size(); x++) {
+            String text = "jQuery ajax.get()用法";
             LocalDateTime localDateTime = LocalDateTime.parse(currentDateTime, DateTimeFormatter.ofPattern(FORMAT));
             Long cycle = cycleTime.get(x);
             System.out.println(localDateTime.plusMinutes(cycle).format(DateTimeFormatter.ofPattern(FORMAT)));
             String reviseDate = localDateTime.plusMinutes(cycle).format(DateTimeFormatter.ofPattern(FORMAT));
             Review review = new Review();
-            review.setName("jQuery noConflict用法");
+            review.setName("Name_" + MD5Utils.encoder(text));
             review.setReviewDate(reviseDate);
             review.setCreateDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT)));
+            review.setMessage(text);
             reviewService.saveReview(review);
         }
     }
