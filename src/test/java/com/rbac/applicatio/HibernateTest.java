@@ -151,16 +151,16 @@ public class HibernateTest {
         String currentDateTime = "2018-09-07 07:30:00";
 
         for (int x = 0; x < cycleTime.size(); x++) {
-            String text = "jQuery ajax.get()用法";
+            String name = "印象笔记-英语笔记-第一天";
             LocalDateTime localDateTime = LocalDateTime.parse(currentDateTime, DateTimeFormatter.ofPattern(FORMAT));
             Long cycle = cycleTime.get(x);
             System.out.println(localDateTime.plusMinutes(cycle).format(DateTimeFormatter.ofPattern(FORMAT)));
             String reviseDate = localDateTime.plusMinutes(cycle).format(DateTimeFormatter.ofPattern(FORMAT));
             Review review = new Review();
-            review.setName("印象笔记-结构施工图 识图，读图2");
+            review.setName(name);
             review.setReviewDate(reviseDate);
             review.setCreateDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT)));
-            review.setMessage(text);
+            review.setMessage(null);
             reviewService.saveReview(review);
         }
     }
