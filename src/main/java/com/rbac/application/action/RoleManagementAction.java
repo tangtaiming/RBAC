@@ -32,8 +32,6 @@ public class RoleManagementAction extends RbacAction {
 
     private String result;
 
-    private Integer id;
-
     private static final String ERROR_KEY = "error";
 
     private SaveSiteAccessRqDto siteAccessRqDto;
@@ -116,7 +114,7 @@ public class RoleManagementAction extends RbacAction {
      */
     public String siteAccess() {
         _execute();
-        Role role = roleService.findRoleOne(id);
+        Role role = roleService.findRoleOne(getId());
         if (null == role) {
             addFieldError(ERROR_KEY, "编辑异常, 查询角色为空");
             return INPUT;

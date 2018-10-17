@@ -148,10 +148,10 @@ public class HibernateTest {
     @Test
     public void saveReview() {
         ReviewService reviewService = new ReviewService();
-        String currentDateTime = "2018-09-07 07:30:00";
+        String currentDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT));
 
         for (int x = 0; x < cycleTime.size(); x++) {
-            String name = "印象笔记-英语笔记-第一天";
+            String name = "印象笔记-英语笔记-第六天";
             LocalDateTime localDateTime = LocalDateTime.parse(currentDateTime, DateTimeFormatter.ofPattern(FORMAT));
             Long cycle = cycleTime.get(x);
             System.out.println(localDateTime.plusMinutes(cycle).format(DateTimeFormatter.ofPattern(FORMAT)));

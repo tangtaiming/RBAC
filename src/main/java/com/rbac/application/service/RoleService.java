@@ -68,6 +68,7 @@ public class RoleService {
     }
 
     public Role findRoleOne(Serializable rid) {
+        System.out.println("rid: "+ rid);
         Role role = roleDao.findOne(Integer.valueOf(rid.toString()));
         return role;
     }
