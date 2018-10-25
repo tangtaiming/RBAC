@@ -86,7 +86,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
             actionContext.getSession().put("WW_TRANS_I18N_LOCALE", actionContext.getLocale());
         }
         LOG.info("Show requestUri: {}, contextPath: {}, method: {}", requestUri, contextPath, method);
-        //判断对应的请求url 时候符合
+        //判断对应的请求url 是否符合
         if (!(checkoutAllowRequestUrl(requestUri)) && !checkoutLoginStatusBySession(request)) {
             return LOGIN_PAGE;
         }

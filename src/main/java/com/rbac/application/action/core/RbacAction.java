@@ -1,14 +1,25 @@
 package com.rbac.application.action.core;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.util.logging.commons.CommonsLogger;
+import com.rbac.application.orm.Access;
+import com.rbac.application.orm.RoleAccess;
+import com.rbac.application.service.AccessService;
+import com.rbac.application.service.RoleService;
+import com.rbac.application.service.UserService;
 import com.system.core.vo.NavigatorRsVo;
+import com.system.util.base.JsonUtils;
 import com.system.util.base.PageUtils;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @auther ttm
@@ -50,12 +61,40 @@ public class RbacAction<E> extends ActionSupport {
      */
     private String result;
 
+    private static Set<String> chooseAccessList;
+
     public void _execute() {
         HttpServletRequest request = ServletActionContext.getRequest();
         HttpSession session = request.getSession(false);
         if (!(null == session)) {
             String loginName = (String) session.getAttribute("name");
             setLoginName(loginName);
+            String secretKey = (String) session.getAttribute("secretKey");
+            String[] splitSecretKey = StringUtils.split(secretKey, "#");
+            String userId = splitSecretKey[1];
+            //根据用户查询用户对于的组，
+            //根据用户组查下组下面的权限
+            UserService userService = new UserService();
+            List<Integer> userRoleIdList = userService.findUserRoleColumnRoleIdByUserId(Integer.valueOf(userId));
+            if (!CollectionUtils.isEmpty(userRoleIdList) && CollectionUtils.isEmpty(chooseAccessList)) {
+                chooseAccessList = new HashSet<>();
+                RoleService roleService = new RoleService();
+                for (Integer userRoleIdRow : userRoleIdList) {
+                    List<RoleAccess> roleAccessList = roleService.findRoleAccessByRoleId(userRoleIdRow);
+                    if (!(CollectionUtils.isEmpty(roleAccessList))) {
+                        AccessService accessService = new AccessService();
+                        for (RoleAccess roleAccessRow : roleAccessList) {
+                            Access access = accessService.findAccessOne(roleAccessRow.getAccessId());
+                            if (!(null == access)) {
+                                String uri = access.getUrls();
+                                List<String> uriList = (List<String>) JsonUtils.fromJson(uri, List.class);
+                                chooseAccessList.addAll(uriList);
+                            }
+                        }
+                    }
+                }
+                LOG.info("access uri: " + chooseAccessList.toString());
+            }
         }
         //实例化导航
         nav = new NavigatorRsVo();
@@ -130,4 +169,5 @@ public class RbacAction<E> extends ActionSupport {
     public void setResult(String result) {
         this.result = result;
     }
+
 }
