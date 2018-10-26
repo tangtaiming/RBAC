@@ -10,12 +10,14 @@ import com.rbac.application.service.UserService;
 import com.system.core.vo.NavigatorRsVo;
 import com.system.util.base.JsonUtils;
 import com.system.util.base.PageUtils;
+import nu.xom.ParsingException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;

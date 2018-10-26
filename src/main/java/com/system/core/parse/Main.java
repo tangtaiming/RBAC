@@ -1,8 +1,7 @@
-package com.rbac.applicatio;
+package com.system.core.parse;
 
-import com.system.util.base.DumperUtils;
+import com.system.util.base.AppPathUtils;
 import nu.xom.*;
-import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,42 +10,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @auther ttm
- * @date 2018/8/21
- */
-public class ParseXmlTest {
+public class Main {
 
-    @Test
-    public void contextText() throws ParsingException, IOException {
-        String fileDir = "F:\\project\\rbac\\src\\main\\resources\\com\\page\\main\\";
-        String path = fileDir + "userManager.xml";
-        File file = new File(path);
-        Builder builder = new Builder();
-        Document document = builder.build(file);
-        System.out.println("root : " + document.getRootElement().getLocalName());
-        Element root = document.getRootElement();
-        String rootClassName = root.getAttributeValue("class");
-        Elements childElementList = root.getChildElements();
-        int childElementSize = childElementList.size();
-        Map<String, Object> allMapData = new HashMap<>();
-        allMapData.put("entity", rootClassName);
-        for (int x = 0; x < childElementSize; x++) {
-            Element childElement = childElementList.get(x);
-            System.out.println("Show " + childElement.getLocalName());
-            String childLocalName = childElement.getLocalName();
-            if (childLocalName.equals("head")) {
-                Map<String, List<String>> headData = parseHeadXml(childElement);
-                allMapData.put("head", headData);
-            } else if (childLocalName.equals("body")) {
-                Map<String, Object> bodyData = parseBodyXml(childElement);
-                allMapData.put("body", bodyData);
-            } else {
-                System.out.println("Parse fail element name : " + childLocalName);
-            }
-        }
+    private Map<String, Object> body;
 
-        DumperUtils.dump(allMapData);
+    private Map<String, List<String>> head;
+
+    public Main(String urlPath) throws ParsingException, IOException {
+        System.out.println("Show url: " + urlPath);
+//        AppPathUtils.getAppPageXmlPath() + AppPathUtils.SEPARATORCHAR + urlPath;
+//        File file = new File(urlPath);
+//        Builder builder = new Builder();
+//        Document document = builder.build(file);
+//        Element root = document.getRootElement();
+//        parseXml(root);
+    }
+
+    public void parseXml(Element root) {
+        Element headElement = root.getFirstChildElement("head");
+        Element bodyElement = root.getFirstChildElement("body");
+        Map<String, List<String>> headList = parseHeadXml(headElement);
+        Map<String, Object> bodyList = parseBodyXml(bodyElement);
+        setHead(headList);
+        setBody(bodyList);
     }
 
     private Map<String, Object> parseBodyXml(Element bodyElement) {
@@ -119,5 +105,19 @@ public class ParseXmlTest {
         return headMap;
     }
 
+    public Map<String, Object> getBody() {
+        return body;
+    }
 
+    public void setBody(Map<String, Object> body) {
+        this.body = body;
+    }
+
+    public Map<String, List<String>> getHead() {
+        return head;
+    }
+
+    public void setHead(Map<String, List<String>> head) {
+        this.head = head;
+    }
 }
