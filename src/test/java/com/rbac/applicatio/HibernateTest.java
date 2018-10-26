@@ -145,18 +145,36 @@ public class HibernateTest {
         cycleTime.add(15L * 24 * 60);
     }
 
-    @Ignore
     @Test
-    public void saveReview() {
+    public void saveReview2() {
         ReviewService reviewService = new ReviewService();
-        String currentDateTime = "2018-09-07 07:30:00";
+        String currentDateTime = LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern(FORMAT));
         for (int x = 0; x < cycleTime.size(); x++) {
             LocalDateTime localDateTime = LocalDateTime.parse(currentDateTime, DateTimeFormatter.ofPattern(FORMAT));
             Long cycle = cycleTime.get(x);
             System.out.println(localDateTime.plusMinutes(cycle).format(DateTimeFormatter.ofPattern(FORMAT)));
             String reviseDate = localDateTime.plusMinutes(cycle).format(DateTimeFormatter.ofPattern(FORMAT));
             Review review = new Review();
-            review.setName("印象笔记-结构施工图 识图，读图2");
+            review.setName("百词斩-第八天");
+            review.setReviewDate(reviseDate);
+            review.setCreateDate(LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern(FORMAT)));
+//            System.out.println("Show: " + JsonUtils.toJson(review));
+            reviewService.saveReview(review);
+        }
+    }
+
+    @Ignore
+    @Test
+    public void saveReview() {
+        ReviewService reviewService = new ReviewService();
+        String currentDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT));
+        for (int x = 0; x < cycleTime.size(); x++) {
+            LocalDateTime localDateTime = LocalDateTime.parse(currentDateTime, DateTimeFormatter.ofPattern(FORMAT));
+            Long cycle = cycleTime.get(x);
+            System.out.println(localDateTime.plusMinutes(cycle).format(DateTimeFormatter.ofPattern(FORMAT)));
+            String reviseDate = localDateTime.plusMinutes(cycle).format(DateTimeFormatter.ofPattern(FORMAT));
+            Review review = new Review();
+            review.setName("百词斩-第八天");
             review.setReviewDate(reviseDate);
             review.setCreateDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT)));
             reviewService.saveReview(review);
@@ -174,7 +192,9 @@ public class HibernateTest {
             System.out.println("复习标题: "
                     + review.getName()
                     + ", 今日复习时间: "
-                    + review.getReviewDate());
+                    + review.getReviewDate()
+                    + ", 创建时间: "
+                    + review.getCreateDate());
             System.out.println();
         }
     }
