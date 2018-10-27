@@ -5,6 +5,7 @@ import com.rbac.application.action.vo.LoginVo;
 import com.rbac.application.action.vo.ResponseVo;
 import com.rbac.application.orm.User;
 import com.rbac.application.service.UserService;
+import com.system.util.base.JsonUtils;
 import com.system.util.base.MD5Utils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;

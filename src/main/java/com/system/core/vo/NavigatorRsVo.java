@@ -1,6 +1,7 @@
 package com.system.core.vo;
 
 import nu.xom.*;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +23,11 @@ public class NavigatorRsVo {
 
     private final String NAVIGATOR = "navigator";
 
-    public NavigatorRsVo() {}
+    private static List<String> permissionList;
+
+    public NavigatorRsVo() {
+
+    }
 
     /**
      * 获取所有导航菜单

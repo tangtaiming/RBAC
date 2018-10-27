@@ -1,6 +1,5 @@
 package com.rbac.applicatio;
 
-import com.rbac.application.dao.ReviewDao;
 import com.rbac.application.dao.RoleDao;
 import com.rbac.application.orm.Menu;
 import com.rbac.application.orm.Review;
@@ -145,38 +144,23 @@ public class HibernateTest {
         cycleTime.add(15L * 24 * 60);
     }
 
-    @Test
-    public void saveReview2() {
-        ReviewService reviewService = new ReviewService();
-        String currentDateTime = LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern(FORMAT));
-        for (int x = 0; x < cycleTime.size(); x++) {
-            LocalDateTime localDateTime = LocalDateTime.parse(currentDateTime, DateTimeFormatter.ofPattern(FORMAT));
-            Long cycle = cycleTime.get(x);
-            System.out.println(localDateTime.plusMinutes(cycle).format(DateTimeFormatter.ofPattern(FORMAT)));
-            String reviseDate = localDateTime.plusMinutes(cycle).format(DateTimeFormatter.ofPattern(FORMAT));
-            Review review = new Review();
-            review.setName("百词斩-第八天");
-            review.setReviewDate(reviseDate);
-            review.setCreateDate(LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern(FORMAT)));
-//            System.out.println("Show: " + JsonUtils.toJson(review));
-            reviewService.saveReview(review);
-        }
-    }
-
     @Ignore
     @Test
     public void saveReview() {
         ReviewService reviewService = new ReviewService();
         String currentDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT));
+
         for (int x = 0; x < cycleTime.size(); x++) {
+            String name = "印象笔记-英语笔记-第六天";
             LocalDateTime localDateTime = LocalDateTime.parse(currentDateTime, DateTimeFormatter.ofPattern(FORMAT));
             Long cycle = cycleTime.get(x);
             System.out.println(localDateTime.plusMinutes(cycle).format(DateTimeFormatter.ofPattern(FORMAT)));
             String reviseDate = localDateTime.plusMinutes(cycle).format(DateTimeFormatter.ofPattern(FORMAT));
             Review review = new Review();
-            review.setName("百词斩-第八天");
+            review.setName(name);
             review.setReviewDate(reviseDate);
             review.setCreateDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT)));
+            review.setMessage(null);
             reviewService.saveReview(review);
         }
     }
@@ -192,9 +176,7 @@ public class HibernateTest {
             System.out.println("复习标题: "
                     + review.getName()
                     + ", 今日复习时间: "
-                    + review.getReviewDate()
-                    + ", 创建时间: "
-                    + review.getCreateDate());
+                    + review.getReviewDate());
             System.out.println();
         }
     }

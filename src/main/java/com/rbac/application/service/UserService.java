@@ -208,6 +208,11 @@ public class UserService {
         return chosenVoList;
     }
 
+    /**
+     * 根据用户id查下用户对于角色
+     * @param userId
+     * @return
+     */
     public List<Integer> findUserRoleColumnRoleIdByUserId(Integer userId) {
         return userRoleDao.findUserRoleColumnRoleIdByUserId(userId);
     }

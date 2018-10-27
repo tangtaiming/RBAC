@@ -29,7 +29,6 @@ public class MenuService {
 
     private static final String ROOTNAME = "一级菜单";
 
-
     public List<Menu> findMenuAllList() {
         return menuDao.findAllList();
     }
