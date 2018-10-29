@@ -1,6 +1,9 @@
 package com.system.core.dao;
 
+import com.system.core.domain.SimpleSpecificationBuilder;
+import com.system.core.domain.Specification;
 import com.system.core.exception.RbacException;
+import com.system.core.session.FilterSession;
 import com.system.util.base.HibernateUtils;
 import org.hibernate.NonUniqueResultException;
 import org.hibernate.Session;
@@ -10,11 +13,11 @@ import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,6 +106,29 @@ public abstract class BaseDao<E extends Serializable> {
             CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(classes);
             criteriaQuery.from(classes);
             datas = session.createQuery(criteriaQuery).getResultList();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            HibernateUtils.closeSession(session);
+        }
+
+        return datas;
+    }
+
+    public List<E> findList(Specification specification) {
+        List<E> datas = new ArrayList<E>();
+        try {
+            session = HibernateUtils.getSession();
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(classes);
+            Root root = criteriaQuery.from(classes);
+            Predicate predicate = specification.toPredicate(root, criteriaQuery, criteriaBuilder);
+
+            criteriaQuery.where(predicate);
+            TypedQuery typedQuery = session.createQuery(criteriaQuery);
+            typedQuery.setFirstResult(10);
+            typedQuery.setMaxResults(20);
+            datas = typedQuery.getResultList();
         } catch (Exception e) {
             throw e;
         } finally {

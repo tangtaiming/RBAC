@@ -5,6 +5,10 @@ import com.rbac.application.dao.UserDao;
 import com.rbac.application.dao.UserRoleDao;
 import com.rbac.application.orm.User;
 import com.rbac.application.orm.UserRole;
+import com.system.core.domain.SimpleSpecification;
+import com.system.core.domain.SimpleSpecificationBuilder;
+import com.system.core.domain.Specification;
+import com.system.core.session.FilterSession;
 import com.system.util.base.JsonUtils;
 import com.system.util.base.MD5Utils;
 import com.system.util.base.ResponseVoUtils;
@@ -215,6 +219,13 @@ public class UserService {
      */
     public List<Integer> findUserRoleColumnRoleIdByUserId(Integer userId) {
         return userRoleDao.findUserRoleColumnRoleIdByUserId(userId);
+    }
+
+    public List<User> findUserListTest() {
+        FilterSession filterSession = new FilterSession();
+        SimpleSpecificationBuilder builder = filterSession.initSpecificationBuilder();
+        Specification specification = builder.generateSpecification();
+        return userDao.findList(specification);
     }
 
 }

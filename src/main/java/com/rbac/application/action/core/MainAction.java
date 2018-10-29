@@ -1,6 +1,7 @@
 package com.rbac.application.action.core;
 
 import com.system.core.parse.Main;
+import com.system.core.session.FilterSession;
 import nu.xom.ParsingException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
@@ -26,6 +27,7 @@ public class MainAction extends RbacAction {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        FilterSession filterSession = new FilterSession();
     }
 
     public void setMainXml(String url) throws ParsingException, IOException {

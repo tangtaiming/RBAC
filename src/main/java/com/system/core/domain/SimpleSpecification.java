@@ -22,7 +22,7 @@ public class SimpleSpecification<T> implements Specification<T> {
         int index = 0;
         //通过resultPre来组合多个条件
         Predicate resultPre = null;
-        for(SpecificationOperator op:opers) {
+        for(SpecificationOperator op : opers) {
             if(index++==0) {
                 resultPre = generatePredicate(root, criteriaBuilder, op);
                 continue;
@@ -39,19 +39,35 @@ public class SimpleSpecification<T> implements Specification<T> {
     }
 
     private Predicate generatePredicate(Root<T> root, CriteriaBuilder criteriaBuilder, SpecificationOperator op) {
+        Object o = op.getValue();
         /*
          * 根据不同的操作符返回特定的查询*/
-        if("=".equalsIgnoreCase(op.getOper())) {
-            System.out.println(op.getKey()+","+ op.getValue());
+        if("eq".equalsIgnoreCase(op.getOper())) {
             return criteriaBuilder.equal(root.get(op.getKey()),op.getValue());
         } else if(">=".equalsIgnoreCase(op.getOper())) {
-            return criteriaBuilder.ge(root.get(op.getKey()), (Number)op.getValue());
+            if (o instanceof Integer) {
+                return criteriaBuilder.ge(root.get(op.getKey()), (Number) op.getValue());
+            } else if (o instanceof String) {
+                return criteriaBuilder.greaterThanOrEqualTo(root.get(op.getKey()), (String) op.getValue());
+            }
         } else if("<=".equalsIgnoreCase(op.getOper())) {
-            return criteriaBuilder.le(root.get(op.getKey()),(Number)op.getValue());
+            if (o instanceof Integer) {
+                return criteriaBuilder.le(root.get(op.getKey()), (Number) op.getValue());
+            } else {
+                return criteriaBuilder.lessThanOrEqualTo(root.get(op.getKey()), (String) op.getValue());
+            }
         } else if(">".equalsIgnoreCase(op.getOper())) {
-            return criteriaBuilder.gt(root.get(op.getKey()),(Number)op.getValue());
+            if (o instanceof Integer) {
+                return criteriaBuilder.gt(root.get(op.getKey()), (Number) op.getValue());
+            } else if (o instanceof String) {
+                return criteriaBuilder.greaterThan(root.get(op.getKey()), (String) op.getValue());
+            }
         } else if("<".equalsIgnoreCase(op.getOper())) {
-            return criteriaBuilder.lt(root.get(op.getKey()),(Number)op.getValue());
+            if (o instanceof Integer) {
+                return criteriaBuilder.lt(root.get(op.getKey()), (Number) op.getValue());
+            } else {
+                return criteriaBuilder.lessThan(root.get(op.getKey()), (String) op.getValue());
+            }
         } else if(":".equalsIgnoreCase(op.getOper())) {
             return criteriaBuilder.like(root.get(op.getKey()),"%"+op.getValue()+"%");
         } else if("l:".equalsIgnoreCase(op.getOper())) {
@@ -62,7 +78,7 @@ public class SimpleSpecification<T> implements Specification<T> {
             return criteriaBuilder.isNull(root.get(op.getKey()));
         } else if("!null".equalsIgnoreCase(op.getOper())) {
             return criteriaBuilder.isNotNull(root.get(op.getKey()));
-        } else if("!=".equalsIgnoreCase(op.getOper())) {
+        } else if("!eq".equalsIgnoreCase(op.getOper())) {
             return criteriaBuilder.notEqual(root.get(op.getKey()),op.getValue());
         }
         return null;
