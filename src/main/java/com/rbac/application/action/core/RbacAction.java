@@ -42,11 +42,6 @@ public class RbacAction<E> extends ActionSupport {
      */
     private String loginName;
 
-    /**
-     * 获取数据
-     */
-    private List<?> dataList;
-
     private String time;
 
     private String id;
@@ -111,14 +106,6 @@ public class RbacAction<E> extends ActionSupport {
 
     public void setNav(NavigatorRsVo nav) {
         this.nav = nav;
-    }
-
-    public List<?> getDataList() {
-        return dataList;
-    }
-
-    public void setDataList(List<?> dataList) {
-        this.dataList = dataList;
     }
 
     public String getTime() {

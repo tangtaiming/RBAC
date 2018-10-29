@@ -19,6 +19,8 @@ public class TestManagementAction extends MainAction {
         try {
             _execute();
             userList = userService.findUserListTest();
+            Integer totalCount = userService.findUserAllListCount();
+            buildPageData(userList, totalCount);
         } catch (Exception e) {
             e.printStackTrace();
         }

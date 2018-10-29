@@ -19,7 +19,7 @@
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <div class="row content-header" style="background: #ffffff;">
-                <#assign managerTitle=main.titleOne />
+                <#assign managerTitle=main.titleOne!'' />
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                     <h4 class="page-title"><i class="fa fa-list"></i> <@s.text name="${managerTitle!''}"/></h4>
                 </div>
@@ -79,10 +79,10 @@
                                     </tr>
                                 </thead>
                                 <tbody id="adminlte-tbody-data-list">
-                                    <#assign  dataList = main.body.data />
-                                    <#list collection as row>
+                                    <#assign  bodyDataList = main.body.data />
+                                    <#list dataList as row>
                                     <tr>
-                                        <#list dataList as dataRow>
+                                        <#list bodyDataList as dataRow>
                                             <#if dataRow.type?? && dataRow.type=="action">
                                                 <td>
                                                     <div class="layui-edit-last">
@@ -97,7 +97,7 @@
                                     </tr>
                                     </#list>
                                     <tr>
-                                        <td colspan="${dataList?size}" style="padding:0px 0px 0px 0px; height:45px;">
+                                        <td colspan="${bodyDataList?size}" style="padding:0px 0px 0px 0px; height:45px;">
                                             <!-- 分页 -->
                                             <#include "adminlte-page.ftl" />
                                             <!-- 分页 END -->
@@ -136,10 +136,10 @@
     </html>
 
     <#else>
-        <#assign  dataList = main.body.data />
-        <#list collection as row>
+        <#assign  bodyDataList = main.body.data />
+        <#list dataList as row>
         <tr>
-            <#list dataList as dataRow>
+            <#list bodyDataList as dataRow>
                 <#if dataRow.type?? && dataRow.type=="action">
                     <td>
                         <div class="layui-edit-last">
@@ -154,7 +154,7 @@
         </tr>
         </#list>
         <tr>
-            <td colspan="${dataList?size}" style="padding:0px 0px 0px 0px; height:45px;">
+            <td colspan="${bodyDataList?size}" style="padding:0px 0px 0px 0px; height:45px;">
                 <!-- 分页 -->
                 <#include "adminlte-page.ftl" />
                 <!-- 分页 END -->

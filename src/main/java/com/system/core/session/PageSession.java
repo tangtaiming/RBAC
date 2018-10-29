@@ -1,5 +1,7 @@
 package com.system.core.session;
 
+import com.system.core.domain.Pageable;
+import com.system.core.domain.SimplePageableBuilder;
 import com.system.core.vo.PageVo;
 import com.system.util.base.PageUtils;
 import org.apache.struts2.ServletActionContext;
@@ -34,6 +36,11 @@ public class PageSession {
      * 默认每页数量
      */
     public final static Integer PAGESIZE = 1;
+
+    /**
+     * 分页构造器
+     */
+    private SimplePageableBuilder pageableBuilder;
 
     /**
      * 如果请求是 GET请求
@@ -76,4 +83,12 @@ public class PageSession {
         this.page = page;
     }
 
+    /**
+     * 初始化分页查询条件
+     * @return
+     */
+    public Pageable initPageableBuilder() {
+        pageableBuilder = new SimplePageableBuilder();
+        return pageableBuilder.addPageable(pageVo.getPageNumber(), pageVo.getPageSize());
+    }
 }
