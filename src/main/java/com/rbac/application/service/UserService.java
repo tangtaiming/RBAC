@@ -5,9 +5,7 @@ import com.rbac.application.dao.UserDao;
 import com.rbac.application.dao.UserRoleDao;
 import com.rbac.application.orm.User;
 import com.rbac.application.orm.UserRole;
-import com.system.core.domain.SimpleSpecification;
-import com.system.core.domain.SimpleSpecificationBuilder;
-import com.system.core.domain.Specification;
+import com.system.core.domain.*;
 import com.system.core.session.FilterSession;
 import com.system.util.base.JsonUtils;
 import com.system.util.base.MD5Utils;
@@ -225,7 +223,10 @@ public class UserService {
         FilterSession filterSession = new FilterSession();
         SimpleSpecificationBuilder builder = filterSession.initSpecificationBuilder();
         Specification specification = builder.generateSpecification();
-        return userDao.findList(specification);
+        SimpleOrderableBuilder orderableBuilder = new SimpleOrderableBuilder();
+        SimplePageableBuilder pageableBuilder = new SimplePageableBuilder();
+        Pageable pageable = pageableBuilder.addPageable(1, 20);
+        return userDao.findList(specification, orderableBuilder.desc("id").getOrderable(), pageable);
     }
 
 }

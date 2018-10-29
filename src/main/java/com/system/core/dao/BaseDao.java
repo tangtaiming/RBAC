@@ -1,5 +1,7 @@
 package com.system.core.dao;
 
+import com.system.core.domain.Orderable;
+import com.system.core.domain.Pageable;
 import com.system.core.domain.SimpleSpecificationBuilder;
 import com.system.core.domain.Specification;
 import com.system.core.exception.RbacException;
@@ -115,7 +117,7 @@ public abstract class BaseDao<E extends Serializable> {
         return datas;
     }
 
-    public List<E> findList(Specification specification) {
+    public List<E> findList(Specification specification, Orderable orderable, Pageable pageable) {
         List<E> datas = new ArrayList<E>();
         try {
             session = HibernateUtils.getSession();
@@ -123,11 +125,19 @@ public abstract class BaseDao<E extends Serializable> {
             CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(classes);
             Root root = criteriaQuery.from(classes);
             Predicate predicate = specification.toPredicate(root, criteriaQuery, criteriaBuilder);
-
-            criteriaQuery.where(predicate);
+            Order order = orderable.toOrder(root, criteriaBuilder);
+            //查询条件
+            if (!(null == predicate)) {
+                criteriaQuery.where(predicate);
+            }
+            //排序
+            if (!(null == order)) {
+                criteriaQuery.orderBy(order);
+            }
             TypedQuery typedQuery = session.createQuery(criteriaQuery);
-            typedQuery.setFirstResult(10);
-            typedQuery.setMaxResults(20);
+            //分页
+            typedQuery.setFirstResult(pageable.getOffset());
+            typedQuery.setMaxResults(pageable.getPageSize());
             datas = typedQuery.getResultList();
         } catch (Exception e) {
             throw e;
@@ -156,6 +166,8 @@ public abstract class BaseDao<E extends Serializable> {
                 queryPredicateList.add(predicate);
             }
             criteriaQuery.where(queryPredicateList.toArray(new Predicate[]{}));
+
+
             Query findQuery = session.createQuery(criteriaQuery);
             datas = findQuery.getResultList();
         } catch (Exception e) {

@@ -28,7 +28,9 @@ public class SimpleSpecification<T> implements Specification<T> {
                 continue;
             }
             Predicate pre = generatePredicate(root, criteriaBuilder, op);
-            if(pre==null) continue;
+            if(pre == null) {
+                continue;
+            }
             if("and".equalsIgnoreCase(op.getJoin())) {
                 resultPre = criteriaBuilder.and(resultPre, pre);
             } else if("or".equalsIgnoreCase(op.getJoin())) {
@@ -42,7 +44,7 @@ public class SimpleSpecification<T> implements Specification<T> {
         Object o = op.getValue();
         /*
          * 根据不同的操作符返回特定的查询*/
-        if("eq".equalsIgnoreCase(op.getOper())) {
+        if("=".equalsIgnoreCase(op.getOper())) {
             return criteriaBuilder.equal(root.get(op.getKey()),op.getValue());
         } else if(">=".equalsIgnoreCase(op.getOper())) {
             if (o instanceof Integer) {
@@ -78,7 +80,7 @@ public class SimpleSpecification<T> implements Specification<T> {
             return criteriaBuilder.isNull(root.get(op.getKey()));
         } else if("!null".equalsIgnoreCase(op.getOper())) {
             return criteriaBuilder.isNotNull(root.get(op.getKey()));
-        } else if("!eq".equalsIgnoreCase(op.getOper())) {
+        } else if("!=".equalsIgnoreCase(op.getOper())) {
             return criteriaBuilder.notEqual(root.get(op.getKey()),op.getValue());
         }
         return null;
