@@ -1,24 +1,28 @@
 package com.system.core.dao;
 
+import com.system.core.domain.SimpleSpecificationBuilder;
+import com.system.core.domain.Specification;
 import com.system.core.exception.RbacException;
 import com.system.core.session.FilterSession;
-import com.system.core.vo.FilterVo;
 import com.system.util.base.HibernateUtils;
-import org.hibernate.*;
-import org.hibernate.criterion.CriteriaSpecification;
-import org.hibernate.criterion.Order;
+import org.hibernate.NonUniqueResultException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.hibernate.query.criteria.internal.path.RootImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * @auther ttm
@@ -111,6 +115,29 @@ public abstract class BaseDao<E extends Serializable> {
         return datas;
     }
 
+    public List<E> findList(Specification specification) {
+        List<E> datas = new ArrayList<E>();
+        try {
+            session = HibernateUtils.getSession();
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(classes);
+            Root root = criteriaQuery.from(classes);
+            Predicate predicate = specification.toPredicate(root, criteriaQuery, criteriaBuilder);
+
+            criteriaQuery.where(predicate);
+            TypedQuery typedQuery = session.createQuery(criteriaQuery);
+            typedQuery.setFirstResult(10);
+            typedQuery.setMaxResults(20);
+            datas = typedQuery.getResultList();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            HibernateUtils.closeSession(session);
+        }
+
+        return datas;
+    }
+
     /**
      * 条件查询只适用于 eq
      * @param query
@@ -128,7 +155,6 @@ public abstract class BaseDao<E extends Serializable> {
                 Predicate predicate = criteriaBuilder.equal(root.get(key), query.get(key));
                 queryPredicateList.add(predicate);
             }
-            
             criteriaQuery.where(queryPredicateList.toArray(new Predicate[]{}));
             Query findQuery = session.createQuery(criteriaQuery);
             datas = findQuery.getResultList();

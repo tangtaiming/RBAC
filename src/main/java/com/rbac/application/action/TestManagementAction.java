@@ -5,25 +5,24 @@ import com.rbac.application.action.core.RbacAction;
 import com.rbac.application.orm.User;
 import com.rbac.application.service.UserService;
 import com.system.util.base.AppPathUtils;
-import com.system.util.base.JsonUtils;
+import com.system.util.base.DumperUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TestManagementAction extends MainAction {
 
     private UserService userService = new UserService();
 
-    public String page() {
+    public String execute() {
+        List<User> userList = new ArrayList<>();
         try {
             _execute();
-            List<User> userList = userService.findUserList();
-            setCollection(userList);
-            calculationPage(userService.findUserAllListCount());
-
-            System.out.println("Show: " + JsonUtils.toJson(getMain()));
+            userList = userService.findUserListTest();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        DumperUtils.dump(userList);
         return SUCCESS;
     }
 

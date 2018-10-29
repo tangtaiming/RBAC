@@ -4,8 +4,8 @@
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
     <package name="textManager" namespace="/test" extends="rbac">
-        <action name="page" class="com.rbac.application.action.TestManagementAction" method="page">
-            <result name="success">/design/template/core/list-manager.ftl</result>
+        <action name="page" class="com.rbac.application.action.TestManagementAction">
+            <result name="success">/index.jsp</result>
         </action>
     </package>
 </struts>
