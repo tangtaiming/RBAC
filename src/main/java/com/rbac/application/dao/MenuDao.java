@@ -2,6 +2,8 @@ package com.rbac.application.dao;
 
 import com.rbac.application.orm.Menu;
 import com.system.core.dao.BaseDao;
+import com.system.core.domain.SimpleSpecificationBuilder;
+import com.system.core.domain.Specification;
 import com.system.util.base.HibernateUtils;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -32,9 +34,12 @@ public class MenuDao extends BaseDao<Menu> {
         try {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(getClasses());
+            SimpleSpecificationBuilder builder = new SimpleSpecificationBuilder();
             Root root = criteriaQuery.from(getClasses());
-            Expression expression = root.get("type").as(Integer.class);
-            Predicate predicate = criteriaBuilder.notEqual(expression, button);
+//            Expression expression = root.get("type").as(Integer.class);
+//            Predicate predicate = criteriaBuilder.notEqual(expression, button);
+            Specification specification = builder.add("type", "=", button).generateSpecification();
+            Predicate predicate = specification.toPredicate(root, criteriaQuery, criteriaBuilder);
             criteriaQuery.where(predicate);
             Query query = session.createQuery(criteriaQuery);
             menuList = query.list();

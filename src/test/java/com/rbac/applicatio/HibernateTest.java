@@ -1,5 +1,6 @@
 package com.rbac.applicatio;
 
+import com.rbac.application.dao.MenuDao;
 import com.rbac.application.dao.RoleDao;
 import com.rbac.application.orm.Menu;
 import com.rbac.application.orm.Review;
@@ -60,10 +61,10 @@ public class HibernateTest {
 //        sessionFactory.close();
     }
 
-//    @Test
+    @Test
     public void findAllRole() {
-        BaseDao roleDao = new RoleDao();
-        roleDao.findAllList();
+        MenuDao menuDao = new MenuDao();
+        menuDao.queryNotButtonMenuList();
     }
 
 //    @Test

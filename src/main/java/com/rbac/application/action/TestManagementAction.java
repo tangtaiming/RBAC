@@ -6,7 +6,7 @@ import com.system.util.base.AppPathUtils;
 
 public class TestManagementAction extends MainAction {
 
-    public String page() {
+    public String execute() {
         try {
             _execute();
         } catch (Exception e) {
