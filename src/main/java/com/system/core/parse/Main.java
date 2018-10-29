@@ -2,6 +2,7 @@ package com.system.core.parse;
 
 import com.system.util.base.AppPathUtils;
 import nu.xom.*;
+import org.apache.commons.lang.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,27 +13,48 @@ import java.util.Map;
 
 public class Main {
 
+    /**
+     * 集合实体
+     */
+    private String classesName;
+
+    /**
+     * 管理功能 title
+     */
+    private String title;
+
+    /**
+     * 管理页面搜索与数据集合
+     */
     private Map<String, Object> body;
 
-    private Map<String, List<String>> head;
+    /**
+     * css样式与js
+     */
+    private Map<String, Object> head;
 
     public Main(String urlPath) throws ParsingException, IOException {
-        System.out.println("Show url: " + urlPath);
-//        AppPathUtils.getAppPageXmlPath() + AppPathUtils.SEPARATORCHAR + urlPath;
-//        File file = new File(urlPath);
-//        Builder builder = new Builder();
-//        Document document = builder.build(file);
-//        Element root = document.getRootElement();
-//        parseXml(root);
+        String[] urlPathArr = StringUtils.split(urlPath, "/");
+        String path =
+                AppPathUtils.getAppPageXmlPath()
+                + "main\\" + urlPathArr[0] + "\\" + urlPathArr[1] + ".xml";
+        System.out.println("Show url: " + path);
+        File file = new File(path);
+        Builder builder = new Builder();
+        Document document = builder.build(file);
+        Element root = document.getRootElement();
+        parseXml(root);
     }
 
     public void parseXml(Element root) {
         Element headElement = root.getFirstChildElement("head");
         Element bodyElement = root.getFirstChildElement("body");
-        Map<String, List<String>> headList = parseHeadXml(headElement);
+        Map<String, Object> headList = parseHeadXml(headElement);
         Map<String, Object> bodyList = parseBodyXml(bodyElement);
-        setHead(headList);
-        setBody(bodyList);
+        title = (String) headList.get("titleOne");
+        classesName = root.getAttributeValue("class");
+        head = headList;
+        body = bodyList;
     }
 
     private Map<String, Object> parseBodyXml(Element bodyElement) {
@@ -57,7 +79,12 @@ public class Main {
             String type = searchElement.getAttributeValue("type");
             String name = searchElement.getAttributeValue("name");
             searchMap.put("type", type);
-            searchMap.put("name", name);
+            if (!type.equals("action")) {
+                searchMap.put("name", name);
+            } else {
+                searchMap.put("name", "");
+            }
+
             searchList.add(searchMap);
         }
 
@@ -68,6 +95,10 @@ public class Main {
             Map<String, String> dataMap = new HashMap<>();
             Element dataElement = dataElementList.get(dataX);
             String name = dataElement.getAttributeValue("name");
+            String type = dataElement.getAttributeValue("type");
+            if (!StringUtils.isEmpty(type) && type.equals("action")) {
+                dataMap.put("type", "action");
+            }
             dataMap.put("name", name);
             dataList.add(dataMap);
         }
@@ -80,28 +111,26 @@ public class Main {
         return allBodyMap;
     }
 
-    private Map<String, List<String>> parseHeadXml(Element headElement) {
-        Elements headChildElementList = headElement.getChildElements();
-        int headChildTotalNumber = headChildElementList.size();
+    private Map<String, Object> parseHeadXml(Element headElement) {
+        //js script
         List<String> jsList = new ArrayList<>();
+        Element headChildScriptElement = headElement.getFirstChildElement("script");
+        String srcAttribute = headChildScriptElement.getAttributeValue("src");
+        jsList.add(srcAttribute);
+        //css link
         List<String> cssList = new ArrayList<>();
-        for (int headX = 0; headX < headChildTotalNumber; headX++) {
-            Element headChildElement = headChildElementList.get(headX);
-            String headChileElementName = headChildElement.getLocalName();
-            if (headChileElementName.equals("script")) {
-                String srcAttribute = headChildElement.getAttributeValue("src");
-                jsList.add(srcAttribute);
-            } else if (headChileElementName.equals("link")) {
-                String hrefAttribute = headChildElement.getAttributeValue("href");
-                cssList.add(hrefAttribute);
-            } else {
-                System.out.println("Parse parseHeadXml fail element name : " + headChileElementName);
-            }
-        }
+        Element headChildCssElement = headElement.getFirstChildElement("link");
+        String hrefAttribute = headChildCssElement.getAttributeValue("href");
+        cssList.add(hrefAttribute);
+        //title
+        Element headChildTitleElement = headElement.getFirstChildElement("title");
+        String headTitle = headChildTitleElement.getValue();
+
         //整合 script 与 css数据
-        Map<String, List<String>> headMap = new HashMap<>();
+        Map<String, Object> headMap = new HashMap<>();
         headMap.put("jsList", jsList);
         headMap.put("cssList", cssList);
+        headMap.put("titleOne", headTitle);
         return headMap;
     }
 
@@ -113,11 +142,27 @@ public class Main {
         this.body = body;
     }
 
-    public Map<String, List<String>> getHead() {
+    public Map<String, Object> getHead() {
         return head;
     }
 
-    public void setHead(Map<String, List<String>> head) {
+    public void setHead(Map<String, Object> head) {
         this.head = head;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getClassesName() {
+        return classesName;
+    }
+
+    public void setClassesName(String classesName) {
+        this.classesName = classesName;
     }
 }

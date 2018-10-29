@@ -1,5 +1,7 @@
 package com.system.util.base;
 
+import com.system.core.vo.PageVo;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +68,14 @@ public class PageUtils {
      * 数字分页连接
      */
     private List<Integer> linkPages;
+
+    /**
+     * 根据PageVo获取分页实体
+     * @param pageVo
+     */
+    public PageUtils(PageVo pageVo) {
+        this(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getTotalRows());
+    }
 
     /**
      * 默认当前页是1 每页显示数量为 20

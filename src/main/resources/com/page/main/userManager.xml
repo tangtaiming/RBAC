@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <user class="userVo">
     <head>
+        <title>user.management</title>
         <script src="admin/user.js" />
         <link href="admin/user.css" />
     </head>

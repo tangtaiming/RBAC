@@ -1,12 +1,14 @@
 package com.system.core.dao;
 
 import com.system.core.exception.RbacException;
+import com.system.core.session.FilterSession;
+import com.system.core.vo.FilterVo;
 import com.system.util.base.HibernateUtils;
-import org.hibernate.NonUniqueResultException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
+import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.Order;
 import org.hibernate.query.Query;
+import org.hibernate.query.criteria.internal.path.RootImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,10 +18,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @auther ttm
@@ -129,6 +128,7 @@ public abstract class BaseDao<E extends Serializable> {
                 Predicate predicate = criteriaBuilder.equal(root.get(key), query.get(key));
                 queryPredicateList.add(predicate);
             }
+            
             criteriaQuery.where(queryPredicateList.toArray(new Predicate[]{}));
             Query findQuery = session.createQuery(criteriaQuery);
             datas = findQuery.getResultList();

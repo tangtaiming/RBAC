@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <user class="userVo">
     <head>
+        <title>user.management</title>
         <script src="admin/user.js" />
         <link href="admin/user.css" />
     </head>
@@ -12,6 +13,7 @@
             <column title="admin" />
             <column title="status" />
             <column title="create.date" />
+            <column title="action" />
         </head-container>
         <search-container>
             <column type="text" name="id" />
@@ -20,6 +22,7 @@
             <column type="text" name="admin" />
             <column type="text" name="status" />
             <column type="text" name="createDate" />
+            <column type="action" />
         </search-container>
         <data-container>
             <column name="id" />
@@ -28,6 +31,7 @@
             <column name="admin" />
             <column name="status" />
             <column name="createDate" />
+            <column type="action"/>
         </data-container>
     </body>
 </user>

@@ -5,7 +5,7 @@
 <struts>
     <package name="textManager" namespace="/test" extends="rbac">
         <action name="page" class="com.rbac.application.action.TestManagementAction" method="page">
-            <result name="success">/design/template/ok.ftl</result>
+            <result name="success">/design/template/core/list-manager.ftl</result>
         </action>
     </package>
 </struts>

@@ -33,7 +33,7 @@ public class MenuManagementAction extends RbacAction {
         List<Menu> menuList = menuService.findMenuAllList();
         Integer count = menuService.findMenuAllListCount();
         setDataList(menuList);
-        setTotalRows(count);
+//        setTotalRows(count);
         return SUCCESS;
     }
 

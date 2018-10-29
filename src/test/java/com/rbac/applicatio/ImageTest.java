@@ -1,5 +1,6 @@
 package com.rbac.applicatio;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.imageio.ImageIO;
@@ -12,6 +13,7 @@ import java.net.URL;
  * @auther ttm
  * @date 2018/8/28
  */
+@Ignore
 public class ImageTest {
 
     public static InputStream readInputStream(String strurl)

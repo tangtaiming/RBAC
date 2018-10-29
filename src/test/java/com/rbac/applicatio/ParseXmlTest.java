@@ -1,5 +1,6 @@
 package com.rbac.applicatio;
 
+import com.rbac.application.action.core.MainAction;
 import com.system.util.base.DumperUtils;
 import nu.xom.*;
 import org.junit.Test;
@@ -19,7 +20,7 @@ public class ParseXmlTest {
 
     @Test
     public void contextText() throws ParsingException, IOException {
-        String fileDir = "F:\\project\\rbac\\src\\main\\resources\\com\\page\\main\\";
+        String fileDir = "E:\\Project\\learngit\\RBAC\\src\\main\\resources\\com\\page\\main\\";
         String path = fileDir + "userManager.xml";
         File file = new File(path);
         Builder builder = new Builder();
@@ -36,7 +37,7 @@ public class ParseXmlTest {
             System.out.println("Show " + childElement.getLocalName());
             String childLocalName = childElement.getLocalName();
             if (childLocalName.equals("head")) {
-                Map<String, List<String>> headData = parseHeadXml(childElement);
+                Map<String, Object> headData = parseHeadXml(childElement);
                 allMapData.put("head", headData);
             } else if (childLocalName.equals("body")) {
                 Map<String, Object> bodyData = parseBodyXml(childElement);
@@ -45,7 +46,6 @@ public class ParseXmlTest {
                 System.out.println("Parse fail element name : " + childLocalName);
             }
         }
-
         DumperUtils.dump(allMapData);
     }
 
@@ -94,28 +94,26 @@ public class ParseXmlTest {
         return allBodyMap;
     }
 
-    private Map<String, List<String>> parseHeadXml(Element headElement) {
-        Elements headChildElementList = headElement.getChildElements();
-        int headChildTotalNumber = headChildElementList.size();
+    private Map<String, Object> parseHeadXml(Element headElement) {
+        //js script
         List<String> jsList = new ArrayList<>();
+        Element headChildScriptElement = headElement.getFirstChildElement("script");
+        String srcAttribute = headChildScriptElement.getAttributeValue("src");
+        jsList.add(srcAttribute);
+        //css link
         List<String> cssList = new ArrayList<>();
-        for (int headX = 0; headX < headChildTotalNumber; headX++) {
-            Element headChildElement = headChildElementList.get(headX);
-            String headChileElementName = headChildElement.getLocalName();
-            if (headChileElementName.equals("script")) {
-                String srcAttribute = headChildElement.getAttributeValue("src");
-                jsList.add(srcAttribute);
-            } else if (headChileElementName.equals("link")) {
-                String hrefAttribute = headChildElement.getAttributeValue("href");
-                cssList.add(hrefAttribute);
-            } else {
-                System.out.println("Parse parseHeadXml fail element name : " + headChileElementName);
-            }
-        }
+        Element headChildCssElement = headElement.getFirstChildElement("link");
+        String hrefAttribute = headChildCssElement.getAttributeValue("href");
+        cssList.add(hrefAttribute);
+        //title
+        Element headChildTitleElement = headElement.getFirstChildElement("title");
+        String headTitle = headChildTitleElement.getValue();
+
         //整合 script 与 css数据
-        Map<String, List<String>> headMap = new HashMap<>();
+        Map<String, Object> headMap = new HashMap<>();
         headMap.put("jsList", jsList);
         headMap.put("cssList", cssList);
+        headMap.put("titleOne", headTitle);
         return headMap;
     }
 

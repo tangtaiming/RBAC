@@ -5,7 +5,7 @@
          */
         pager : function(url, pageNumber) {
             var params = {};
-            var pageSize = $.fn.helper('fetchPageSize');
+            var pageSize = $.fn.page('fetchPageSize');
             params['pageNumber'] = pageNumber;
             params['pageSize'] = pageSize;
             alert(JSON.stringify(params));
@@ -25,7 +25,7 @@
          * 获取每页显示数量
          */
         fetchPageSize : function() {
-            var pageSizeElement = $('#adminlte-page-size');
+            var pageSizeElement = $('#adminlte-input-page-size');
             return pageSizeElement.val();
         },
         /**
@@ -33,18 +33,18 @@
          */
         fetchPageNumber : function () {
             var pageNumberElement = $('#adminlte-input-page-number');
-            rturn pageNumberElement.val();
+            return pageNumberElement.val();
         }
     };
 
-    $.fn.helper = function( method ) {
+    $.fn.page = function( method ) {
         // Method calling logic
         if ( methods[method] ) {
             return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
         } else if ( typeof method === 'object' || ! method ) {
             return methods.init.apply( this, arguments );
         } else {
-            $.error( 'Method ' +  method + ' does not exist on jQuery.helper' );
+            $.error( 'Method ' +  method + ' does not exist on jQuery.page' );
         }
     }
 

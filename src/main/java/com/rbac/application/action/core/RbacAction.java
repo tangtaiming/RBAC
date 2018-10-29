@@ -7,6 +7,8 @@ import com.rbac.application.orm.RoleAccess;
 import com.rbac.application.service.AccessService;
 import com.rbac.application.service.RoleService;
 import com.rbac.application.service.UserService;
+import com.system.core.session.PageSession;
+import com.system.core.session.RbacSession;
 import com.system.core.vo.NavigatorRsVo;
 import com.system.util.base.JsonUtils;
 import com.system.util.base.PageUtils;
@@ -21,6 +23,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -35,19 +38,9 @@ public class RbacAction<E> extends ActionSupport {
     private NavigatorRsVo nav;
 
     /**
-     * 分页
-     */
-    private PageUtils page;
-
-    /**
      * 登录用户
      */
     private String loginName;
-
-    /**
-     * 总共数量
-     */
-    private int totalRows;
 
     /**
      * 获取数据
@@ -66,36 +59,38 @@ public class RbacAction<E> extends ActionSupport {
     private static Set<String> chooseAccessList;
 
     public void _execute() {
-        HttpServletRequest request = ServletActionContext.getRequest();
-        HttpSession session = request.getSession(false);
+        RbacSession rbacSession = new RbacSession();
+        Map<String, Object> session = rbacSession.getSession();
         if (!(null == session)) {
-            String loginName = (String) session.getAttribute("name");
+            String loginName = (String) session.get("name");
             setLoginName(loginName);
-            String secretKey = (String) session.getAttribute("secretKey");
-            String[] splitSecretKey = StringUtils.split(secretKey, "#");
-            String userId = splitSecretKey[1];
-            //根据用户查询用户对于的组，
-            //根据用户组查下组下面的权限
-            UserService userService = new UserService();
-            List<Integer> userRoleIdList = userService.findUserRoleColumnRoleIdByUserId(Integer.valueOf(userId));
-            if (!CollectionUtils.isEmpty(userRoleIdList) && CollectionUtils.isEmpty(chooseAccessList)) {
-                chooseAccessList = new HashSet<>();
-                RoleService roleService = new RoleService();
-                for (Integer userRoleIdRow : userRoleIdList) {
-                    List<RoleAccess> roleAccessList = roleService.findRoleAccessByRoleId(userRoleIdRow);
-                    if (!(CollectionUtils.isEmpty(roleAccessList))) {
-                        AccessService accessService = new AccessService();
-                        for (RoleAccess roleAccessRow : roleAccessList) {
-                            Access access = accessService.findAccessOne(roleAccessRow.getAccessId());
-                            if (!(null == access)) {
-                                String uri = access.getUrls();
-                                List<String> uriList = (List<String>) JsonUtils.fromJson(uri, List.class);
-                                chooseAccessList.addAll(uriList);
+            String secretKey = (String) session.get("secretKey");
+            if (!StringUtils.isEmpty(secretKey)) {
+                String[] splitSecretKey = StringUtils.split(secretKey, "#");
+                String userId = splitSecretKey[1];
+                //根据用户查询用户对于的组，
+                //根据用户组查下组下面的权限
+                UserService userService = new UserService();
+                List<Integer> userRoleIdList = userService.findUserRoleColumnRoleIdByUserId(Integer.valueOf(userId));
+                if (!CollectionUtils.isEmpty(userRoleIdList) && CollectionUtils.isEmpty(chooseAccessList)) {
+                    chooseAccessList = new HashSet<>();
+                    RoleService roleService = new RoleService();
+                    for (Integer userRoleIdRow : userRoleIdList) {
+                        List<RoleAccess> roleAccessList = roleService.findRoleAccessByRoleId(userRoleIdRow);
+                        if (!(CollectionUtils.isEmpty(roleAccessList))) {
+                            AccessService accessService = new AccessService();
+                            for (RoleAccess roleAccessRow : roleAccessList) {
+                                Access access = accessService.findAccessOne(roleAccessRow.getAccessId());
+                                if (!(null == access)) {
+                                    String uri = access.getUrls();
+                                    List<String> uriList = (List<String>) JsonUtils.fromJson(uri, List.class);
+                                    chooseAccessList.addAll(uriList);
+                                }
                             }
                         }
                     }
+                    LOG.info("access uri: " + chooseAccessList.toString());
                 }
-                LOG.info("access uri: " + chooseAccessList.toString());
             }
         }
         //实例化导航
@@ -116,28 +111,6 @@ public class RbacAction<E> extends ActionSupport {
 
     public void setNav(NavigatorRsVo nav) {
         this.nav = nav;
-    }
-
-    public PageUtils getPage() {
-        return page;
-    }
-
-    public void setPage(PageUtils page) {
-        this.page = page;
-    }
-
-    public int getTotalRows() {
-        return totalRows;
-    }
-
-    public void setTotalRows(int totalRows) {
-        initPage(totalRows);
-        this.totalRows = totalRows;
-    }
-
-    private void initPage(int totalRows) {
-        PageUtils page = new PageUtils(totalRows);
-        setPage(page);
     }
 
     public List<?> getDataList() {
