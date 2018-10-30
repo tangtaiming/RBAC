@@ -4,7 +4,7 @@ package com.system.core.vo;
  * @auther ttm
  * @date 2018/10/27 0027
  **/
-public class PageVo {
+public final class PageVo {
 
     /**
      * 当前页
@@ -16,21 +16,10 @@ public class PageVo {
      */
     private Integer pageSize;
 
-    /**
-     * 总数量
-     */
-    private Integer totalRows;
 
-    public PageVo() {}
-
-    public PageVo(Integer totalRows) {
-        this.totalRows = totalRows;
-    }
-
-    public PageVo(Integer pageNumber, Integer pageSize, Integer totalRows) {
-        this.pageNumber = pageNumber;
-        this.pageSize = pageSize;
-        this.totalRows = totalRows;
+    private PageVo(PageVoBuilder pageBuilder) {
+        this.pageNumber = pageBuilder.pageNumber;
+        this.pageSize = pageBuilder.pageSize;
     }
 
     public Integer getPageNumber() {
@@ -49,11 +38,32 @@ public class PageVo {
         this.pageSize = pageSize;
     }
 
-    public Integer getTotalRows() {
-        return totalRows;
+    public static class PageVoBuilder {
+
+        /**
+         * 当前页
+         */
+        private final Integer pageNumber;
+
+        /**
+         * 每页显示数量
+         */
+        private final Integer pageSize;
+
+        public PageVoBuilder(Integer pageNumber, Integer pageSize) {
+            if (null == pageNumber || null == pageSize) {
+                throw new IllegalArgumentException("pageNumber and pageSize can not be null");
+            }
+            this.pageNumber = pageNumber;
+            this.pageSize = pageSize;
+        }
+
+        public PageVo build() {
+            return new PageVo(this);
+        }
+
     }
 
-    public void setTotalRows(Integer totalRows) {
-        this.totalRows = totalRows;
-    }
 }
+
+

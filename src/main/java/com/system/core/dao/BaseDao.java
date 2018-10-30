@@ -2,10 +2,8 @@ package com.system.core.dao;
 
 import com.system.core.domain.Orderable;
 import com.system.core.domain.Pageable;
-import com.system.core.domain.SimpleSpecificationBuilder;
 import com.system.core.domain.Specification;
 import com.system.core.exception.RbacException;
-import com.system.core.session.FilterSession;
 import com.system.util.base.HibernateUtils;
 import org.hibernate.NonUniqueResultException;
 import org.hibernate.Session;
@@ -15,8 +13,6 @@ import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
@@ -135,6 +131,8 @@ public abstract class BaseDao<E extends Serializable> {
                 criteriaQuery.orderBy(order);
             }
             TypedQuery typedQuery = session.createQuery(criteriaQuery);
+
+
             //分页
             typedQuery.setFirstResult(pageable.getOffset());
             typedQuery.setMaxResults(pageable.getPageSize());
@@ -146,6 +144,38 @@ public abstract class BaseDao<E extends Serializable> {
         }
 
         return datas;
+    }
+
+    /**
+     * 条件查询数量
+     * @param specification
+     * @return
+     */
+    public Integer findListCount(Specification specification) {
+        int count = 0;
+        try {
+            session = HibernateUtils.getSession();
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(classes);
+            Root root = criteriaQuery.from(classes);
+            criteriaQuery.select(criteriaBuilder.count(root.get("id")));
+            Predicate predicate = specification.toPredicate(root, criteriaQuery, criteriaBuilder);
+            if (!(null == predicate)) {
+                criteriaQuery.where(predicate);
+            }
+            javax.persistence.Query typedQuery = session.createQuery(criteriaQuery);
+
+            Object objCount = typedQuery.getSingleResult();
+            if (!(null == objCount)) {
+                count = Integer.valueOf(objCount.toString());
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            HibernateUtils.closeSession(session);
+        }
+
+        return count;
     }
 
     /**

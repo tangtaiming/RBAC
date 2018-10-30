@@ -70,14 +70,6 @@ public class PageUtils {
     private List<Integer> linkPages;
 
     /**
-     * 根据PageVo获取分页实体
-     * @param pageVo
-     */
-    public PageUtils(PageVo pageVo) {
-        this(pageVo.getPageNumber(), pageVo.getPageSize(), pageVo.getTotalRows());
-    }
-
-    /**
      * 默认当前页是1 每页显示数量为 20
      * @param totalRows
      */

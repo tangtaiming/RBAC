@@ -12,15 +12,15 @@ import java.util.List;
 
 public class TestManagementAction extends MainAction {
 
-    private UserService userService = new UserService();
+    private UserService userService;
 
     public String execute() {
+        userService = new UserService();
         List<User> userList = new ArrayList<>();
         try {
             _execute();
-            userList = userService.findUserListTest();
-            Integer totalCount = userService.findUserAllListCount();
-            buildPageData(userList, totalCount);
+            setDataList(userService.getDataList());
+            setPage(userService.getPage());
         } catch (Exception e) {
             e.printStackTrace();
         }

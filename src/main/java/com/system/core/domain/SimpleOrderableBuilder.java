@@ -30,6 +30,11 @@ public class SimpleOrderableBuilder<T> {
         return this;
     }
 
+    public SimpleOrderableBuilder setJpaOrder(Sort sort) {
+        this.sort = sort;
+        return this;
+    }
+
     /**
      * 升序
      * @param propertyName

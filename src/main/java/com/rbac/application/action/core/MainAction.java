@@ -130,7 +130,7 @@ public class MainAction<E> extends RbacAction {
             pageNumber = 20;
         }
 
-        PageSession pageSession = new PageSession(pageNumber, pageSize, totalRows);
+        PageSession pageSession = new PageSession();
         this.page = pageSession.getPage();
     }
 

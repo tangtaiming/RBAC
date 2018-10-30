@@ -7,8 +7,10 @@ import com.rbac.application.orm.User;
 import com.rbac.application.orm.UserRole;
 import com.system.core.domain.*;
 import com.system.core.session.FilterSession;
+import com.system.core.session.PageSession;
 import com.system.util.base.JsonUtils;
 import com.system.util.base.MD5Utils;
+import com.system.util.base.PageUtils;
 import com.system.util.base.ResponseVoUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.struts2.ServletActionContext;
@@ -29,7 +31,7 @@ import java.util.Optional;
  * @auther ttm
  * @date 2018/7/24
  */
-public class UserService {
+public class UserService extends SimpleCoreService<User> {
 
     private Logger LOG = LoggerFactory.getLogger(UserService.class);
 
@@ -220,13 +222,47 @@ public class UserService {
     }
 
     public List<User> findUserListTest() {
-        FilterSession filterSession = new FilterSession();
-        SimpleSpecificationBuilder builder = filterSession.initSpecificationBuilder();
-        Specification specification = builder.generateSpecification();
+        //获取当前页 和每页显示数量 与分页情况
+//        FilterSession filterSession = new FilterSession();
+//        Specification specification = filterSession.getSpecification();
+//        PageSession pageSession = new PageSession();
+//        Pageable pageable = pageSession.getPageable();
+
+//        SimpleSpecificationBuilder builder = filterSession.initSpecificationBuilder();
+//        Specification specification = builder.generateSpecification();
+
         SimpleOrderableBuilder orderableBuilder = new SimpleOrderableBuilder();
+
         SimplePageableBuilder pageableBuilder = new SimplePageableBuilder();
         Pageable pageable = pageableBuilder.addPageable(1, 20);
-        return userDao.findList(specification, orderableBuilder.desc("id").getOrderable(), pageable);
+        return userDao.findList(null, orderableBuilder.desc("id").getOrderable(), pageable);
     }
+
+    @Override
+    public List<User> getDataList() {
+        return userDao.findList(getSpecification(), getOrderable(), getPageable());
+    }
+
+    @Override
+    public PageUtils getPage() {
+        Integer listCount = userDao.findListCount(getSpecification());
+        Pageable pageable = getPageable();
+        PageUtils page = new PageUtils(pageable.getPageNumber(), pageable.getPageSize(), listCount);
+        return page;
+    }
+
+//    public PageUtils getPage(Integer pageNumber, Integer pageSize) {
+//        Integer totalRows = userDao.findAllListCount();
+//        if (0 < pageNumber) {
+//            pageNumber = 1;
+//        }
+//        if (0 < pageSize) {
+//            pageNumber = 20;
+//        }
+//
+//        PageSession pageSession = new PageSession();
+//        PageUtils page = pageSession.getPage();
+//        return page;
+//    }
 
 }

@@ -39,7 +39,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
 
     private final static String LOGIN_PAGE = "login";
 
-    private UserService userService = new UserService();
+    private UserService userService;
 
     private RoleService roleService = new RoleService();
 
@@ -135,6 +135,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         }
 
         if (CollectionUtils.isEmpty(privilegeUrls)) {
+            userService = new UserService();
             privilegeUrls = new ArrayList<>();
             List<Integer> userRoleList = userService.findUserRoleColumnRoleIdByUserId(userId);
             if (CollectionUtils.isNotEmpty(userRoleList)) {
