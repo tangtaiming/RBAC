@@ -1,10 +1,12 @@
 package com.system.core.dao;
 
-import com.system.core.domain.Orderable;
-import com.system.core.domain.Pageable;
-import com.system.core.domain.Specification;
+import com.system.core.domain.*;
 import com.system.core.exception.RbacException;
+import com.system.core.session.FilterSession;
+import com.system.core.session.PageSession;
+import com.system.core.session.SortSession;
 import com.system.util.base.HibernateUtils;
+import com.system.util.base.PageUtils;
 import org.hibernate.NonUniqueResultException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,6 +15,8 @@ import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
@@ -38,8 +42,23 @@ public abstract class BaseDao<E extends Serializable> {
 
     private Class<E> classes;
 
+    private Specification specification;
+
+    private Orderable orderable;
+
+    private Pageable pageable;
+
     public BaseDao(Class classes) {
         this.classes = classes;
+    }
+
+    public E findOneTest() {
+        E entity = null;
+        session = HibernateUtils.getSession();
+        EntityManagerFactory factory = session.getEntityManagerFactory();
+        EntityManager entityManager = factory.createEntityManager();
+        entity = entityManager.find(classes, Long.valueOf(1));
+        return entity;
     }
 
     private E findOne(Serializable id) {
@@ -113,9 +132,23 @@ public abstract class BaseDao<E extends Serializable> {
         return datas;
     }
 
-    public List<E> findList(Specification specification, Orderable orderable, Pageable pageable) {
+    public void initSession() {
+        FilterSession filterSession = new FilterSession();
+        SimpleSpecificationBuilder filterBuilder = filterSession.initSpecificationBuilder();
+        specification = filterBuilder.generateSpecification();
+        //sort
+        SortSession sortSession = new SortSession();
+        Sort sort = sortSession.getSort();
+        orderable = new SimpleOrderableBuilder<>().setJpaOrder(sort).getOrderable();
+        //page
+        PageSession pageSession = new PageSession();
+        pageable = pageSession.initPageableBuilder();
+    }
+
+    public List<E> findList() {
         List<E> datas = new ArrayList<E>();
         try {
+            initSession();
             session = HibernateUtils.getSession();
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(classes);
@@ -132,7 +165,6 @@ public abstract class BaseDao<E extends Serializable> {
             }
             TypedQuery typedQuery = session.createQuery(criteriaQuery);
 
-
             //分页
             typedQuery.setFirstResult(pageable.getOffset());
             typedQuery.setMaxResults(pageable.getPageSize());
@@ -148,12 +180,13 @@ public abstract class BaseDao<E extends Serializable> {
 
     /**
      * 条件查询数量
-     * @param specification
      * @return
      */
-    public Integer findListCount(Specification specification) {
+    public PageUtils findListCount() {
         int count = 0;
+        PageUtils page = null;
         try {
+            initSession();
             session = HibernateUtils.getSession();
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(classes);
@@ -168,6 +201,7 @@ public abstract class BaseDao<E extends Serializable> {
             Object objCount = typedQuery.getSingleResult();
             if (!(null == objCount)) {
                 count = Integer.valueOf(objCount.toString());
+                page = new PageUtils(pageable.getPageNumber(), pageable.getPageSize(), count);
             }
         } catch (Exception e) {
             throw e;
@@ -175,7 +209,7 @@ public abstract class BaseDao<E extends Serializable> {
             HibernateUtils.closeSession(session);
         }
 
-        return count;
+        return page;
     }
 
     /**
@@ -325,5 +359,29 @@ public abstract class BaseDao<E extends Serializable> {
 
     public void setClasses(Class<E> classes) {
         this.classes = classes;
+    }
+
+    public Specification getSpecification() {
+        return specification;
+    }
+
+    public void setSpecification(Specification specification) {
+        this.specification = specification;
+    }
+
+    public Orderable getOrderable() {
+        return orderable;
+    }
+
+    public void setOrderable(Orderable orderable) {
+        this.orderable = orderable;
+    }
+
+    public Pageable getPageable() {
+        return pageable;
+    }
+
+    public void setPageable(Pageable pageable) {
+        this.pageable = pageable;
     }
 }

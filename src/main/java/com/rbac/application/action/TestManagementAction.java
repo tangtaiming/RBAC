@@ -16,7 +16,6 @@ public class TestManagementAction extends MainAction {
 
     public String execute() {
         userService = new UserService();
-        List<User> userList = new ArrayList<>();
         try {
             _execute();
             setDataList(userService.getDataList());
@@ -24,7 +23,6 @@ public class TestManagementAction extends MainAction {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        DumperUtils.dump(userList);
         return SUCCESS;
     }
 

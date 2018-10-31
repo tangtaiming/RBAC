@@ -8,6 +8,7 @@ import com.rbac.application.service.MenuService;
 import com.rbac.application.service.ReviewService;
 import com.rbac.application.service.UserService;
 import com.system.core.dao.BaseDao;
+import com.system.util.base.DumperUtils;
 import com.system.util.base.HibernateUtils;
 import com.system.util.base.JsonUtils;
 import org.apache.commons.collections.map.LinkedMap;
@@ -63,8 +64,10 @@ public class HibernateTest {
 
     @Test
     public void findAllRole() {
-        MenuDao menuDao = new MenuDao();
-        menuDao.queryNotButtonMenuList();
+//        MenuDao menuDao = new MenuDao();
+//        menuDao.queryNotButtonMenuList();
+        BaseDao baseDao = new MenuDao();
+        DumperUtils.dump(baseDao.findOneTest());
     }
 
 //    @Test
