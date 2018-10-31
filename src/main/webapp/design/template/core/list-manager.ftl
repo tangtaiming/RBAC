@@ -35,12 +35,11 @@
             <div class="content container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-
                         <div class="text-right">
                             <div class="btn-group">
                                 <a class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus-square-o"></i> 新增</a>
                                 <a class="btn btn-primary btn-sm btn-flat"><i class="fa fa-mail-reply"></i> 重置</a>
-                                <a class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> 搜索</a>
+                                <a id="filter-submit" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> 搜索</a>
                             </div>
                         </div>
 
@@ -49,33 +48,31 @@
                             <table class="layui-table">
                                 <thead>
                                     <tr>
-                                            <#assign  titleList = main.body.title/>
-                                            <#list titleList as titleRow>
-                                                <#if (titleRow_index + 1) == titleList?size>
-                                                    <th class="layui-edit-last">
-                                                        <@s.text name="${titleRow['title']}" />
-                                                    </th>
-                                                    <#else>
-                                                    <th><@s.text name="${titleRow['title']}" /></th>
-                                                </#if>
-                                            </#list>
-
+                                        <#assign  titleList = main.body.title/>
+                                        <#list titleList as titleRow>
+                                            <#if (titleRow_index + 1) == titleList?size>
+                                                <th class="layui-edit-last">
+                                                    <@s.text name="${titleRow['title']}" />
+                                                </th>
+                                                <#else>
+                                                <th><@s.text name="${titleRow['title']}" /></th>
+                                            </#if>
+                                        </#list>
                                     </tr>
                                     <tr id="search">
-                                            <#assign  searchList = main.body.search/>
-                                            <#list searchList as searchRow>
-                                                <#assign searchType = searchRow['type'] />
-                                                <#assign searchName = searchRow['name'] />
-                                                <#-- 文本域 -->
-                                                <#if searchType=="text">
-                                                    <th>
-                                                        <input type="text" name="${searchName}" class="form-control custom-form-control" />
-                                                    </th>
-                                                    <#elseif searchType=="action">
-                                                    <th class="layui-edit-last"></th>
-                                                </#if>
-                                            </#list>
-
+                                        <#assign searchList = main.body.search/>
+                                        <#list searchList as searchRow>
+                                            <#assign searchType = searchRow['type'] />
+                                            <#assign searchName = searchRow['name'] />
+                                            <#-- 文本域 -->
+                                            <#if searchType=="text">
+                                                <th>
+                                                    <input type="text" name="${searchName}" class="filter form-control custom-form-control" />
+                                                </th>
+                                                <#elseif searchType=="action">
+                                                <th class="layui-edit-last"></th>
+                                            </#if>
+                                        </#list>
                                     </tr>
                                 </thead>
                                 <tbody id="adminlte-tbody-data-list">
@@ -123,13 +120,22 @@
          Both of these plugins are recommended to enhance the
          user experience. -->
     </body>
+    <script type="text/javascript" src="/design/static/plugins/layer/layer.js"></script>
     <script type="text/javascript" src="/design/static/js/jquery.pluginPage.js"></script>
+    <script type="text/javascript" src="/design/static/js/jquery.pluginFilter.js"></script>
+    <script type="text/javascript" src="/design/static/js/jquery.pluginDialog.js"></script>
     <script type="text/javascript">
         $(function () {
             $('#adminlte-button-page-number').click(function() {
                 var pageNumber = $.fn.page('fetchPageNumber');
                 var uri = '/test/page';
                 $.fn.page('pager', uri, pageNumber);
+            });
+
+            //点击搜索
+            $('#filter-submit').click(function() {
+                var uri = '/test/page';
+                $.fn.filter('build', uri);
             });
         });
     </script>
