@@ -5,6 +5,7 @@ import com.rbac.application.dao.UserDao;
 import com.rbac.application.dao.UserRoleDao;
 import com.rbac.application.orm.User;
 import com.rbac.application.orm.UserRole;
+import com.system.core.dao.BaseDao;
 import com.system.core.domain.*;
 import com.system.core.session.FilterSession;
 import com.system.core.session.PageSession;
@@ -231,38 +232,21 @@ public class UserService extends SimpleCoreService<User> {
 //        SimpleSpecificationBuilder builder = filterSession.initSpecificationBuilder();
 //        Specification specification = builder.generateSpecification();
 
-        SimpleOrderableBuilder orderableBuilder = new SimpleOrderableBuilder();
-
-        SimplePageableBuilder pageableBuilder = new SimplePageableBuilder();
-        Pageable pageable = pageableBuilder.addPageable(1, 20);
-        return userDao.findList(null, orderableBuilder.desc("id").getOrderable(), pageable);
+//        SimpleOrderableBuilder orderableBuilder = new SimpleOrderableBuilder();
+//
+//        SimplePageableBuilder pageableBuilder = new SimplePageableBuilder();
+//        Pageable pageable = pageableBuilder.addPageable(1, 20);
+        return userDao.findList();
     }
 
     @Override
     public List<User> getDataList() {
-        return userDao.findList(getSpecification(), getOrderable(), getPageable());
+        return userDao.findList();
     }
 
     @Override
     public PageUtils getPage() {
-        Integer listCount = userDao.findListCount(getSpecification());
-        Pageable pageable = getPageable();
-        PageUtils page = new PageUtils(pageable.getPageNumber(), pageable.getPageSize(), listCount);
-        return page;
+        return userDao.findListCount();
     }
-
-//    public PageUtils getPage(Integer pageNumber, Integer pageSize) {
-//        Integer totalRows = userDao.findAllListCount();
-//        if (0 < pageNumber) {
-//            pageNumber = 1;
-//        }
-//        if (0 < pageSize) {
-//            pageNumber = 20;
-//        }
-//
-//        PageSession pageSession = new PageSession();
-//        PageUtils page = pageSession.getPage();
-//        return page;
-//    }
 
 }

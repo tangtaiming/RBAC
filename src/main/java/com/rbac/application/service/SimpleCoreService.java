@@ -1,5 +1,6 @@
 package com.rbac.application.service;
 
+import com.system.core.dao.BaseDao;
 import com.system.core.domain.*;
 import com.system.core.session.FilterSession;
 import com.system.core.session.PageSession;
@@ -14,24 +15,7 @@ import java.util.List;
  **/
 public abstract class SimpleCoreService<T> {
 
-    private Specification specification;
-
-    private Orderable orderable;
-
-    private Pageable pageable;
-
-    public SimpleCoreService() {
-        FilterSession filterSession = new FilterSession();
-        SimpleSpecificationBuilder filterBuilder = filterSession.initSpecificationBuilder();
-        specification = filterBuilder.generateSpecification();
-        //sort
-        SortSession sortSession = new SortSession();
-        Sort sort = sortSession.getSort();
-        orderable = new SimpleOrderableBuilder<>().setJpaOrder(sort).getOrderable();
-        //page
-        PageSession pageSession = new PageSession();
-        pageable = pageSession.initPageableBuilder();
-    }
+    public SimpleCoreService() {}
 
     /**
      * 数据集合
@@ -45,27 +29,4 @@ public abstract class SimpleCoreService<T> {
      */
     public abstract PageUtils getPage();
 
-    public Specification getSpecification() {
-        return specification;
-    }
-
-    public void setSpecification(Specification specification) {
-        this.specification = specification;
-    }
-
-    public Orderable getOrderable() {
-        return orderable;
-    }
-
-    public void setOrderable(Orderable orderable) {
-        this.orderable = orderable;
-    }
-
-    public Pageable getPageable() {
-        return pageable;
-    }
-
-    public void setPageable(Pageable pageable) {
-        this.pageable = pageable;
-    }
 }
