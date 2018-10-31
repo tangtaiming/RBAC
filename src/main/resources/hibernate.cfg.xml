@@ -23,13 +23,14 @@
         <!-- 选择使用C3P0连接池 -->
         <property name="hibernate.connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</property>
         <!-- 连接池中最小连接数 -->
-        <property name="hibernate.c3p0.min_size">5</property>
+        <property name="hibernate.c3p0.min_size">10</property>
         <!-- 连接池中最大连接数 -->
-        <property name="hibernate.c3p0.max_size">20</property>
+        <property name="hibernate.c3p0.max_size">30</property>
         <!-- 设定数据库连接超时时间，以秒为单位。如果连接池中某个数据库连接处于空闲状态且超过timeout秒时，就会从连接池中移除-->
         <property name="hibernate.c3p0.timeout">120</property>
         <!-- 设置数据库 -->
         <property name="hibernate.c3p0.idle_test_period">3000</property>
+
 
         <!-- 配置hibernate的映射文件所在的位置 -->
         <mapping resource="com/hibernate/role.hbm.xml"></mapping>

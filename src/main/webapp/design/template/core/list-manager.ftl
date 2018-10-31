@@ -120,10 +120,11 @@
          Both of these plugins are recommended to enhance the
          user experience. -->
     </body>
-    <script type="text/javascript" src="/design/static/plugins/layer/layer.js"></script>
-    <script type="text/javascript" src="/design/static/js/jquery.pluginPage.js"></script>
-    <script type="text/javascript" src="/design/static/js/jquery.pluginFilter.js"></script>
-    <script type="text/javascript" src="/design/static/js/jquery.pluginDialog.js"></script>
+    <script type="text/javascript" src="/design/static/plugins/layer/layer.js?time=${time}"></script>
+    <script type="text/javascript" src="/design/static/js/jquery.pluginPage.js?time=${time}"></script>
+    <script type="text/javascript" src="/design/static/js/jquery.pluginFilter.js?time=${time}"></script>
+    <script type="text/javascript" src="/design/static/js/jquery.pluginDialog.js?time=${time}"></script>
+    <script type="text/javascript" src="/design/static/js/jquery.pluginAjax.js?time=${time}"></script>
     <script type="text/javascript">
         $(function () {
             $('#adminlte-button-page-number').click(function() {

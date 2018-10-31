@@ -1,5 +1,5 @@
 /**
- * 过滤查询条件 插件
+ * 查询条件 插件
  */
 (function( $ ) {
     var methods = {
@@ -13,30 +13,19 @@
             inputFilterElement.each(function() {
                 var filterName = $(this).attr("name");
                 var filterValue = $(this).val();
-                console.info("filterName: " + filterName + " filterValue: " + filterValue);
+                // console.info("filterName: " + filterName + " filterValue: " + filterValue);
                 // params[filterName] = filterValue;
                 if (!("" == filterValue)) {
                     params[filterName] = filterValue;
                 }
             });
-            //显示加载
-            var loadIndex = $.fn.dialog('load');
-            $.ajax({
-                url: uri,
-                type: 'POST',
-                data: params,
-                success: function ( response ) {
-                    //隐藏加载
-                    $.fn.dialog('close', loadIndex);
-                    $.fn.dialog('success', response);
-                },
-                error: function () {
-                    //隐藏加载
-                    $.fn.dialog('close', loadIndex);
-                    $.fn.dialog('error');
-                }
-            });
+            //page 分页条件查询
+            var pageNumber = $.fn.page('fetchPageNumber');
+            var pageSize = $.fn.page('fetchPageSize');
+            params['pageNumber'] = Number(pageNumber);
+            params['pageSize'] = Number(pageSize);
 
+            $.fn.myAjax('list', uri, params);
             // console.info("show params: " + JSON.stringify(params));
         }
     };

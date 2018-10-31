@@ -3,23 +3,12 @@
         /**
          *	分页ajax请求
          */
-        pager : function(url, pageNumber) {
+        pager : function(uri, pageNumber) {
             var params = {};
             var pageSize = $.fn.page('fetchPageSize');
             params['pageNumber'] = pageNumber;
             params['pageSize'] = pageSize;
-            alert(JSON.stringify(params));
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: params,
-                success: function( response ) {
-                    alert(response);
-                },
-                error: function() {
-                    alert('request error!');
-                }
-            });
+            $.fn.myAjax('list', uri, params);
         },
         /**
          * 获取每页显示数量
