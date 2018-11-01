@@ -10,6 +10,7 @@ import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,14 +47,12 @@ public class MainAction<E> extends RbacAction {
         super._execute();
         try {
             setMainXml(getUrl());
-        } catch (ParsingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void setMainXml(String url) throws ParsingException, IOException {
+    public void setMainXml(String url) throws ParsingException, IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         Main mainEntity = null;
         if (StringUtils.isEmpty(url)) {
             mainEntity = new Main(getSubRequestUri());

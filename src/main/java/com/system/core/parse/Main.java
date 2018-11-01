@@ -1,11 +1,13 @@
 package com.system.core.parse;
 
 import com.system.util.base.AppPathUtils;
+import com.system.util.custom.Select;
 import nu.xom.*;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +35,7 @@ public class Main {
      */
     private Map<String, Object> head;
 
-    public Main(String urlPath) throws ParsingException, IOException {
+    public Main(String urlPath) throws ParsingException, IOException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         String[] urlPathArr = StringUtils.split(urlPath, "/");
         String path =
                 AppPathUtils.getAppPageXmlPath()
@@ -46,7 +48,7 @@ public class Main {
         parseXml(root);
     }
 
-    public void parseXml(Element root) {
+    public void parseXml(Element root) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         Element headElement = root.getFirstChildElement("head");
         Element bodyElement = root.getFirstChildElement("body");
         Map<String, Object> headList = parseHeadXml(headElement);
@@ -57,7 +59,7 @@ public class Main {
         body = bodyList;
     }
 
-    private Map<String, Object> parseBodyXml(Element bodyElement) {
+    private Map<String, Object> parseBodyXml(Element bodyElement) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         Element headContainer = bodyElement.getChildElements("head-container").get(0);
         Elements headTitleElementList = headContainer.getChildElements();
         List<Map<String, String>> titleList = new ArrayList<>();
@@ -79,12 +81,20 @@ public class Main {
             String type = searchElement.getAttributeValue("type");
             String name = searchElement.getAttributeValue("name");
             searchMap.put("type", type);
-            if (!type.equals("action")) {
-                searchMap.put("name", name);
-            } else {
-                searchMap.put("name", "");
+            switch (type) {
+                case "text":
+                    searchMap.put("name", name);
+                    break;
+                case "select":
+                    buildSelect(searchMap, searchElement);
+                    break;
+                case "action":
+                    searchMap.put("name", "");
+                    break;
+                default:
+                    searchMap.put("name", "");
+                    break;
             }
-
             searchList.add(searchMap);
         }
 
@@ -109,6 +119,23 @@ public class Main {
         allBodyMap.put("data", dataList);
 
         return allBodyMap;
+    }
+
+    private void buildSelect(Map<String, Object> dataMap, Element element) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        String type = element.getAttributeValue("type");
+        String name = element.getAttributeValue("name");
+        String model = element.getAttributeValue("model");
+        String classes = element.getAttributeValue("option");
+        if (StringUtils.isEmpty(type) || StringUtils.isEmpty(name) || StringUtils.isEmpty(classes)) {
+            throw new IllegalArgumentException("type , name and option can not be null");
+        }
+        if (StringUtils.isEmpty(model)) {
+            model = type;
+        }
+        Map<String, String> optionMap = new Select.SelectBuilder(classes, model).build().toOption();
+        dataMap.put("name", name);
+        dataMap.put("model", model);
+        dataMap.put("option", optionMap);
     }
 
     private Map<String, Object> parseHeadXml(Element headElement) {
