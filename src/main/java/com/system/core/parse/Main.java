@@ -68,7 +68,9 @@ public class Main {
             Map<String, String> headTitleMap = new HashMap<>();
             Element headTitleElement = headTitleElementList.get(titleX);
             String title = headTitleElement.getAttributeValue("title");
+            String width = headTitleElement.getAttributeValue("width");
             headTitleMap.put("title", title);
+            headTitleMap.put("width", width);
             titleList.add(headTitleMap);
         }
 

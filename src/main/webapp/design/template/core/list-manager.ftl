@@ -50,12 +50,13 @@
                                     <tr>
                                         <#assign  titleList = main.body.title/>
                                         <#list titleList as titleRow>
+                                            <#assign title = titleRow['title'] />
                                             <#if (titleRow_index + 1) == titleList?size>
                                                 <th class="layui-edit-last">
-                                                    <@s.text name="${titleRow['title']}" />
+                                                    <@s.text name="${title}" />
                                                 </th>
                                                 <#else>
-                                                <th><@s.text name="${titleRow['title']}" /></th>
+                                                <th><@s.text name="${title}" /></th>
                                             </#if>
                                         </#list>
                                     </tr>
@@ -69,6 +70,15 @@
                                                 <th>
                                                     <input type="text" name="${searchName}" class="filter form-control custom-form-control" />
                                                 </th>
+                                                <#elseif searchType=="select">
+                                                <th>
+                                                    <#assign optionList=searchRow['option']/>
+                                                    <select name="${searchName}" class="filter" style="width:50px;">
+                                                        <#list optionList?keys as optionKey>
+                                                            <option value="${optionKey!''}">${optionList[optionKey]!''}</option>
+                                                        </#list>
+                                                    </select>
+                                                </th>
                                                 <#elseif searchType=="action">
                                                 <th class="layui-edit-last"></th>
                                             </#if>
@@ -79,16 +89,25 @@
                                     <#assign  bodyDataList = main.body.data />
                                     <#list dataList as row>
                                     <tr>
-                                        <#list bodyDataList as dataRow>
-                                            <#if dataRow.type?? && dataRow.type=="action">
+                                        <#list searchList as dataRow>
+                                            <#assign dataType=dataRow.type>
+                                            <#if dataType?? && dataType=="action">
                                                 <td>
                                                     <div class="layui-edit-last">
                                                         <a class="btn btn-primary btn-xs btn-flat"><i class="fa fa-pencil-square-o"></i> 编辑</a>
                                                         <a class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash-o"></i> 删除</a>
                                                     </div>
                                                 </td>
-                                                <#else >
-                                                <td>${row[dataRow.name]!''}</td>
+                                                <#elseif dataType='select'>
+                                                <td>
+                                                    <#assign optionList=dataRow.option/>
+                                                    <#assign dataKey=row[dataRow.name]!''/>
+                                                    ${optionList[dataKey?string]}
+                                                </td>
+                                                <#else>
+                                                <td>
+                                                    ${row[dataRow.name]!''}
+                                                </td>
                                             </#if>
                                         </#list>
                                     </tr>
@@ -120,11 +139,14 @@
          Both of these plugins are recommended to enhance the
          user experience. -->
     </body>
+    <link type="text/css" rel="stylesheet" href="/design/static/plugins/multiple-select/multiple-select.css"/>
     <script type="text/javascript" src="/design/static/plugins/layer/layer.js?time=${time}"></script>
     <script type="text/javascript" src="/design/static/js/jquery.pluginPage.js?time=${time}"></script>
-    <script type="text/javascript" src="/design/static/js/jquery.pluginFilter.js?time=${time}"></script>
+    <script type="text/javascript" src="/design/static/js/jquery.pluginMyFilter.js?time=${time}"></script>
     <script type="text/javascript" src="/design/static/js/jquery.pluginDialog.js?time=${time}"></script>
     <script type="text/javascript" src="/design/static/js/jquery.pluginAjax.js?time=${time}"></script>
+    <script type="text/javascript" src="/design/static/plugins/multiple-select/multiple-select.js?time=${time}"></script>
+
     <script type="text/javascript">
         $(function () {
             $('#adminlte-button-page-number').click(function() {
@@ -136,26 +158,41 @@
             //点击搜索
             $('#filter-submit').click(function() {
                 var uri = '/test/page';
-                $.fn.filter('build', uri);
+                $.fn.myfilter('build', uri);
+            });
+
+            $("select").multipleSelect({
+                single: true,
+                filter: true
             });
         });
     </script>
     </html>
 
     <#else>
-        <#assign  bodyDataList = main.body.data />
+        <#assign searchList = main.body.search/>
+        <#assign bodyDataList = main.body.data />
         <#list dataList as row>
         <tr>
-            <#list bodyDataList as dataRow>
-                <#if dataRow.type?? && dataRow.type=="action">
+            <#list searchList as dataRow>
+                <#assign dataType=dataRow.type>
+                <#if dataType?? && dataType=="action">
                     <td>
                         <div class="layui-edit-last">
                             <a class="btn btn-primary btn-xs btn-flat"><i class="fa fa-pencil-square-o"></i> 编辑</a>
                             <a class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash-o"></i> 删除</a>
                         </div>
                     </td>
-                    <#else >
-                    <td>${row[dataRow.name]!''}</td>
+                <#elseif dataType='select'>
+                    <td>
+                        <#assign optionList=dataRow.option/>
+                        <#assign dataKey=row[dataRow.name]!''/>
+                        ${optionList[dataKey?string]}
+                    </td>
+                <#else>
+                    <td>
+                        ${row[dataRow.name]!''}
+                    </td>
                 </#if>
             </#list>
         </tr>
@@ -167,4 +204,13 @@
                 <!-- 分页 END -->
             </td>
         </tr>
+        <script>
+            $(function () {
+                $('#adminlte-button-page-number').click(function() {
+                    var pageNumber = $.fn.page('fetchPageNumber');
+                    var uri = '/test/page';
+                    $.fn.page('pager', uri, pageNumber);
+                });
+            })
+        </script>
 </#if>

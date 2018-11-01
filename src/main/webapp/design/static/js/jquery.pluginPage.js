@@ -6,6 +6,9 @@
         pager : function(uri, pageNumber) {
             var params = {};
             var pageSize = $.fn.page('fetchPageSize');
+            if (null == pageNumber) {
+                pageNumber = $.fn.page('fetchPageNumber');
+            }
             params['pageNumber'] = pageNumber;
             params['pageSize'] = pageSize;
             $.fn.myAjax('list', uri, params);

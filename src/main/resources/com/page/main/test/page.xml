@@ -11,16 +11,16 @@
             <column title="name" />
             <column title="email" />
             <column title="admin" />
-            <column title="status" />
-            <column title="create.date" />
+            <column title="status" width="10%"/>
+            <column title="create.date" width="10%"/>
             <column title="action" />
         </head-container>
         <search-container>
             <column type="text" name="id" />
             <column type="text" name="name" />
             <column type="text" name="email" />
-            <column type="select" option="User" name="admin" />
-            <column type="text" name="status" />
+            <column type="text" name="admin" />
+            <column type="select" name="status" option="YesNo"  />
             <column type="text" name="createDate" />
             <column type="action" />
         </search-container>
