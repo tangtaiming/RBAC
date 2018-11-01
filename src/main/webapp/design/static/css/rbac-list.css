@@ -42,9 +42,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-
-
-
 .layui-table-page {
     position: relative;
     width: 100%;
@@ -368,4 +365,20 @@ h1, h2, h3, h4, h5, h6 {
 .custom-form-control {
     height:24px;
     padding:0px 3px;
+}
+
+.select2-container--default .select2-selection--single, .select2-selection .select2-selection--single {
+    height:24px;
+}
+.select2-container .select2-selection--single .select2-selection__rendered {
+    margin-top:-9px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    top:-4px;
+}
+.select2-results__option {
+    padding:2px 12px;
+}
+.select2-search--dropdown .select2-search__field {
+    padding:1px;
 }

@@ -5,8 +5,7 @@
     scratch. This page gets rid of all links and provides the needed markup only.
     -->
     <html>
-        <#include "adminlte-head.ftl"/>
-    <link rel="stylesheet" href="/design/static/css/rbac-list.css"/>
+    <#include "adminlte-head.ftl"/>
 
     <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -73,7 +72,7 @@
                                                 <#elseif searchType=="select">
                                                 <th>
                                                     <#assign optionList=searchRow['option']/>
-                                                    <select name="${searchName}" class="filter" style="width:50px;">
+                                                    <select name="${searchName}" class="filter select2" style="width:100%;">
                                                         <#list optionList?keys as optionKey>
                                                             <option value="${optionKey!''}">${optionList[optionKey]!''}</option>
                                                         </#list>
@@ -139,14 +138,12 @@
          Both of these plugins are recommended to enhance the
          user experience. -->
     </body>
-    <link type="text/css" rel="stylesheet" href="/design/static/plugins/multiple-select/multiple-select.css"/>
-    <script type="text/javascript" src="/design/static/plugins/layer/layer.js?time=${time}"></script>
+    <script type="text/javascript" src="/design/static/plugins/layer/layer.js"></script>
     <script type="text/javascript" src="/design/static/js/jquery.pluginPage.js?time=${time}"></script>
     <script type="text/javascript" src="/design/static/js/jquery.pluginMyFilter.js?time=${time}"></script>
     <script type="text/javascript" src="/design/static/js/jquery.pluginDialog.js?time=${time}"></script>
     <script type="text/javascript" src="/design/static/js/jquery.pluginAjax.js?time=${time}"></script>
-    <script type="text/javascript" src="/design/static/plugins/multiple-select/multiple-select.js?time=${time}"></script>
-
+    <script type="text/javascript" src="/design/static/plugins/select2/dist/js/select2.min.js"></script>
     <script type="text/javascript">
         $(function () {
             $('#adminlte-button-page-number').click(function() {
@@ -161,10 +158,7 @@
                 $.fn.myfilter('build', uri);
             });
 
-            $("select").multipleSelect({
-                single: true,
-                filter: true
-            });
+            $('.select2').select2();
         });
     </script>
     </html>

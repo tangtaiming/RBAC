@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/design/static/plugins/admin-lte/bower_components/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="/design/static/plugins/admin-lte/bower_components/Ionicons/css/ionicons.min.css">
+    <!-- select -->
+    <link rel="stylesheet" href="/design/static/plugins/select2/dist/css/select2.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/design/static/plugins/admin-lte/dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -17,7 +19,8 @@
     <link rel="stylesheet" href="/design/static/plugins/admin-lte/dist/css/skins/skin-blue.min.css">
 
     <!-- custom style -->
-    <link rel="stylesheet" href="/design/static/css/adminlte-manager.css"/>
+    <link rel="stylesheet" href="/design/static/css/adminlte-manager.css?time=${time}"/>
+    <link rel="stylesheet" href="/design/static/css/rbac-list.css?time=${time}"/>
 
     <!-- Google Font -->
     <link rel="stylesheet"
@@ -27,7 +30,7 @@
 
     <!-- REQUIRED JS SCRIPTS -->
     <!-- jQuery 3 -->
-    <script src="/design/static/js/jQuery-2.2.0.min.js"></script>
+    <script src="/design/static/js/jquery.min.js"></script>
     <!-- Bootstrap 3.3.7 -->
     <script src="/design/static/plugins/admin-lte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- AdminLTE App -->
