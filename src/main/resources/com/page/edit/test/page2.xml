@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entity class="userVo">
+    <head>
+        <title>edit.user</title>
+        <script src="admin/user.js" />
+        <link href="admin/user.css" />
+    </head>
+    <tabs>
+        <tab>
+            <column type="text" title="name" name="name" />
+            <column type="text" title="password" name="password" />
+            <column type="ftl" title="parent.id" name="parentId" ftl="/descing/a.ftl" />
+            <column type="checkbox" title="role.name" name="roleId" option="YesNo" />
+        </tab>
+    </tabs>
+</entity>

@@ -29,7 +29,11 @@ public class MenuManagementAction extends RbacAction {
      * @return
      */
     public String menuManagement() {
-        _execute();
+        try {
+            _execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         List<Menu> menuList = menuService.findMenuAllList();
         Integer count = menuService.findMenuAllListCount();
 //        setDataList(menuList);
@@ -42,13 +46,21 @@ public class MenuManagementAction extends RbacAction {
      * @return
      */
     public String createMenu() {
-        _execute();
+        try {
+            _execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         saveMenuRsVo = menuService.findNoButtonMenuList();
         return SUCCESS;
     }
 
     public String editMenu() {
-        _execute();
+        try {
+            _execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         saveMenuRsVo = menuService.findEditPageData(getId());
         return SUCCESS;
     }

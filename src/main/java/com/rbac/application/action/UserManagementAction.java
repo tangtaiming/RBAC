@@ -45,7 +45,11 @@ public class UserManagementAction extends RbacAction {
     private String name;
 
     public String userManagement() {
-        _execute();
+        try {
+            _execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         userRsVo = userService.findUserManagementRsVo();
         int count = userService.findUserAllListCount();
 //        setTotalRows(count);
@@ -53,7 +57,11 @@ public class UserManagementAction extends RbacAction {
     }
 
     public String createUser() {
-        _execute();
+        try {
+            _execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         List<Role> roleList = roleService.findRoleList();
         createUserRsVo = new CreateUserRsVo(roleList);
         return SUCCESS;
@@ -86,7 +94,11 @@ public class UserManagementAction extends RbacAction {
     }
 
     public String editUser() {
-        _execute();
+        try {
+            _execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         User user = userService.findUserOne(getId());
         if (null == user) {
             addFieldError(ERROR_KEY, "编辑异常, 查询用户为空");

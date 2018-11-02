@@ -17,12 +17,9 @@ import java.util.Map;
  * @auther ttm
  * @date 2018/11/3 0003
  **/
-public class Edit<T> {
+public class Edit {
 
-    /**
-     * 实体
-     */
-    public T entity;
+    private static final String EDIT_PACKAGE = "edit";
 
     /**
      * 头部
@@ -48,7 +45,7 @@ public class Edit<T> {
         String[] urlPathArr = StringUtils.split(urlPath, "/");
         String path =
                 AppPathUtils.getAppPageXmlPath()
-                        + "main\\" + urlPathArr[0] + "\\" + urlPathArr[1] + ".xml";
+                        + EDIT_PACKAGE + "\\" + urlPathArr[0] + "\\" + urlPathArr[1] + ".xml";
         System.out.println("Show url: " + path);
         File file = new File(path);
         Builder builder = new Builder();
@@ -69,26 +66,33 @@ public class Edit<T> {
     private Map<String, Object> parseTabsXml(Element tabsElement) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         Elements tabElementList = tabsElement.getChildElements();
         Map<String, Object> tabsMap = new HashMap<>();
-        List<Map<String, Object>> tabsList = new ArrayList<>();
+        List<Map<String, Object>> tabList = new ArrayList<>();
         for (int x = 0; x < tabElementList.size(); x++) {
             Map<String, Object> tabMap = new HashMap<>();
+            List<Map<String, Object>> columnList = new ArrayList<>();
             Element tabElementRow = tabElementList.get(x);
-            String tabType = tabElementRow.getAttributeValue("type");
-            String tabTitle = tabElementRow.getAttributeValue("title");
-            String tabName = tabElementRow.getAttributeValue("name");
-            tabMap.put("tabType", tabType);
-            tabMap.put("tabTitle", tabTitle);
-            tabMap.put("tabName", tabName);
-            if (tabType.equals("ftl")) {
-                String tabFtl = tabElementRow.getAttributeValue("ftl");
-                tabMap.put("tabFtl", tabFtl);
-            } else if (tabType.equals("checkbox")) {
-                buildSelect(tabMap, tabElementRow);
+            Elements tabColumnList = tabElementRow.getChildElements();
+            for (int y = 0; y < tabColumnList.size(); y++) {
+                Map<String, Object> columnMap = new HashMap<>();
+                Element columnRow = tabColumnList.get(y);
+                String tabType = columnRow.getAttributeValue("type");
+                String tabTitle = columnRow.getAttributeValue("title");
+                String tabName = columnRow.getAttributeValue("name");
+                columnMap.put("tabType", tabType);
+                columnMap.put("tabTitle", tabTitle);
+                columnMap.put("tabName", tabName);
+                if (tabType.equals("ftl")) {
+                    String tabFtl = tabElementRow.getAttributeValue("ftl");
+                    columnMap.put("tabFtl", tabFtl);
+                } else if (tabType.equals("checkbox")) {
+                    buildSelect(columnMap, tabElementRow);
+                }
+                columnList.add(columnMap);
             }
-            tabsList.add(tabMap);
+            tabMap.put("tab", columnList);
+            tabList.add(tabMap);
         }
-
-        tabsMap.put("tabs", tabsList);
+        tabsMap.put("tabs", tabList);
         return tabsMap;
     }
 
@@ -132,8 +136,36 @@ public class Edit<T> {
         return headMap;
     }
 
+    public Map<String, Object> getHeadList() {
+        return headList;
+    }
 
+    public void setHeadList(Map<String, Object> headList) {
+        this.headList = headList;
+    }
 
+    public Map<String, Object> getTabsList() {
+        return tabsList;
+    }
 
+    public void setTabsList(Map<String, Object> tabsList) {
+        this.tabsList = tabsList;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getClassesName() {
+        return classesName;
+    }
+
+    public void setClassesName(String classesName) {
+        this.classesName = classesName;
+    }
 
 }

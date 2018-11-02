@@ -19,8 +19,6 @@ public class MainAction<E> extends RbacAction {
 
     private Map<String, Object> main;
 
-    private String url;
-
     /**
      * 当前页
      */
@@ -44,8 +42,8 @@ public class MainAction<E> extends RbacAction {
 
     @Override
     public void _execute() {
-        super._execute();
         try {
+            super._execute();
             setMainXml(getUrl());
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,21 +61,7 @@ public class MainAction<E> extends RbacAction {
         main.put("head", mainEntity.getHead());
         main.put("body", mainEntity.getBody());
         main.put("titleOne", mainEntity.getTitle());
-    }
-
-    public String getSubRequestUri() {
-        HttpServletRequest request = ServletActionContext.getRequest();
-        String requestUri = request.getRequestURI();
-        String contextPath = request.getContextPath();
-        return requestUri.substring(contextPath.length());
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
+        setTitle(mainEntity.getTitle());
     }
 
     public Map<String, Object> getMain() {

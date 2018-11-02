@@ -5,6 +5,11 @@
 <struts>
     <package name="textManager" namespace="/test" extends="rbac">
         <action name="page" class="com.rbac.application.action.TestManagementAction">
+            <result name="success">/design/template/core/list-manager.ftl</result>
+            <!--<result name="success">/design/template/core/entity-edit.ftl</result>-->
+        </action>
+
+        <action name="page2" class="com.rbac.application.action.TestEditAction">
             <!--<result name="success">/design/template/core/list-manager.ftl</result>-->
             <result name="success">/design/template/core/entity-edit.ftl</result>
         </action>

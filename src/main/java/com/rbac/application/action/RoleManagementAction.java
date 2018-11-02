@@ -53,7 +53,11 @@ public class RoleManagementAction extends RbacAction {
      * @return
      */
     public String roleManagement() {
-        _execute();
+        try {
+            _execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         roleRsVo = roleService.findRoleManagementRsVo();
         int count = roleService.findRoleAllListCount();
 //        setTotalRows(count);
@@ -65,7 +69,11 @@ public class RoleManagementAction extends RbacAction {
      * @return
      */
     public String createRole() {
-        _execute();
+        try {
+            _execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return SUCCESS;
     }
 
@@ -97,7 +105,11 @@ public class RoleManagementAction extends RbacAction {
      * @return
      */
     public String editRole() {
-        _execute();
+        try {
+            _execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Role role = roleService.findRoleOne(getId());
         if (null == role) {
             addFieldError(ERROR_KEY, "编辑异常, 查询角色为空");
@@ -113,7 +125,11 @@ public class RoleManagementAction extends RbacAction {
      * @return
      */
     public String siteAccess() {
-        _execute();
+        try {
+            _execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Role role = roleService.findRoleOne(getId());
         if (null == role) {
             addFieldError(ERROR_KEY, "编辑异常, 查询角色为空");

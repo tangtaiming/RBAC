@@ -28,7 +28,11 @@ public class AccessManagementAction extends RbacAction {
     private static final String ERROR_KEY = "error";
 
     public String accessManagement() {
-        _execute();
+        try {
+            _execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         List<Access> accessList = accessService.findAccessAllList();
         setAccessList(accessList);
         int count = accessService.findAccessAllListCount();
@@ -37,7 +41,11 @@ public class AccessManagementAction extends RbacAction {
     }
 
     public String createAccess() {
-        _execute();
+        try {
+            _execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         accessRsVo = new CreateAccessRsVo();
         return SUCCESS;
     }
@@ -69,7 +77,11 @@ public class AccessManagementAction extends RbacAction {
     }
 
     public String editAccess() {
-        _execute();
+        try {
+            _execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         SaveAccessRsDto findAccessRsDto = accessService.findAccessRsDtoOne(getId());
         if (null == findAccessRsDto) {
             addFieldError(ERROR_KEY, "编辑异常, 查询权限为空");

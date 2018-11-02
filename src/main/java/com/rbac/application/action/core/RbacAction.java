@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -51,9 +52,19 @@ public class RbacAction<E> extends ActionSupport {
      */
     private String result;
 
+    /**
+     * 请求url
+     */
+    private String url;
+
+    /**
+     * 标题
+     */
+    private String title;
+
     private static Set<String> chooseAccessList;
 
-    public void _execute() {
+    public void _execute() throws Exception {
         RbacSession rbacSession = new RbacSession();
         Map<String, Object> session = rbacSession.getSession();
         if (!(null == session)) {
@@ -90,6 +101,13 @@ public class RbacAction<E> extends ActionSupport {
         }
         //实例化导航
         nav = new NavigatorRsVo();
+    }
+
+    public String getSubRequestUri() {
+        HttpServletRequest request = ServletActionContext.getRequest();
+        String requestUri = request.getRequestURI();
+        String contextPath = request.getContextPath();
+        return requestUri.substring(contextPath.length());
     }
 
     public String getLoginName() {
@@ -132,4 +150,19 @@ public class RbacAction<E> extends ActionSupport {
         this.result = result;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }
