@@ -74,7 +74,7 @@
                                                     <#assign optionList=searchRow['option']/>
                                                     <select name="${searchName}" class="filter select2" style="width:100%;">
                                                         <#list optionList?keys as optionKey>
-                                                            <option value="${optionKey!''}">${optionList[optionKey]!''}</option>
+                                                            <option value="${optionKey!''}">${optionList[optionKey]!' '}</option>
                                                         </#list>
                                                     </select>
                                                 </th>
