@@ -15,55 +15,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <style>
-            .content-header {
-                position: relative;
-                background: #ffffff;
-                overflow: hidden;
-                padding: 15px 10px 9px;
-                margin-bottom: 25px;
-                margin-left: 0px;
-                margin-right: 0px;
-            }
-            .content-header .breadcrumb {
-                background: none;
-                margin-bottom: 0px;
-                float: right;
-                padding: 0;
-                margin-top: 8px;
-            }
-            .content-header h4 {
-                text-transform: uppercase;
-                font-size: 14px;
-                font-weight: 500;
-                margin-top: 6px;
-            }
-            h4 {
-                line-height: 22px;
-                font-size: 18px;
-            }
-            h1, h2, h3, h4, h5, h6 {
-                color: #313131;
-                font-family: 'Rubik', sans-serif;
-                margin: 10px 0;
-                font-weight: 300;
-            }
-
-            .white-box {
-                background: #ffffff;
-                padding: 25px;
-                margin-bottom: 30px;
-            }
-
-            .content {
-                padding:0px 15px 15px 15px;
-            }
-
-            .table-responsive {
-                overflow-y: hidden;
-                overflow-x: hidden;
-            }
-        </style>
         <!-- Content Header (Page header) -->
         <div class="row content-header" style="background: #ffffff;">
             <div class="col-lg-6 col-md-4 col-sm-4 col-xs-12">
@@ -90,7 +41,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <div class="tab-pane active" id="timeline">
                                 11111111
                             </div>
-
                             <div class="tab-pane" id="settings">
                                 <form class="form-horizontal">
                                     <div class="form-group">
