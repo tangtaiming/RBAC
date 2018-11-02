@@ -51,12 +51,10 @@ public class Main {
     public void parseXml(Element root) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         Element headElement = root.getFirstChildElement("head");
         Element bodyElement = root.getFirstChildElement("body");
-        Map<String, Object> headList = parseHeadXml(headElement);
-        Map<String, Object> bodyList = parseBodyXml(bodyElement);
-        title = (String) headList.get("titleOne");
+        head = parseHeadXml(headElement);
+        body = parseBodyXml(bodyElement);
+        title = (String) head.get("titleOne");
         classesName = root.getAttributeValue("class");
-        head = headList;
-        body = bodyList;
     }
 
     private Map<String, Object> parseBodyXml(Element bodyElement) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {

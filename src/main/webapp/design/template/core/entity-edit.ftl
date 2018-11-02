@@ -32,70 +32,61 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Main content -->
             <div class="content container-fluid">
                 <div class="col-lg-12">
+                    <div class="text-right">
+                        <div class="btn-group">
+                            <a class="btn btn-primary btn-sm btn-flat"><i class="fa"></i> 返回</a>
+                            <a class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus-square-o"></i> 删除</a>
+                            <a class="btn btn-primary btn-sm btn-flat"><i class="fa fa-mail-reply"></i> 重置</a>
+                            <a class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> 保存</a>
+                            <a class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> 保存并返回</a>
+                        </div>
+                    </div>
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="#timeline" data-toggle="tab">Timeline</a></li>
-                            <li><a href="#settings" data-toggle="tab">Settings</a></li>
+                            <li class="active"><a href="#settings" data-toggle="tab">用户基本信息</a></li>
                         </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="timeline">
-                                11111111
-                            </div>
-                            <div class="tab-pane" id="settings">
-                                <form class="form-horizontal">
+                        <form class="tab-content">
+                            <div class="tab-pane active" id="settings">
+                                <div class="form-horizontal">
                                     <div class="form-group">
                                         <label for="inputName" class="col-sm-2 control-label">Name</label>
 
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-6">
                                             <input type="email" class="form-control" id="inputName" placeholder="Name">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-6">
                                             <input type="email" class="form-control" id="inputEmail" placeholder="Email">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputName" class="col-sm-2 control-label">Name</label>
 
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-6">
                                             <input type="text" class="form-control" id="inputName" placeholder="Name">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
 
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-6">
                                             <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
 
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-6">
                                             <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-danger">Submit</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
                             <!-- /.tab-pane -->
-                        </div>
+                        </form>
                         <!-- /.tab-content -->
                     </div>
                     <!-- /.nav-tabs-custom -->
