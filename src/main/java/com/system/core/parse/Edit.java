@@ -65,12 +65,14 @@ public class Edit {
 
     private Map<String, Object> parseTabsXml(Element tabsElement) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         Elements tabElementList = tabsElement.getChildElements();
-        Map<String, Object> tabsMap = new HashMap<>();
-        List<Map<String, Object>> tabList = new ArrayList<>();
+
+        Map<String, Object> tabRowNameMap = new HashMap<>();
+        List<Object> tabList = new ArrayList<>();
         for (int x = 0; x < tabElementList.size(); x++) {
-            Map<String, Object> tabMap = new HashMap<>();
             List<Map<String, Object>> columnList = new ArrayList<>();
             Element tabElementRow = tabElementList.get(x);
+            String tabRowTitle = tabElementRow.getAttributeValue("title");
+            String tabRowName = tabElementRow.getAttributeValue("name");
             Elements tabColumnList = tabElementRow.getChildElements();
             for (int y = 0; y < tabColumnList.size(); y++) {
                 Map<String, Object> columnMap = new HashMap<>();
@@ -82,16 +84,21 @@ public class Edit {
                 columnMap.put("tabTitle", tabTitle);
                 columnMap.put("tabName", tabName);
                 if (tabType.equals("ftl")) {
-                    String tabFtl = tabElementRow.getAttributeValue("ftl");
+                    String tabFtl = columnRow.getAttributeValue("ftl");
                     columnMap.put("tabFtl", tabFtl);
                 } else if (tabType.equals("checkbox")) {
-                    buildSelect(columnMap, tabElementRow);
+                    buildSelect(columnMap, columnRow);
                 }
                 columnList.add(columnMap);
             }
-            tabMap.put("tab", columnList);
-            tabList.add(tabMap);
+            Map<String, Object> b = new HashMap<>();
+            b.put("tab", columnList);
+            b.put("title", tabRowTitle);
+            tabRowNameMap.put(tabRowName, b);
+            tabList.add(columnList);
         }
+
+        Map<String, Object> tabsMap = new HashMap<>();
         tabsMap.put("tabs", tabList);
         return tabsMap;
     }

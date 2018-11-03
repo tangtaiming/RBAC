@@ -6,11 +6,23 @@
         <link href="admin/user.css" />
     </head>
     <tabs>
-        <tab>
+        <tab title="tab.1" name="tab-1">
             <column type="text" title="name" name="name" />
             <column type="text" title="password" name="password" />
             <column type="ftl" title="parent.id" name="parentId" ftl="/descing/a.ftl" />
             <column type="checkbox" title="role.name" name="roleId" option="YesNo" />
+        </tab>
+        <tab title="tab.2" name="tab-2">
+            <column type="text" title="name2" name="name" />
+            <column type="text" title="password2" name="password" />
+            <column type="ftl" title="parent.id2" name="parentId" ftl="/descing/a.ftl" />
+            <column type="checkbox" title="role.name2" name="roleId" option="YesNo" />
+        </tab>
+        <tab title="tab.3" name="tab-3">
+            <column type="text" title="name3" name="name" />
+            <column type="text" title="password3" name="password" />
+            <column type="ftl" title="parent.id3" name="parentId" ftl="/descing/a.ftl" />
+            <column type="checkbox" title="role.name3" name="roleId" option="YesNo" />
         </tab>
     </tabs>
 </entity>
