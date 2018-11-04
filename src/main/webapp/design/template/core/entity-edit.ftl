@@ -42,49 +42,62 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div>
                     </div>
                     <div class="nav-tabs-custom">
+                        <#assign tabsEntity=edit.tabsList />
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="#settings" data-toggle="tab">用户基本信息</a></li>
+                        <#list tabsEntity as tabEntity>
+                            <#assign tabTitle = tabEntity["title"]/>
+                            <#assign tabActive = '' />
+                            <#if tabEntity_index == 0>
+                                <#assign tabActive = 'class="active"' />
+                            </#if>
+
+                            <li ${tabActive}><a href="#settings" data-toggle="tab"><@s.text name="${tabTitle}" /></a></li>
+                        </#list>
                         </ul>
                         <form class="tab-content">
-                            <div class="tab-pane active" id="settings">
+                            <#assign tabsEntity=edit.tabsList />
+                            <#list tabsEntity as tabEntity>
+                            <#assign tabValue = tabEntity["tab"]/>
+                            <#assign tabActive = '' />
+                            <#if tabEntity_index == 0>
+                                <#assign tabActive = 'active' />
+                            </#if>
+                            <div class="tab-pane ${tabActive}" id="settings">
                                 <div class="form-horizontal">
-                                    <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">Name</label>
+                                    <#list tabValue as column>
+                                        <#assign columnName=column["name"] />
+                                        <#assign columnType=column["type"] />
+                                        <#assign columnTitle=column["title"] />
+                                        <div class="form-group">
+                                            <label for="${edit.classesName}_${columnName}" class="col-sm-2 control-label"><@s.text name="${columnTitle}"/></label>
+                                            <div class="col-sm-6">
+                                            <#-- 文本域 -->
+                                            <#if columnType=="text">
+                                                <input type="text" name="${edit.classesName}.${columnName}" class="form-control" id="${edit.classesName}_${columnName}" placeholder="<@s.text name="${columnTitle}"/>">
 
-                                        <div class="col-sm-6">
-                                            <input type="email" class="form-control" id="inputName" placeholder="Name">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                                                <#-- 复选框 -->
+                                                <#elseif columnType=="checkbox">
+                                                <div class="checkbox">
+                                                    <#assign columnOption=column["option"] />
+                                                    <#list columnOption?keys as optionKey>
+                                                        <label>
+                                                            <input type="checkbox" name="${edit.classesName}.${columnName}" id="${edit.classesName}_${columnName}">${columnOption[optionKey]!' '}
+                                                        </label>
+                                                    </#list>
+                                                </div>
 
-                                        <div class="col-sm-6">
-                                            <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">Name</label>
+                                                <#-- 自定义ftl页面 -->
+                                                <#elseif columnType=="ftl">
+                                                    <#assign columnFtl=column["ftl"] />
+                                                    <#include "${columnFtl}"/>
 
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="inputName" placeholder="Name">
+                                            </#if>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
-
-                                        <div class="col-sm-6">
-                                            <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
-
-                                        <div class="col-sm-6">
-                                            <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
-                                        </div>
-                                    </div>
+                                    </#list>
                                 </div>
                             </div>
+                            </#list>
                             <!-- /.tab-pane -->
                         </form>
                         <!-- /.tab-content -->

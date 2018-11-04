@@ -29,7 +29,7 @@ public class Edit {
     /**
      * 数据面板
      */
-    private Map<String, Object> tabsList;
+    private List<Map<String, Object>> tabsList;
 
     /**
      * 标题
@@ -63,16 +63,15 @@ public class Edit {
         classesName = root.getAttributeValue("class");
     }
 
-    private Map<String, Object> parseTabsXml(Element tabsElement) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    private List<Map<String, Object>> parseTabsXml(Element tabsElement) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         Elements tabElementList = tabsElement.getChildElements();
 
-        Map<String, Object> tabRowNameMap = new HashMap<>();
-        List<Object> tabList = new ArrayList<>();
+        List<Map<String, Object>> tabList = new ArrayList<>();
         for (int x = 0; x < tabElementList.size(); x++) {
             List<Map<String, Object>> columnList = new ArrayList<>();
             Element tabElementRow = tabElementList.get(x);
             String tabRowTitle = tabElementRow.getAttributeValue("title");
-            String tabRowName = tabElementRow.getAttributeValue("name");
+//            String tabRowName = tabElementRow.getAttributeValue("name");
             Elements tabColumnList = tabElementRow.getChildElements();
             for (int y = 0; y < tabColumnList.size(); y++) {
                 Map<String, Object> columnMap = new HashMap<>();
@@ -80,12 +79,12 @@ public class Edit {
                 String tabType = columnRow.getAttributeValue("type");
                 String tabTitle = columnRow.getAttributeValue("title");
                 String tabName = columnRow.getAttributeValue("name");
-                columnMap.put("tabType", tabType);
-                columnMap.put("tabTitle", tabTitle);
-                columnMap.put("tabName", tabName);
+                columnMap.put("type", tabType);
+                columnMap.put("title", tabTitle);
+                columnMap.put("name", tabName);
                 if (tabType.equals("ftl")) {
                     String tabFtl = columnRow.getAttributeValue("ftl");
-                    columnMap.put("tabFtl", tabFtl);
+                    columnMap.put("ftl", tabFtl);
                 } else if (tabType.equals("checkbox")) {
                     buildSelect(columnMap, columnRow);
                 }
@@ -94,13 +93,12 @@ public class Edit {
             Map<String, Object> b = new HashMap<>();
             b.put("tab", columnList);
             b.put("title", tabRowTitle);
-            tabRowNameMap.put(tabRowName, b);
-            tabList.add(columnList);
+            tabList.add(b);
         }
 
-        Map<String, Object> tabsMap = new HashMap<>();
-        tabsMap.put("tabs", tabList);
-        return tabsMap;
+//        Map<String, Object> tabsMap = new HashMap<>();
+//        tabsMap.put("tabs", tabList);
+        return tabList;
     }
 
     private void buildSelect(Map<String, Object> dataMap, Element element) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
@@ -151,11 +149,11 @@ public class Edit {
         this.headList = headList;
     }
 
-    public Map<String, Object> getTabsList() {
+    public List<Map<String, Object>> getTabsList() {
         return tabsList;
     }
 
-    public void setTabsList(Map<String, Object> tabsList) {
+    public void setTabsList(List<Map<String, Object>> tabsList) {
         this.tabsList = tabsList;
     }
 
