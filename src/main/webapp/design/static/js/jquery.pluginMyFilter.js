@@ -8,6 +8,10 @@
          */
         build: function(uri) {
             var params = {};
+            if (null == uri) {
+                uri = window.location.pathname;
+            }
+
             //获取input表单数据
             var inputFilterElement = $('.filter');
             inputFilterElement.each(function() {

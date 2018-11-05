@@ -5,6 +5,9 @@
          */
         pager : function(uri, pageNumber) {
             var params = {};
+            if (null == uri) {
+                uri = window.location.pathname;
+            }
             var pageSize = $.fn.page('fetchPageSize');
             if (null == pageNumber) {
                 pageNumber = $.fn.page('fetchPageNumber');

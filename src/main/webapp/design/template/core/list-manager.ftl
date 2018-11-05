@@ -50,12 +50,16 @@
                                         <#assign  titleList = main.body.title/>
                                         <#list titleList as titleRow>
                                             <#assign title = titleRow['title'] />
+                                            <#assign width = '' />
+                                            <#if titleRow['width']??>
+                                                <#assign width = 'style="width:' + titleRow['width'] + '"' />
+                                            </#if>
                                             <#if (titleRow_index + 1) == titleList?size>
                                                 <th class="layui-edit-last">
                                                     <@s.text name="${title}" />
                                                 </th>
                                                 <#else>
-                                                <th><@s.text name="${title}" /></th>
+                                                <th ${width}><@s.text name="${title}" /></th>
                                             </#if>
                                         </#list>
                                     </tr>
@@ -74,7 +78,11 @@
                                                     <#assign optionList=searchRow['option']/>
                                                     <select name="${searchName}" class="filter select2" style="width:100%;">
                                                         <#list optionList?keys as optionKey>
-                                                            <option value="${optionKey!''}">${optionList[optionKey]!' '}</option>
+                                                            <#if optionKey=="">
+                                                                <option value="">&nbsp;</option>
+                                                                <#else>
+                                                                <option value="${optionKey!''}">${optionList[optionKey]!''}</option>
+                                                            </#if>
                                                         </#list>
                                                     </select>
                                                 </th>
@@ -101,7 +109,11 @@
                                                 <td>
                                                     <#assign optionList=dataRow.option/>
                                                     <#assign dataKey=row[dataRow.name]!''/>
-                                                    ${optionList[dataKey?string]}
+                                                    <#if optionList[dataKey?string]??>
+                                                        ${optionList[dataKey?string]}
+                                                        <#else>
+                                                        ${dataKey?string}
+                                                    </#if>
                                                 </td>
                                                 <#else>
                                                 <td>
@@ -148,14 +160,12 @@
         $(function () {
             $('#adminlte-button-page-number').click(function() {
                 var pageNumber = $.fn.page('fetchPageNumber');
-                var uri = '/test/page';
-                $.fn.page('pager', uri, pageNumber);
+                $.fn.page('pager', null, pageNumber);
             });
 
             //点击搜索
             $('#filter-submit').click(function() {
-                var uri = '/test/page';
-                $.fn.myfilter('build', uri);
+                $.fn.myfilter('build', null);
             });
 
             $('.select2').select2();
@@ -181,7 +191,11 @@
                     <td>
                         <#assign optionList=dataRow.option/>
                         <#assign dataKey=row[dataRow.name]!''/>
-                        ${optionList[dataKey?string]}
+                        <#if optionList[dataKey?string]??>
+                            ${optionList[dataKey?string]}
+                        <#else>
+                            ${dataKey?string}
+                        </#if>
                     </td>
                 <#else>
                     <td>
@@ -202,8 +216,7 @@
             $(function () {
                 $('#adminlte-button-page-number').click(function() {
                     var pageNumber = $.fn.page('fetchPageNumber');
-                    var uri = '/test/page';
-                    $.fn.page('pager', uri, pageNumber);
+                    $.fn.page('pager', null, pageNumber);
                 });
             })
         </script>

@@ -1,5 +1,6 @@
 package com.rbac.application.action;
 
+import com.rbac.application.action.core.MainAction;
 import com.rbac.application.action.core.RbacAction;
 import com.rbac.application.action.vo.CreateUserRsVo;
 import com.rbac.application.action.vo.EditUserRsVo;
@@ -19,7 +20,7 @@ import java.util.List;
  * @auther ttm
  * @date 2018/7/24
  */
-public class UserManagementAction extends RbacAction {
+public class UserManagementAction extends MainAction {
 
     private final static Logger LOG = LoggerFactory.getLogger(UserManagementAction.class);
 
@@ -47,12 +48,11 @@ public class UserManagementAction extends RbacAction {
     public String userManagement() {
         try {
             _execute();
+            setDataList(userService.getDataList());
+            setPage(userService.getPage());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        userRsVo = userService.findUserManagementRsVo();
-        int count = userService.findUserAllListCount();
-//        setTotalRows(count);
         return SUCCESS;
     }
 

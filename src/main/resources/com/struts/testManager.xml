@@ -13,5 +13,9 @@
             <!--<result name="success">/design/template/core/list-manager.ftl</result>-->
             <result name="success">/design/template/core/entity-edit.ftl</result>
         </action>
+
+        <action name="savePage2" class="com.rbac.application.action.TestEditAction" method="savePage2">
+            <result name="success">/design/template/result/success.ftl</result>
+        </action>
     </package>
 </struts>

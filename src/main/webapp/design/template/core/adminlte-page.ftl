@@ -14,7 +14,7 @@
             </#if>
             <a
                 <#if upRow?string("true", "false")=="true">
-                    onclick="$.fn.page('pager', '/test/page', ${pageNumber - 1});" href="javascript:void(0);"
+                    onclick="$.fn.page('pager', null, ${pageNumber - 1});" href="javascript:void(0);"
                 </#if>
                 class="layui-laypage-prev ${upDisabledClass}">
                 <i class="fa fa-angle-left"></i>
@@ -26,7 +26,7 @@
                         <em>${link}</em>
                     </span>
                 <#else>
-                    <a onclick="$.fn.page('pager', '/test/page', ${link})" href="javascript:void(0);">${link}</a>
+                    <a onclick="$.fn.page('pager', null, ${link})" href="javascript:void(0);">${link}</a>
                 </#if>
             </#list>
             <#assign downDisabledClass='layui-disabled' />
@@ -35,7 +35,7 @@
             </#if>
             <a
                 <#if downRow?string("true", "false")=="true">
-                    onclick="$.fn.page('pager', '/test/page', ${pageNumber + 1});" href="javascript:void(0);"
+                    onclick="$.fn.page('pager', null, ${pageNumber + 1});" href="javascript:void(0);"
                 </#if>
                     class="layui-laypage-next ${downDisabledClass}">
                 <i class="fa fa-angle-right"></i>
@@ -48,7 +48,7 @@
             </span>
             <span class="layui-laypage-count">共 ${totalPage} 页, 总共 ${totalRows} 条, 每页</span>
             <span class="layui-laypage-limits">
-                <select id="adminlte-input-page-size" onchange="$.fn.page('pager', '/test/page', ${pageNumber});">
+                <select id="adminlte-input-page-size" onchange="$.fn.page('pager', null, ${pageNumber});">
                     <#list [1, 10, 20, 30, 40, 50, 60, 70, 80, 90] as pz>
                         <#assign selectAttr='' />
                         <#if pageSize==pz>

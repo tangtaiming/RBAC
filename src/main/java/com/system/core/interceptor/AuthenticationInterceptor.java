@@ -8,6 +8,8 @@ import com.rbac.application.orm.User;
 import com.rbac.application.service.AccessService;
 import com.rbac.application.service.RoleService;
 import com.rbac.application.service.UserService;
+import com.system.core.session.RbacSession;
+import com.system.util.base.AutoTokenUtils;
 import com.system.util.base.JsonUtils;
 import com.system.util.base.MD5Utils;
 import org.apache.commons.collections.CollectionUtils;
@@ -39,7 +41,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
 
     private final static String LOGIN_PAGE = "login";
 
-    private UserService userService;
+    private UserService userService = new UserService();
 
     private RoleService roleService = new RoleService();
 
@@ -66,6 +68,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         allowRequestUrl.add("/admin/doLogin");
         allowRequestUrl.add("/test/page");
         allowRequestUrl.add("/test/page2");
+        allowRequestUrl.add("/test/savePage2");
 
         ignoreRequestUrl = new ArrayList<>();
         ignoreRequestUrl.add("/admin/vlogin");
@@ -74,6 +77,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         ignoreRequestUrl.add("/admin/doLogin");
         ignoreRequestUrl.add("/test/page");
         ignoreRequestUrl.add("/test/page2");
+        ignoreRequestUrl.add("/test/savePage2");
     }
 
     @Override
@@ -137,7 +141,6 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         }
 
         if (CollectionUtils.isEmpty(privilegeUrls)) {
-            userService = new UserService();
             privilegeUrls = new ArrayList<>();
             List<Integer> userRoleList = userService.findUserRoleColumnRoleIdByUserId(userId);
             if (CollectionUtils.isNotEmpty(userRoleList)) {
@@ -173,13 +176,13 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
 
 
     private boolean checkoutLoginStatusBySession(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
+        RbacSession session = new RbacSession();
         if (null == session) {
             LOG.info("Checkout session is null");
             return false;
         }
 
-        String secretKey = (String) session.getAttribute("secretKey");
+        String secretKey = (String) session.get("secretKey");
         if (StringUtils.isEmpty(secretKey)) {
             LOG.info("Checkout login status fail, fail result: searetKey is null");
             return false;
@@ -194,7 +197,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
             return false;
         }
 
-        String createAutoToken = createAutoToken(user, request);
+        String createAutoToken = AutoTokenUtils.createAutoToken(user, request);
         if (!autoToken.equals(createAutoToken)) {
             LOG.info("Checkout login status, auto token not equals");
             return false;
@@ -239,7 +242,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
             return false;
         }
 
-        String createAutoToken = createAutoToken(user, request);
+        String createAutoToken = AutoTokenUtils.createAutoToken(user, request);
         if (!autoToken.equals(createAutoToken)) {
             LOG.info("Checkout login status, auto token not equals");
             return false;
@@ -247,11 +250,6 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
 
         LOG.info("Checkout Login status: " + secretKey + " success");
         return true;
-    }
-
-    private String createAutoToken(User user, HttpServletRequest request) {
-        String encode = user.getId() + user.getName() + user.getPassword() + request.getHeader("user-agent");
-        return MD5Utils.encoder(encode);
     }
 
     public User getUser() {

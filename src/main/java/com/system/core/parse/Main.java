@@ -68,7 +68,10 @@ public class Main {
             String title = headTitleElement.getAttributeValue("title");
             String width = headTitleElement.getAttributeValue("width");
             headTitleMap.put("title", title);
-            headTitleMap.put("width", width);
+            if (!StringUtils.isEmpty(width)) {
+                headTitleMap.put("width", width);
+            }
+
             titleList.add(headTitleMap);
         }
 

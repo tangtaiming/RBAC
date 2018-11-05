@@ -23,6 +23,29 @@
                     $.fn.dialog('error');
                 }
             });
+        },
+        /**
+         * 提交表单
+         * @param uri
+         */
+        saveFrom: function(uri) {
+            //显示加载
+            var loadIndex = $.fn.dialog('load');
+            //获取数据
+            var params = $('#entity-form').serialize();
+            $.ajax({
+                url: uri,
+                type: 'POST',
+                data: params,
+                success: function ( response ) {
+                    $.fn.dialog('close', loadIndex);
+                    console.log(response);
+                },
+                error: function() {
+                    $.fn.dialog('close', loadIndex);
+                    $.fn.dialog('error');
+                }
+            });
         }
     }
 

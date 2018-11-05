@@ -6,6 +6,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html>
 <#include "adminlte-head.ftl"/>
 <#include "adminlte-create-customjs.ftl" />
+<script type="text/javascript" src="/design/static/plugins/layer/layer.js"></script>
+<script type="text/javascript" src="/design/static/js/jquery.pluginPage.js?time=${time}"></script>
+<script type="text/javascript" src="/design/static/js/jquery.pluginMyFilter.js?time=${time}"></script>
+<script type="text/javascript" src="/design/static/js/jquery.pluginDialog.js?time=${time}"></script>
+<script type="text/javascript" src="/design/static/js/jquery.pluginAjax.js?time=${time}"></script>
+<script type="text/javascript" src="/design/static/plugins/select2/dist/js/select2.min.js"></script>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
     <!-- Main Header -->
@@ -37,7 +43,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <a class="btn btn-primary btn-sm btn-flat"><i class="fa"></i> 返回</a>
                             <a class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus-square-o"></i> 删除</a>
                             <a class="btn btn-primary btn-sm btn-flat"><i class="fa fa-mail-reply"></i> 重置</a>
-                            <a class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> 保存</a>
+                            <a onclick='$.fn.myAjax("saveFrom", "/test/savePage2")' class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> 保存</a>
                             <a class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> 保存并返回</a>
                         </div>
                     </div>
@@ -54,7 +60,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <li ${tabActive}><a href="#settings" data-toggle="tab"><@s.text name="${tabTitle}" /></a></li>
                         </#list>
                         </ul>
-                        <form class="tab-content">
+                        <form id="entity-form" class="tab-content">
                             <#assign tabsEntity=edit.tabsList />
                             <#list tabsEntity as tabEntity>
                             <#assign tabValue = tabEntity["tab"]/>
@@ -69,7 +75,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <#assign columnType=column["type"] />
                                         <#assign columnTitle=column["title"] />
                                         <div class="form-group">
-                                            <label for="${edit.classesName}_${columnName}" class="col-sm-2 control-label"><@s.text name="${columnTitle}"/></label>
+                                            <label id="field_${columnName}" for="${edit.classesName}_${columnName}" class="col-sm-2 control-label required-field"><@s.text name="${columnTitle}"/></label>
                                             <div class="col-sm-6">
                                             <#-- 文本域 -->
                                             <#if columnType=="text">
@@ -77,11 +83,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                                                 <#-- 复选框 -->
                                                 <#elseif columnType=="checkbox">
-                                                <div class="checkbox">
+                                                <div class="checkbox checkbox-${columnName}">
                                                     <#assign columnOption=column["option"] />
                                                     <#list columnOption?keys as optionKey>
                                                         <label>
-                                                            <input type="checkbox" name="${edit.classesName}.${columnName}" id="${edit.classesName}_${columnName}">${columnOption[optionKey]!' '}
+                                                            <input type="checkbox" name="${edit.classesName}.${columnName}" id="${edit.classesName}_${columnName}" value="${optionKey}">${columnOption[optionKey]!' '}
                                                         </label>
                                                     </#list>
                                                 </div>

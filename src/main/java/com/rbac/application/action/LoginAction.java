@@ -5,6 +5,8 @@ import com.rbac.application.action.vo.LoginVo;
 import com.rbac.application.action.vo.ResponseVo;
 import com.rbac.application.orm.User;
 import com.rbac.application.service.UserService;
+import com.system.core.session.RbacSession;
+import com.system.util.base.AutoTokenUtils;
 import com.system.util.base.JsonUtils;
 import com.system.util.base.MD5Utils;
 import org.apache.commons.lang.StringUtils;
@@ -76,19 +78,23 @@ public class LoginAction extends RbacAction {
 
         HttpServletRequest request = ServletActionContext.getRequest();
         String userAgent = request.getHeader("user-agent");
+        RbacSession session = new RbacSession();
+
+
         Integer userId = user.getId();
-        String userInfoToString = userId + user.getName() + user.getEmail() + userAgent;
-        String autoToken = MD5Utils.encoder(userInfoToString);
+        String autoToken = AutoTokenUtils.createAutoToken(user, request);
         String secretKey = autoToken + "#" + userId;
         LOG.info("Secret key: " + secretKey);
+        session.put("user", user.getName());
+        session.put("secretKey", secretKey);
         //创建Cookie
-        Cookie cookie = new Cookie("User", user.getName());
-        cookie.setPath("/");
-        Cookie cookieToken = new Cookie("SecretKey", secretKey);
-        cookieToken.setPath("/");
-
-        ServletActionContext.getResponse().addCookie(cookie);
-        ServletActionContext.getResponse().addCookie(cookieToken);
+//        Cookie cookie = new Cookie("User", user.getName());
+//        cookie.setPath("/");
+//        Cookie cookieToken = new Cookie("SecretKey", secretKey);
+//        cookieToken.setPath("/");
+//
+//        ServletActionContext.getResponse().addCookie(cookie);
+//        ServletActionContext.getResponse().addCookie(cookieToken);
         return SUCCESS;
     }
 
