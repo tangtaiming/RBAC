@@ -41,10 +41,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="text-right">
                         <div class="btn-group">
                             <a class="btn btn-primary btn-sm btn-flat"><i class="fa"></i> 返回</a>
-                            <a class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus-square-o"></i> 删除</a>
+                            <a onclick='$.fn.myAjax("deleteById", "${edit.headList.deleteLink}")' class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus-square-o"></i> 删除</a>
                             <a class="btn btn-primary btn-sm btn-flat"><i class="fa fa-mail-reply"></i> 重置</a>
-                            <a onclick='$.fn.myAjax("saveFrom", "/test/savePage2")' class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> 保存</a>
-                            <a class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> 保存并返回</a>
+                            <a onclick='$.fn.myAjax("saveFrom", "${edit.headList.saveLink}")' class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> 保存</a>
+                            <a onclick='$.fn.myAjax("saveAndBackFrom", "${edit.headList.saveLink}")' class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> 保存并返回</a>
                         </div>
                     </div>
                     <div class="nav-tabs-custom">

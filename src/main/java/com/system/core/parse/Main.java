@@ -155,12 +155,16 @@ public class Main {
         //title
         Element headChildTitleElement = headElement.getFirstChildElement("title");
         String headTitle = headChildTitleElement.getValue();
+        //create button
+        Element headChildCreateElement = headElement.getFirstChildElement("create");
+        String createLink = headChildCreateElement.getAttributeValue("link");
 
         //整合 script 与 css数据
         Map<String, Object> headMap = new HashMap<>();
         headMap.put("jsList", jsList);
         headMap.put("cssList", cssList);
         headMap.put("titleOne", headTitle);
+        headMap.put("createLink", createLink);
         return headMap;
     }
 

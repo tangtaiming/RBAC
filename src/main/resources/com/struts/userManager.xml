@@ -7,10 +7,11 @@
         <action name="userManagement" class="com.rbac.application.action.UserManagementAction" method="userManagement">
             <result name="success">/design/template/core/list-manager.ftl</result>
         </action>
-        <action name="createUser" class="com.rbac.application.action.UserManagementAction" method="createUser">
-            <result name="success">/design/template/create-user.ftl</result>
+        <action name="createUser" class="com.rbac.application.action.UserEditAction" method="createUser">
+            <!--<result name="success">/design/template/create-user.ftl</result>-->
+            <result name="success">/design/template/core/entity-edit.ftl</result>
         </action>
-        <action name="saveUser" class="com.rbac.application.action.UserManagementAction" method="saveUser">
+        <action name="saveUser" class="com.rbac.application.action.UserEditAction" method="saveUser">
             <result name="success">/design/template/save-result.ftl</result>
             <result name="input">/design/template/ajax-fail.ftl</result>
         </action>

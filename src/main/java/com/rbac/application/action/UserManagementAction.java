@@ -56,42 +56,31 @@ public class UserManagementAction extends MainAction {
         return SUCCESS;
     }
 
-    public String createUser() {
-        try {
-            _execute();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        List<Role> roleList = roleService.findRoleList();
-        createUserRsVo = new CreateUserRsVo(roleList);
-        return SUCCESS;
-    }
-
-    public void validateSaveUser() {
-        if (StringUtils.isEmpty(userReVo.getName())) {
-            addFieldError(ERROR_KEY, "保存用户名称不能为空");
-            return;
-        }
-        if (StringUtils.isEmpty(userReVo.getEmail())) {
-            addFieldError(ERROR_KEY, "保存用户邮箱不能为空");
-            return;
-        }
-
-        if (null == userReVo.getId()) {
-            User findUser = userService.findUserByName(userReVo.getName());
-            if (null != findUser) {
-                addFieldError(ERROR_KEY, "保存用户名称已经存在，请进行数据修改!");
-                return;
-            }
-        }
-    }
-
-    public String saveUser() {
-        LOG.info(userReVo.toString());
-        userService.saveUser(userReVo);
-        setResult("success");
-        return SUCCESS;
-    }
+//    public void validateSaveUser() {
+//        if (StringUtils.isEmpty(userReVo.getName())) {
+//            addFieldError(ERROR_KEY, "保存用户名称不能为空");
+//            return;
+//        }
+//        if (StringUtils.isEmpty(userReVo.getEmail())) {
+//            addFieldError(ERROR_KEY, "保存用户邮箱不能为空");
+//            return;
+//        }
+//
+//        if (null == userReVo.getId()) {
+//            User findUser = userService.findUserByName(userReVo.getName());
+//            if (null != findUser) {
+//                addFieldError(ERROR_KEY, "保存用户名称已经存在，请进行数据修改!");
+//                return;
+//            }
+//        }
+//    }
+//
+//    public String saveUser() {
+//        LOG.info(userReVo.toString());
+//        userService.saveUser(userReVo);
+//        setResult("success");
+//        return SUCCESS;
+//    }
 
     public String editUser() {
         try {

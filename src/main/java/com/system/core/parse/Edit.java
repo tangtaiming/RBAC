@@ -132,12 +132,22 @@ public class Edit {
         //title
         Element headChildTitleElement = headElement.getFirstChildElement("title");
         String headTitle = headChildTitleElement.getValue();
+        //button
+        Element headChildSaveElement = headElement.getFirstChildElement("save");
+        String saveLink = headChildSaveElement.getAttributeValue("link");
+        Element headChildDeleteElement = headElement.getFirstChildElement("delete");
+        String deleteLink = headChildDeleteElement.getAttributeValue("link");
+        Element headChildBackElement = headElement.getFirstChildElement("back");
+        String backLink = headChildBackElement.getAttributeValue("link");
 
         //整合 script 与 css数据
         Map<String, Object> headMap = new HashMap<>();
         headMap.put("jsList", jsList);
         headMap.put("cssList", cssList);
         headMap.put("titleOne", headTitle);
+        headMap.put("saveLink", saveLink);
+        headMap.put("deleteLink", deleteLink);
+        headMap.put("backLink", backLink);
         return headMap;
     }
 

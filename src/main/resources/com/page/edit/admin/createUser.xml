@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entity class="userReVo">
+    <head>
+        <title>edit.user</title>
+        <script src="admin/user.js" />
+        <link href="admin/user.css" />
+        <save link="/admin/saveUser"/>
+        <delete link="/admin/deleteUser"/>
+        <back link="/admin/userManagement"/>
+    </head>
+    <tabs>
+        <tab title="tab.1">
+            <column type="text" title="name" name="name" />
+            <column type="text" title="password" name="password" />
+            <column type="text" title="email" name="email" />
+            <column type="checkbox" title="role.name" name="roles" option="RoleSelect" />
+        </tab>
+    </tabs>
+</entity>
