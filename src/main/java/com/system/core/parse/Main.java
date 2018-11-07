@@ -92,7 +92,23 @@ public class Main {
                     buildSelect(searchMap, searchElement);
                     break;
                 case "action":
-                    searchMap.put("name", "");
+                    String style = searchElement.getAttributeValue("style");
+                    if (style.equals("base")) {
+                        Elements actionElements = searchElement.getChildElements();
+                        List<Map<String, Object>> editAction = new ArrayList<>();
+                        for (int actionX = 0; actionX < actionElements.size(); actionX++) {
+                            Map<String, Object> editActionLink = new HashMap<>();
+                            Element actionParamElement = actionElements.get(actionX);
+                            String actionType = actionParamElement.getAttributeValue("type");
+                            String actionLink = actionParamElement.getAttributeValue("link");
+                            editActionLink.put("editType", actionType);
+                            editActionLink.put("editLink", actionLink);
+                            editAction.add(editActionLink);
+                        }
+                        searchMap.put("actionLink", editAction);
+                    }
+                    searchMap.put("style", style);
+                    searchMap.put("name", "action");
                     break;
                 default:
                     searchMap.put("name", "");
@@ -103,14 +119,15 @@ public class Main {
 
         Element dataContainer = bodyElement.getChildElements("data-container").get(0);
         Elements dataElementList = dataContainer.getChildElements();
-        List<Map<String, String>> dataList = new ArrayList<>();
+        List<Map<String, Object>> dataList = new ArrayList<>();
         for (int dataX = 0; dataX < dataElementList.size(); dataX++) {
-            Map<String, String> dataMap = new HashMap<>();
+            Map<String, Object> dataMap = new HashMap<>();
             Element dataElement = dataElementList.get(dataX);
             String name = dataElement.getAttributeValue("name");
             String type = dataElement.getAttributeValue("type");
             if (!StringUtils.isEmpty(type) && type.equals("action")) {
                 dataMap.put("type", "action");
+
             }
             dataMap.put("name", name);
             dataList.add(dataMap);

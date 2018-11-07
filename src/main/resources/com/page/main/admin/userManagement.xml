@@ -23,7 +23,10 @@
             <column type="select" name="admin" option="YesNoAdmin" />
             <column type="select" name="status" option="Status" />
             <column type="text" name="createDate" />
-            <column type="action" />
+            <column type="action" style="base">
+                <param type="edit" link="/admin/editUser" />
+                <param type="delete" link="/admin/deleteUser" />
+            </column>
         </search-container>
         <data-container>
             <column name="id" />
@@ -32,7 +35,7 @@
             <column name="admin" />
             <column name="status" />
             <column name="createDate" />
-            <column type="action"/>
+            <column type="action" />
         </data-container>
     </body>
 </user>

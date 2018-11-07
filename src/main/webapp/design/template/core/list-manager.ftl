@@ -99,10 +99,19 @@
                                         <#list searchList as dataRow>
                                             <#assign dataType=dataRow.type>
                                             <#if dataType?? && dataType=="action">
+                                                <#assign dataStyle=dataRow.style />
+                                                <#assign actionLink=dataRow.actionLink />
                                                 <td>
                                                     <div class="layui-edit-last">
-                                                        <a class="btn btn-primary btn-xs btn-flat"><i class="fa fa-pencil-square-o"></i> 编辑</a>
-                                                        <a class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash-o"></i> 删除</a>
+                                                    <#if dataStyle=="base">
+                                                        <#list actionLink as alink>
+                                                            <#if alink.editType="edit">
+                                                                <a href="${alink.editLink}" target="_blank" class="btn btn-primary btn-xs btn-flat"><i class="fa fa-pencil-square-o"></i> 编辑</a>
+                                                                <#elseif alink.editType="delete">
+                                                                <a class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash-o"></i> 删除</a>
+                                                            </#if>
+                                                        </#list>
+                                                    </#if>
                                                     </div>
                                                 </td>
                                                 <#elseif dataType='select'>
@@ -181,10 +190,19 @@
             <#list searchList as dataRow>
                 <#assign dataType=dataRow.type>
                 <#if dataType?? && dataType=="action">
+                    <#assign dataStyle=dataRow.style />
+                    <#assign actionLink=dataRow.actionLink />
                     <td>
                         <div class="layui-edit-last">
-                            <a class="btn btn-primary btn-xs btn-flat"><i class="fa fa-pencil-square-o"></i> 编辑</a>
-                            <a class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash-o"></i> 删除</a>
+                        <#if dataStyle=="base">
+                            <#list actionLink as alink>
+                                <#if alink.editType="edit">
+                                    <a href="${alink.editLink}" target="_blank" class="btn btn-primary btn-xs btn-flat"><i class="fa fa-pencil-square-o"></i> 编辑</a>
+                                <#elseif alink.editType="delete">
+                                    <a class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash-o"></i> 删除</a>
+                                </#if>
+                            </#list>
+                        </#if>
                         </div>
                     </td>
                 <#elseif dataType='select'>

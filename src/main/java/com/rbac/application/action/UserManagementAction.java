@@ -10,6 +10,7 @@ import com.rbac.application.orm.Role;
 import com.rbac.application.orm.User;
 import com.rbac.application.service.RoleService;
 import com.rbac.application.service.UserService;
+import com.system.util.base.DumperUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,6 +51,7 @@ public class UserManagementAction extends MainAction {
             _execute();
             setDataList(userService.getDataList());
             setPage(userService.getPage());
+            DumperUtils.dump(getMain());
         } catch (Exception e) {
             e.printStackTrace();
         }
