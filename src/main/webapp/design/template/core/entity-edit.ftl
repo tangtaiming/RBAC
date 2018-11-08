@@ -61,6 +61,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </#list>
                         </ul>
                         <form id="entity-form" class="tab-content">
+                            <#if entity??>
+                                <input type="hidden" name="${edit.classesName}.id" class="form-control" id="${edit.classesName}_id" value="${entity['id']!''}">
+                            </#if>
                             <#assign tabsEntity=edit.tabsList />
                             <#list tabsEntity as tabEntity>
                             <#assign tabValue = tabEntity["tab"]/>
@@ -79,15 +82,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <div class="col-sm-6">
                                             <#-- 文本域 -->
                                             <#if columnType=="text">
-                                                <input type="text" name="${edit.classesName}.${columnName}" class="form-control" id="${edit.classesName}_${columnName}" placeholder="<@s.text name="${columnTitle}"/>">
+                                                <input type="text" name="${edit.classesName}.${columnName}" class="form-control" id="${edit.classesName}_${columnName}" value="${entity[columnName]!''}" placeholder="<@s.text name="${columnTitle}"/>">
 
                                                 <#-- 复选框 -->
                                                 <#elseif columnType=="checkbox">
+                                                <#assign chose=entity[columnName]!'' />
                                                 <div class="checkbox checkbox-${columnName}">
                                                     <#assign columnOption=column["option"] />
                                                     <#list columnOption?keys as optionKey>
+                                                        <#-- 选中数据勾选 -->
+                                                        <#assign choseStyle="" />
+                                                        <#list entity[columnName] as entityRow>
+                                                            <#if entityRow?string==optionKey>
+                                                                <#assign choseStyle='checked="checked"' />
+                                                                <#break >
+                                                            </#if>
+                                                        </#list>
                                                         <label>
-                                                            <input type="checkbox" name="${edit.classesName}.${columnName}" id="${edit.classesName}_${columnName}" value="${optionKey}">${columnOption[optionKey]!' '}
+                                                            <input type="checkbox" ${choseStyle} name="${edit.classesName}.${columnName}" id="${edit.classesName}_${columnName}" value="${optionKey}">${columnOption[optionKey]!' '}
                                                         </label>
                                                     </#list>
                                                 </div>

@@ -1,17 +1,22 @@
 package com.rbac.application.action;
 
 import com.rbac.application.action.core.EditAction;
+import com.rbac.application.action.vo.EditUserRsVo;
 import com.rbac.application.action.vo.SaveUserReVo;
+import com.rbac.application.action.vo.UserVo;
+import com.rbac.application.orm.Role;
 import com.rbac.application.orm.User;
 import com.rbac.application.service.RoleService;
 import com.rbac.application.service.UserService;
 import org.apache.commons.lang.StringUtils;
 
+import java.util.List;
+
 /**
  * @auther ttm
  * @date 2018/11/6 0006
  **/
-public class UserEditAction extends EditAction {
+public class UserEditAction extends EditAction<UserVo> {
 
     private SaveUserReVo userReVo;
 
@@ -20,6 +25,22 @@ public class UserEditAction extends EditAction {
     private RoleService roleService = new RoleService();
 
     private static final String ERROR_KEY = "error";
+
+    private EditUserRsVo editUserRsVo;
+
+    private UserVo userVo;
+
+    public String editUser() {
+        try {
+            _execute();
+            userVo = userService.findUserVoById(getId());
+            setEntity(userVo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return SUCCESS;
+    }
+
 
     public String createUser() {
         try {
@@ -65,5 +86,21 @@ public class UserEditAction extends EditAction {
 
     public void setUserReVo(SaveUserReVo userReVo) {
         this.userReVo = userReVo;
+    }
+
+    public EditUserRsVo getEditUserRsVo() {
+        return editUserRsVo;
+    }
+
+    public void setEditUserRsVo(EditUserRsVo editUserRsVo) {
+        this.editUserRsVo = editUserRsVo;
+    }
+
+    public UserVo getUserVo() {
+        return userVo;
+    }
+
+    public void setUserVo(UserVo userVo) {
+        this.userVo = userVo;
     }
 }

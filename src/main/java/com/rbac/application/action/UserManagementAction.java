@@ -84,23 +84,23 @@ public class UserManagementAction extends MainAction {
 //        return SUCCESS;
 //    }
 
-    public String editUser() {
-        try {
-            _execute();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        User user = userService.findUserOne(getId());
-        if (null == user) {
-            addFieldError(ERROR_KEY, "编辑异常, 查询用户为空");
-            return INPUT;
-        }
-
-        List<Role> roleList = roleService.findRoleList();
-        List<Integer> chosenRoleList = userService.findUserChosenRole(user.getId());
-        editUserRsVo = new EditUserRsVo(user, roleList, chosenRoleList);
-        return SUCCESS;
-    }
+//    public String editUser() {
+//        try {
+//            _execute();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        User user = userService.findUserOne(getId());
+//        if (null == user) {
+//            addFieldError(ERROR_KEY, "编辑异常, 查询用户为空");
+//            return INPUT;
+//        }
+//
+//        List<Role> roleList = roleService.findRoleList();
+//        List<Integer> chosenRoleList = userService.findUserChosenRole(user.getId());
+//        editUserRsVo = new EditUserRsVo(user, roleList, chosenRoleList);
+//        return SUCCESS;
+//    }
 
     public String getName() {
         return name;

@@ -3,6 +3,7 @@ package com.rbac.application.service;
 import com.rbac.application.action.vo.*;
 import com.rbac.application.dao.UserDao;
 import com.rbac.application.dao.UserRoleDao;
+import com.rbac.application.orm.Role;
 import com.rbac.application.orm.User;
 import com.rbac.application.orm.UserRole;
 import com.system.core.dao.BaseDao;
@@ -39,6 +40,21 @@ public class UserService extends SimpleCoreService<User> {
     private UserDao userDao = new UserDao(User.class);
 
     private UserRoleDao userRoleDao = new UserRoleDao(UserRole.class);
+
+    public UserVo findUserVoById(String id) {
+        User user = findUserOne(Integer.valueOf(id));
+        if (null == user) {
+            throw new IllegalArgumentException("user entity is empty");
+        }
+
+        List<Integer> chosenRoleList = findUserChosenRole(user.getId());
+        UserVo userVo = new UserVo();
+        userVo.setId(user.getId());
+        userVo.setEmail(user.getEmail());
+        userVo.setName(user.getName());
+        userVo.setRoles(chosenRoleList);
+        return userVo;
+    }
 
     public User findUserOne(Serializable uid) {
         return userDao.findOne(Integer.valueOf(uid.toString()));

@@ -48,4 +48,5 @@ public class EditAction<E> extends RbacAction<E> {
     public void setEntity(E entity) {
         this.entity = entity;
     }
+
 }

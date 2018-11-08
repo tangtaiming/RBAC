@@ -106,7 +106,7 @@
                                                     <#if dataStyle=="base">
                                                         <#list actionLink as alink>
                                                             <#if alink.editType="edit">
-                                                                <a href="${alink.editLink}" target="_blank" class="btn btn-primary btn-xs btn-flat"><i class="fa fa-pencil-square-o"></i> 编辑</a>
+                                                                <a href="${alink.editLink}?id=${row.id}" target="_blank" class="btn btn-primary btn-xs btn-flat"><i class="fa fa-pencil-square-o"></i> 编辑</a>
                                                                 <#elseif alink.editType="delete">
                                                                 <a class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash-o"></i> 删除</a>
                                                             </#if>
@@ -197,7 +197,7 @@
                         <#if dataStyle=="base">
                             <#list actionLink as alink>
                                 <#if alink.editType="edit">
-                                    <a href="${alink.editLink}" target="_blank" class="btn btn-primary btn-xs btn-flat"><i class="fa fa-pencil-square-o"></i> 编辑</a>
+                                    <a href="${alink.editLink}?id=${row.id}" target="_blank" class="btn btn-primary btn-xs btn-flat"><i class="fa fa-pencil-square-o"></i> 编辑</a>
                                 <#elseif alink.editType="delete">
                                     <a class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash-o"></i> 删除</a>
                                 </#if>

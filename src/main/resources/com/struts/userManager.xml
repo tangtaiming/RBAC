@@ -15,8 +15,9 @@
             <result name="success">/design/template/save-result.ftl</result>
             <result name="input">/design/template/ajax-fail.ftl</result>
         </action>
-        <action name="editUser" class="com.rbac.application.action.UserManagementAction" method="editUser">
-            <result name="success">/design/template/edit-user.ftl</result>
+        <action name="editUser" class="com.rbac.application.action.UserEditAction" method="editUser">
+            <result name="success">/design/template/core/entity-edit.ftl</result>
+            <!--<result name="success">/design/template/edit-user.ftl</result>-->
             <result name="input">/design/template/fail.ftl</result>
         </action>
     </package>
