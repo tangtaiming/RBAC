@@ -4,13 +4,11 @@ import com.rbac.application.action.core.EditAction;
 import com.rbac.application.action.vo.EditUserRsVo;
 import com.rbac.application.action.vo.SaveUserReVo;
 import com.rbac.application.action.vo.UserVo;
-import com.rbac.application.orm.Role;
 import com.rbac.application.orm.User;
 import com.rbac.application.service.RoleService;
 import com.rbac.application.service.UserService;
+import com.system.util.base.ResultUtils;
 import org.apache.commons.lang.StringUtils;
-
-import java.util.List;
 
 /**
  * @auther ttm
@@ -29,6 +27,12 @@ public class UserEditAction extends EditAction<UserVo> {
     private EditUserRsVo editUserRsVo;
 
     private UserVo userVo;
+
+    public String deleteUser() {
+        userService.deleteUser(getId());
+        setResult(ResultUtils.success());
+        return SUCCESS;
+    }
 
     public String editUser() {
         try {
@@ -49,8 +53,6 @@ public class UserEditAction extends EditAction<UserVo> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        List<Role> roleList = roleService.findRoleList();
-//        createUserRsVo = new CreateUserRsVo(roleList);
         return SUCCESS;
     }
 
@@ -76,7 +78,7 @@ public class UserEditAction extends EditAction<UserVo> {
     public String saveUser() {
         LOG.info(userReVo.toString());
         userService.saveUser(userReVo);
-        setResult("success");
+        setResult(ResultUtils.success());
         return SUCCESS;
     }
 

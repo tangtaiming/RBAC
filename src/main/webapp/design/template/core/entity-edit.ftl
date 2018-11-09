@@ -24,13 +24,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Content Header (Page header) -->
         <div class="row content-header" style="background: #ffffff;">
             <div class="col-lg-6 col-md-4 col-sm-4 col-xs-12">
-                <h4 class="page-title"><i class="fa fa-plus-square-o"></i> 新增用户</h4>
+                <h4 class="page-title"><i class="fa fa-plus-square-o"></i> <@s.text name="${title!''}"/></h4>
             </div>
             <div class="col-lg-6 col-sm-8 col-md-8 col-xs-12">
                 <ol class="breadcrumb">
-                    <li><a href="/"><i class="fa fa-dashboard"></i> 首页</a></li>
-                    <li><a href="/admin/roleManagement"> 用户管理</a></li>
-                    <li class="active">新增用户</li>
+                    <li><a href="/"><i class="fa fa-dashboard"></i> <@s.text name="home"/></a></li>
+                    <li><a href="${edit.mlink!''}"> <@s.text name="${edit.mtitle!''}"/></a></li>
+                    <li class="active"><@s.text name="${title!''}"/></li>
                 </ol>
             </div>
             <!-- /.col-lg-12 -->
@@ -40,11 +40,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="col-lg-12">
                     <div class="text-right">
                         <div class="btn-group">
-                            <a class="btn btn-primary btn-sm btn-flat"><i class="fa"></i> 返回</a>
-                            <a onclick='$.fn.myAjax("deleteById", "${edit.headList.deleteLink}")' class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus-square-o"></i> 删除</a>
-                            <a class="btn btn-primary btn-sm btn-flat"><i class="fa fa-mail-reply"></i> 重置</a>
-                            <a onclick='$.fn.myAjax("saveFrom", "${edit.headList.saveLink}")' class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> 保存</a>
-                            <a onclick='$.fn.myAjax("saveAndBackFrom", "${edit.headList.saveLink}")' class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> 保存并返回</a>
+                            <#-- 返回 -->
+                            <#assign back = ''/>
+                            <#if edit.headList.backLink??>
+                                <#assign back = 'href="' + edit.headList.backLink + '"'/>
+                                <a ${back} class="btn btn-primary btn-sm btn-flat"><i class="fa"></i> <@s.text name="back"/></a>
+                            </#if>
+
+                            <#-- 删除 -->
+                            <#assign delete = '' />
+                            <#if edit.headList.deleteLink?? && entity?? && entity.id??>
+                                <a onclick='$.fn.myAjax("deleteById", "${edit.headList.deleteLink}", "${edit.mlink!''}", ${entity.id})' class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus-square-o"></i> <@s.text name="delete"/></a>
+                            </#if>
+
+                            <#-- 重置 -->
+                            <a onclick="window.location.reload();" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-mail-reply"></i> <@s.text name="reset"/></a>
+                            <a onclick='$.fn.myAjax("saveFrom", "${edit.headList.saveLink}")' class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> <@s.text name="save.entity"/></a>
+                            <a onclick='$.fn.myAjax("saveFromAndBack", "${edit.headList.saveLink}", "${edit.mlink!''}")' class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> <@s.text name="save.entity.back"/></a>
                         </div>
                     </div>
                     <div class="nav-tabs-custom">
@@ -82,22 +94,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <div class="col-sm-6">
                                             <#-- 文本域 -->
                                             <#if columnType=="text">
-                                                <input type="text" name="${edit.classesName}.${columnName}" class="form-control" id="${edit.classesName}_${columnName}" value="${entity[columnName]!''}" placeholder="<@s.text name="${columnTitle}"/>">
+                                                <#if entity??>
+                                                    <input type="text" name="${edit.classesName}.${columnName}" class="form-control" id="${edit.classesName}_${columnName}" value="${entity[columnName]!''}" placeholder="<@s.text name="${columnTitle}"/>">
+                                                    <#else>
+                                                    <input type="text" name="${edit.classesName}.${columnName}" class="form-control" id="${edit.classesName}_${columnName}" value="" placeholder="<@s.text name="${columnTitle}"/>">
+                                                </#if>
 
                                                 <#-- 复选框 -->
                                                 <#elseif columnType=="checkbox">
-                                                <#assign chose=entity[columnName]!'' />
                                                 <div class="checkbox checkbox-${columnName}">
                                                     <#assign columnOption=column["option"] />
                                                     <#list columnOption?keys as optionKey>
                                                         <#-- 选中数据勾选 -->
                                                         <#assign choseStyle="" />
-                                                        <#list entity[columnName] as entityRow>
-                                                            <#if entityRow?string==optionKey>
-                                                                <#assign choseStyle='checked="checked"' />
-                                                                <#break >
-                                                            </#if>
-                                                        </#list>
+                                                        <#if entity??>
+                                                            <#list entity[columnName] as entityRow>
+                                                                <#if entityRow?string==optionKey>
+                                                                    <#assign choseStyle='checked="checked"' />
+                                                                    <#break >
+                                                                </#if>
+                                                            </#list>
+                                                        </#if>
                                                         <label>
                                                             <input type="checkbox" ${choseStyle} name="${edit.classesName}.${columnName}" id="${edit.classesName}_${columnName}" value="${optionKey}">${columnOption[optionKey]!' '}
                                                         </label>

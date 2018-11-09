@@ -3,17 +3,12 @@ package com.rbac.application.service;
 import com.rbac.application.action.vo.*;
 import com.rbac.application.dao.UserDao;
 import com.rbac.application.dao.UserRoleDao;
-import com.rbac.application.orm.Role;
 import com.rbac.application.orm.User;
 import com.rbac.application.orm.UserRole;
-import com.system.core.dao.BaseDao;
-import com.system.core.domain.*;
-import com.system.core.session.FilterSession;
-import com.system.core.session.PageSession;
 import com.system.util.base.JsonUtils;
 import com.system.util.base.MD5Utils;
 import com.system.util.base.PageUtils;
-import com.system.util.base.ResponseVoUtils;
+import com.system.util.base.ResultUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
@@ -40,6 +35,13 @@ public class UserService extends SimpleCoreService<User> {
     private UserDao userDao = new UserDao(User.class);
 
     private UserRoleDao userRoleDao = new UserRoleDao(UserRole.class);
+
+    public void deleteUser(String id) {
+        User user = findUserOne(Integer.valueOf(id));
+        if (!(null == user)) {
+            userDao.delete(user);
+        }
+    }
 
     public UserVo findUserVoById(String id) {
         User user = findUserOne(Integer.valueOf(id));
@@ -70,7 +72,7 @@ public class UserService extends SimpleCoreService<User> {
         User findUser = userDao.findUserByName(loginName);
         if (null == findUser) {
             //do to
-            return JsonUtils.toJson(ResponseVoUtils.fail("输入账号不正确"));
+            return JsonUtils.toJson(ResultUtils.fail("输入账号不正确"));
         }
 
         HttpServletRequest request = ServletActionContext.getRequest();
@@ -81,7 +83,7 @@ public class UserService extends SimpleCoreService<User> {
         String md5Password = MD5Utils.encoder(voPassowd);
         if (!findPassword.equals(md5Password)) {
             //go to
-            return JsonUtils.toJson(ResponseVoUtils.fail("输入密码不正确"));
+            return JsonUtils.toJson(ResultUtils.fail("输入密码不正确"));
         }
 
         String userInfoToString = userId + name + findPassword + userAgent;
@@ -92,7 +94,7 @@ public class UserService extends SimpleCoreService<User> {
         HttpSession session = request.getSession();
         session.setAttribute("name", name);
         session.setAttribute("secretKey", secretKey);
-        return JsonUtils.toJson(ResponseVoUtils.success());
+        return JsonUtils.toJson(ResultUtils.success());
     }
 
     public User findUserByName(String name) {

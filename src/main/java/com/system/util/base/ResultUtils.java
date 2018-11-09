@@ -6,7 +6,7 @@ import com.rbac.application.action.vo.ResponseVo;
  * @auther ttm
  * @date 2018/8/19 0019
  **/
-public class ResponseVoUtils {
+public class ResultUtils {
 
     /**
      * 成功
@@ -40,10 +40,9 @@ public class ResponseVoUtils {
 
     /**
      * 请求成功
-     * @param <T>
      * @return
      */
-    public static <T> ResponseVo success() {
+    public static String success() {
         return success(null);
     }
 
@@ -53,27 +52,25 @@ public class ResponseVoUtils {
      * @param <T>
      * @return
      */
-    public static <T> ResponseVo success(T data) {
-        return new ResponseVo(CODE_200, MSG_200, data);
+    public static <T> String success(T data) {
+        return JsonUtils.toJson(new ResponseVo(CODE_200, MSG_200, data));
     }
 
     /**
      * 请求失败
-     * @param <T>
      * @return
      */
-    public static <T> ResponseVo fail() {
+    public static String fail() {
         return fail(MSG_400);
     }
 
     /**
      * 请求失败
      * @param msg
-     * @param <T>
      * @return
      */
-    public static <T> ResponseVo fail(String msg) {
-        return new ResponseVo(CODE_400, msg, null);
+    public static String fail(String msg) {
+        return JsonUtils.toJson(new ResponseVo(CODE_400, msg, null));
     }
 
 }

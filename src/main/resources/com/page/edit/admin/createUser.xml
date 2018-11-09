@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <entity class="userReVo">
     <head>
-        <title>edit.user</title>
-        <script src="admin/user.js" />
-        <link href="admin/user.css" />
+        <title>user.create</title>
+        <mtitle>user.management</mtitle>
+        <mlink link="/admin/userManagement" />
         <save link="/admin/saveUser"/>
         <delete link="/admin/deleteUser"/>
         <back link="/admin/userManagement"/>
+        <script src="admin/user.js" />
+        <link href="admin/user.css" />
     </head>
     <tabs>
         <tab title="tab.1">

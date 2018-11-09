@@ -28,6 +28,28 @@
          */
         success: function (response) {
             layer.msg(response, {icon: 1});
+        },
+        /**
+         * 请求成功
+         * @param response
+         * @param callback
+         */
+        success: function (response, callback) {
+            layer.msg(response, {icon: 1}, callback);
+        },
+        /**
+         * 请求失败
+         * @param response
+         */
+        fail: function (response) {
+            layer.msg(response, {icon: 2});
+        },
+        /**
+         * 删除
+         * @param callBack
+         */
+        delete: function (callBack) {
+            var index = layer.confirm('确定删除!', {icon: 3, title:'警告'}, callBack);
         }
     };
 

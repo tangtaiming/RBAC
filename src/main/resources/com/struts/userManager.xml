@@ -12,7 +12,7 @@
             <result name="success">/design/template/core/entity-edit.ftl</result>
         </action>
         <action name="saveUser" class="com.rbac.application.action.UserEditAction" method="saveUser">
-            <result name="success">/design/template/save-result.ftl</result>
+            <result name="success">/design/template/ajax-success.ftl</result>
             <result name="input">/design/template/ajax-fail.ftl</result>
         </action>
         <action name="editUser" class="com.rbac.application.action.UserEditAction" method="editUser">
@@ -20,5 +20,10 @@
             <!--<result name="success">/design/template/edit-user.ftl</result>-->
             <result name="input">/design/template/fail.ftl</result>
         </action>
+        <action name="deleteUser" class="com.rbac.application.action.UserEditAction" method="deleteUser">
+            <result name="success">/design/template/ajax-success.ftl</result>
+            <result name="input">/design/template/ajax-fail.ftl</result>
+        </action>
+
     </package>
 </struts>

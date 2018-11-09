@@ -37,6 +37,16 @@ public class Edit {
     private String title;
 
     /**
+     * 面包屑标题
+     */
+    private String mtitle;
+
+    /**
+     * 面包屑link
+     */
+    private String mlink;
+
+    /**
      * 类名称
      */
     private String classesName;
@@ -59,7 +69,6 @@ public class Edit {
         Element tabsElement = root.getFirstChildElement("tabs");
         headList = parseHeadXml(headElement);
         tabsList = parseTabsXml(tabsElement);
-        title = (String) headList.get("titleOne");
         classesName = root.getAttributeValue("class");
     }
 
@@ -139,15 +148,24 @@ public class Edit {
         String deleteLink = headChildDeleteElement.getAttributeValue("link");
         Element headChildBackElement = headElement.getFirstChildElement("back");
         String backLink = headChildBackElement.getAttributeValue("link");
+        //mtitle
+        Element headChildMtitleElement = headElement.getFirstChildElement("mtitle");
+        String mtitle = headChildMtitleElement.getValue();
+        //mlink
+        Element headChildMlinkElement = headElement.getFirstChildElement("mlink");
+        String mlink = headChildMlinkElement.getAttributeValue("link");
 
         //整合 script 与 css数据
         Map<String, Object> headMap = new HashMap<>();
         headMap.put("jsList", jsList);
         headMap.put("cssList", cssList);
-        headMap.put("titleOne", headTitle);
         headMap.put("saveLink", saveLink);
         headMap.put("deleteLink", deleteLink);
         headMap.put("backLink", backLink);
+
+        setTitle(headTitle);
+        setMtitle(mtitle);
+        setMlink(mlink);
         return headMap;
     }
 
@@ -183,4 +201,19 @@ public class Edit {
         this.classesName = classesName;
     }
 
+    public String getMtitle() {
+        return mtitle;
+    }
+
+    public void setMtitle(String mtitle) {
+        this.mtitle = mtitle;
+    }
+
+    public String getMlink() {
+        return mlink;
+    }
+
+    public void setMlink(String mlink) {
+        this.mlink = mlink;
+    }
 }
