@@ -36,11 +36,44 @@ public class UserService extends SimpleCoreService<User> {
 
     private UserRoleDao userRoleDao = new UserRoleDao(UserRole.class);
 
+    /**
+     * 删除用户
+     * @param id
+     */
     public void deleteUser(String id) {
+        Integer userId = Integer.valueOf(id);
         User user = findUserOne(Integer.valueOf(id));
         if (!(null == user)) {
-            userDao.delete(user);
+            boolean deleteFalg = userDao.delete(user);
+            LOG.info("Delete userId: " + userId + " user name: " + user.getName() + " result: " + getResult(deleteFalg));
+            deleteUserRoleByUserId(userId, deleteFalg);
         }
+    }
+
+    /**
+     * 删除用户角色
+     * @param userId
+     * @param userDeleteFalg
+     */
+    private void deleteUserRoleByUserId(Integer userId, boolean userDeleteFalg) {
+        if (userDeleteFalg) {
+            List<UserRole> userRoleList = findUserRoleByUserId(userId);
+            if (!CollectionUtils.isEmpty(userRoleList)) {
+                for (UserRole userRole : userRoleList) {
+                    boolean deleteuserRoleFalg = userRoleDao.delete(userRole);
+                    LOG.info("Delete user role id: " + userRole.getId() + " result: " + getResult(deleteuserRoleFalg));
+                }
+            }
+        }
+    }
+
+    /**
+     * 根据boolean 获取字符串结果 true 成功 / false 失败
+     * @param falg
+     * @return
+     */
+    private String getResult(boolean falg) {
+        return falg ? "success" : "fail";
     }
 
     public UserVo findUserVoById(String id) {
@@ -254,17 +287,17 @@ public class UserService extends SimpleCoreService<User> {
 //
 //        SimplePageableBuilder pageableBuilder = new SimplePageableBuilder();
 //        Pageable pageable = pageableBuilder.addPageable(1, 20);
-        return userDao.findList();
+        return userDao.findDataList();
     }
 
     @Override
     public List<User> getDataList() {
-        return userDao.findList();
+        return userDao.findDataList();
     }
 
     @Override
     public PageUtils getPage() {
-        return userDao.findListCount();
+        return userDao.findPage();
     }
 
 }

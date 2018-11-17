@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entity class="editRoleRsVo">
+    <head>
+        <title>role.create</title>
+        <mtitle>role.management</mtitle>
+        <mlink link="/admin/roleManagement" />
+        <save link="/admin/saveRole"/>
+        <delete link="/admin/deleteRole"/>
+        <back link="/admin/roleManagement"/>
+        <script src="admin/role.js" />
+        <link href="admin/role.css" />
+    </head>
+    <tabs>
+        <tab title="tab.role.info">
+            <column type="text" title="name" name="name" />
+        </tab>
+    </tabs>
+</entity>

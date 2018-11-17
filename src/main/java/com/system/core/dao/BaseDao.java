@@ -145,7 +145,7 @@ public abstract class BaseDao<E extends Serializable> {
         pageable = pageSession.initPageableBuilder();
     }
 
-    public List<E> findList() {
+    public List<E> findDataList() {
         List<E> datas = new ArrayList<E>();
         try {
             initSession();
@@ -182,7 +182,7 @@ public abstract class BaseDao<E extends Serializable> {
      * 条件查询数量
      * @return
      */
-    public PageUtils findListCount() {
+    public PageUtils findPage() {
         int count = 0;
         PageUtils page = null;
         try {

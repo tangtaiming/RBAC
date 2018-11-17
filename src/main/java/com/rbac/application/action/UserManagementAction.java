@@ -51,7 +51,7 @@ public class UserManagementAction extends MainAction {
             _execute();
             setDataList(userService.getDataList());
             setPage(userService.getPage());
-            DumperUtils.dump(getMain());
+//            DumperUtils.dump(getMain());
         } catch (Exception e) {
             e.printStackTrace();
         }

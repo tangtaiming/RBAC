@@ -1,12 +1,13 @@
 package com.rbac.application.service;
 
+import com.rbac.application.action.vo.EditRoleRsVo;
 import com.rbac.application.action.vo.RoleManagementRsVo;
-import com.rbac.application.action.vo.SaveRoleReVo;
 import com.rbac.application.action.vo.SaveSiteAccessReVo;
 import com.rbac.application.dao.RoleAccessDao;
 import com.rbac.application.dao.RoleDao;
 import com.rbac.application.orm.Role;
 import com.rbac.application.orm.RoleAccess;
+import com.system.util.base.PageUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +23,7 @@ import java.util.Optional;
  * @auther ttm
  * @date 2018/7/25 0025
  **/
-public class RoleService {
+public class RoleService extends SimpleCoreService<Role> {
 
     private static final Logger LOG = LoggerFactory.getLogger(RoleService.class);
 
@@ -42,7 +43,7 @@ public class RoleService {
         return roleList;
     }
 
-    public boolean saveRole(SaveRoleReVo role) {
+    public boolean saveRole(EditRoleRsVo role) {
         Integer roleId = role.getId();
         String format = "yyyy-MM-dd hh:mm:ss";
         String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(format));
@@ -65,6 +66,16 @@ public class RoleService {
         }
 
         return false;
+    }
+
+    public EditRoleRsVo findEditRoleRsVoOne(String id) {
+        Role role = findRoleOne(id);
+        EditRoleRsVo editRoleRsVo = null;
+        if (!(null == role)) {
+            editRoleRsVo = new EditRoleRsVo(role);
+        }
+
+        return editRoleRsVo;
     }
 
     public Role findRoleOne(Serializable rid) {
@@ -136,4 +147,13 @@ public class RoleService {
         return roleAccessDao.findRoleAccessColumnAccessIdByRoleId(roleId);
     }
 
+    @Override
+    public List<Role> getDataList() {
+        return roleDao.findDataList();
+    }
+
+    @Override
+    public PageUtils getPage() {
+        return roleDao.findPage();
+    }
 }

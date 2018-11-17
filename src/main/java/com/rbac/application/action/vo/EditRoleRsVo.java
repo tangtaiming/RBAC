@@ -12,6 +12,9 @@ public class EditRoleRsVo {
 
     private String name;
 
+    public EditRoleRsVo() {
+    }
+
     public EditRoleRsVo(Role role) {
         id = role.getId();
         name = role.getName();

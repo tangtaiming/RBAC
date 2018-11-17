@@ -1,5 +1,6 @@
 package com.rbac.application.action;
 
+import com.rbac.application.action.core.MainAction;
 import com.rbac.application.action.core.RbacAction;
 import com.rbac.application.action.dto.SaveSiteAccessRqDto;
 import com.rbac.application.action.vo.*;
@@ -18,7 +19,7 @@ import java.util.List;
  * @auther ttm
  * @date 2018/7/25 0025
  **/
-public class RoleManagementAction extends RbacAction {
+public class RoleManagementAction extends MainAction {
 
     private static final Logger LOG = LoggerFactory.getLogger(RoleManagementAction.class);
 
@@ -55,70 +56,72 @@ public class RoleManagementAction extends RbacAction {
     public String roleManagement() {
         try {
             _execute();
+            setDataList(roleService.getDataList());
+            setPage(roleService.getPage());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        roleRsVo = roleService.findRoleManagementRsVo();
-        int count = roleService.findRoleAllListCount();
+//        roleRsVo = roleService.findRoleManagementRsVo();
+//        int count = roleService.findRoleAllListCount();
 //        setTotalRows(count);
         return SUCCESS;
     }
 
-    /**
-     * 创建角色
-     * @return
-     */
-    public String createRole() {
-        try {
-            _execute();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return SUCCESS;
-    }
-
-    /**
-     * 验证数据
-     */
-    public void validateSaveRole() {
-        if (StringUtils.isEmpty(saveRoleReVo.getName())) {
-            addFieldError(ERROR_KEY, "角色名称不能为空");
-            return;
-        }
-
-        Role findRole = roleService.findRoleByName(saveRoleReVo.getName());
-        if (null != findRole) {
-            addFieldError(ERROR_KEY, "角色名称已经存在, 保存失败");
-            return;
-        }
-    }
-
-    public String saveRole() {
-        LOG.info("Save role show: " + saveRoleReVo.toString());
-        roleService.saveRole(saveRoleReVo);
-        setResult("success");
-        return SUCCESS;
-    }
-
-    /**
-     * 编辑角色
-     * @return
-     */
-    public String editRole() {
-        try {
-            _execute();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Role role = roleService.findRoleOne(getId());
-        if (null == role) {
-            addFieldError(ERROR_KEY, "编辑异常, 查询角色为空");
-            return INPUT;
-        }
-
-        editRoleRsVo = new EditRoleRsVo(role);
-        return SUCCESS;
-    }
+//    /**
+//     * 创建角色
+//     * @return
+//     */
+//    public String createRole() {
+//        try {
+//            _execute();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return SUCCESS;
+//    }
+//
+//    /**
+//     * 验证数据
+//     */
+//    public void validateSaveRole() {
+//        if (StringUtils.isEmpty(saveRoleReVo.getName())) {
+//            addFieldError(ERROR_KEY, "角色名称不能为空");
+//            return;
+//        }
+//
+//        Role findRole = roleService.findRoleByName(saveRoleReVo.getName());
+//        if (null != findRole) {
+//            addFieldError(ERROR_KEY, "角色名称已经存在, 保存失败");
+//            return;
+//        }
+//    }
+//
+//    public String saveRole() {
+//        LOG.info("Save role show: " + saveRoleReVo.toString());
+//        roleService.saveRole(saveRoleReVo);
+//        setResult("success");
+//        return SUCCESS;
+//    }
+//
+//    /**
+//     * 编辑角色
+//     * @return
+//     */
+//    public String editRole() {
+//        try {
+//            _execute();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        Role role = roleService.findRoleOne(getId());
+//        if (null == role) {
+//            addFieldError(ERROR_KEY, "编辑异常, 查询角色为空");
+//            return INPUT;
+//        }
+//
+//        editRoleRsVo = new EditRoleRsVo(role);
+//        return SUCCESS;
+//    }
 
     /**
      * 设置权限

@@ -15,14 +15,14 @@ public class TestManagementAction extends MainAction {
     private UserService userService;
 
     public String execute() {
-        userService = new UserService();
-        try {
-            _execute();
-            setDataList(userService.getDataList());
-            setPage(userService.getPage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        userService = new UserService();
+//        try {
+//            _execute();
+//            setDataList(userService.getDataList());
+//            setPage(userService.getPage());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         return SUCCESS;
     }
 

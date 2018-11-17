@@ -6,24 +6,27 @@
     <package name="roleManager" namespace="/admin" extends="rbac">
         <action name="roleManagement" class="com.rbac.application.action.RoleManagementAction"
                 method="roleManagement">
-            <result name="success">/design/template/role-management.ftl</result>
+            <!--<result name="success">/design/template/role-management.ftl</result>-->
+            <result name="success">/design/template/core/list-manager.ftl</result>
         </action>
-        <action name="createRole" class="com.rbac.application.action.RoleManagementAction" method="createRole">
-            <result name="success">/design/template/create-role.ftl</result>
+        <action name="createRole" class="com.rbac.application.action.RoleEditAction" method="createRole">
+            <!--<result name="success">/design/template/create-role.ftl</result>-->
+            <result name="success">/design/template/core/entity-edit.ftl</result>
         </action>
-        <action name="saveRole" class="com.rbac.application.action.RoleManagementAction" method="saveRole">
+        <action name="saveRole" class="com.rbac.application.action.RoleEditAction" method="saveRole">
             <result name="success">/design/template/save-result.ftl</result>
             <result name="input">/design/template/ajax-fail.ftl</result>
         </action>
-        <action name="editRole" class="com.rbac.application.action.RoleManagementAction" method="editRole">
-            <result name="success">/design/template/edit-role.ftl</result>
-            <result name="input">/design/template/fail.ftl</result>
+        <action name="editRole" class="com.rbac.application.action.RoleEditAction" method="editRole">
+            <!--<result name="success">/design/template/edit-role.ftl</result>-->
+            <!--<result name="input">/design/template/fail.ftl</result>-->
+            <result name="success">/design/template/core/entity-edit.ftl</result>
         </action>
-        <action name="siteAccess" class="com.rbac.application.action.RoleManagementAction" method="siteAccess">
+        <action name="siteAccess" class="com.rbac.application.action.RoleEditAction" method="siteAccess">
             <result name="success">/design/template/site-access.ftl</result>
             <result name="input">/design/template/fail.ftl</result>
         </action>
-        <action name="saveSiteAccess" class="com.rbac.application.action.RoleManagementAction" method="saveSiteAccess">
+        <action name="saveSiteAccess" class="com.rbac.application.action.RoleEditAction" method="saveSiteAccess">
             <result name="success">/design/template/save-result.ftl</result>
             <result name="input">/design/template/ajax-fail.ftl</result>
         </action>

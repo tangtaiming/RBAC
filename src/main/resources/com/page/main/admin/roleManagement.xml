@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<user class="roleRsVo">
+    <head>
+        <title>role.management</title>
+        <script src="admin/role.js" />
+        <link href="admin/role.css" />
+        <create link="/admin/createRole" />
+    </head>
+    <body>
+        <head-container>
+            <column title="id" />
+            <column title="name" />
+            <column title="action" />
+        </head-container>
+        <search-container>
+            <column type="text" name="id" />
+            <column type="text" name="name" />
+            <column type="action" style="base">
+                <param type="edit" link="/admin/editRole" />
+                <param type="delete" link="/admin/deleteRole" />
+            </column>
+        </search-container>
+        <data-container>
+            <column name="id" />
+            <column name="name" />
+            <column type="action" />
+        </data-container>
+    </body>
+</user>
