@@ -15,7 +15,7 @@ public class SaveMenuRsVo {
     /**
      * 菜单ID
      */
-    private Long menuId;
+    private Long id;
 
     /**
      * 菜单名称
@@ -65,7 +65,7 @@ public class SaveMenuRsVo {
     }
 
     public SaveMenuRsVo(Menu menu) {
-        this.menuId = menu.getMenuId();
+        this.id = menu.getId();
         this.name = menu.getName();
         this.parentId = menu.getParentId();
         this.parentName = menu.getParentName();
@@ -90,12 +90,21 @@ public class SaveMenuRsVo {
         return JsonUtils.toJson(menuList);
     }
 
-    public Long getMenuId() {
-        return menuId;
+//    public Long getMenuId() {
+//        return menuId;
+//    }
+//
+//    public void setMenuId(Long menuId) {
+//        this.menuId = menuId;
+//    }
+
+
+    public Long getId() {
+        return id;
     }
 
-    public void setMenuId(Long menuId) {
-        this.menuId = menuId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

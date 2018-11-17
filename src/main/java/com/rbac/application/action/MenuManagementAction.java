@@ -1,5 +1,6 @@
 package com.rbac.application.action;
 
+import com.rbac.application.action.core.MainAction;
 import com.rbac.application.action.core.RbacAction;
 import com.rbac.application.action.vo.DeleteMenuRsVo;
 import com.rbac.application.action.vo.SaveMenuReVo;
@@ -14,7 +15,7 @@ import java.util.List;
  * @auther ttm
  * @date 2018/8/23
  */
-public class MenuManagementAction extends RbacAction {
+public class MenuManagementAction extends MainAction {
 
     private MenuService menuService = new MenuService();
 
@@ -24,6 +25,8 @@ public class MenuManagementAction extends RbacAction {
 
     private String result;
 
+    private Menu menu;
+
     /**
      * 菜单管理
      * @return
@@ -31,11 +34,13 @@ public class MenuManagementAction extends RbacAction {
     public String menuManagement() {
         try {
             _execute();
+            setDataList(menuService.getDataList());
+            setPage(menuService.getPage());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        List<Menu> menuList = menuService.findMenuAllList();
-        Integer count = menuService.findMenuAllListCount();
+//        List<Menu> menuList = menuService.findMenuAllList();
+//        Integer count = menuService.findMenuAllListCount();
 //        setDataList(menuList);
 //        setTotalRows(count);
         return SUCCESS;
@@ -126,5 +131,13 @@ public class MenuManagementAction extends RbacAction {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
 }

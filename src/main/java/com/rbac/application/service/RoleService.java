@@ -147,6 +147,17 @@ public class RoleService extends SimpleCoreService<Role> {
         return roleAccessDao.findRoleAccessColumnAccessIdByRoleId(roleId);
     }
 
+    public boolean deleteRole(String id) {
+        Role role = findRoleOne(id);
+        boolean deleteRoleFalg = false;
+        if (!(null == role)) {
+            deleteRoleFalg = roleDao.delete(role);
+        }
+        LOG.info("Delete role id:" + role.getId() + " role name: " + role.getName() + " result: " + getResult(deleteRoleFalg));
+        return deleteRoleFalg;
+    }
+
+
     @Override
     public List<Role> getDataList() {
         return roleDao.findDataList();

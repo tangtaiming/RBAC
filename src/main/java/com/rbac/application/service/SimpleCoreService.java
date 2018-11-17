@@ -29,4 +29,13 @@ public abstract class SimpleCoreService<T> {
      */
     public abstract PageUtils getPage();
 
+    /**
+     * 根据boolean 获取字符串结果 true 成功 / false 失败
+     * @param falg
+     * @return
+     */
+    public String getResult(boolean falg) {
+        return falg ? "success" : "fail";
+    }
+
 }

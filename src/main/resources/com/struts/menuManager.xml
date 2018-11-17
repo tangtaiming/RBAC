@@ -5,7 +5,8 @@
 <struts>
     <package name="menuManager" namespace="/admin" extends="rbac">
         <action name="menuManagement" class="com.rbac.application.action.MenuManagementAction" method="menuManagement">
-            <result name="success">/design/template/menu-management.ftl</result>
+            <!--<result name="success">/design/template/menu-management.ftl</result>-->
+            <result name="success">/design/template/core/list-manager.ftl</result>
         </action>
         <action name="createMenu" class="com.rbac.application.action.MenuManagementAction" method="createMenu">
             <result name="success">/design/template/create-menu.ftl</result>

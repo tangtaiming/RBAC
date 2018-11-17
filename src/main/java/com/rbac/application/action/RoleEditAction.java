@@ -62,13 +62,16 @@ public class RoleEditAction extends EditAction {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        Role role = roleService.findRoleOne(getId());
-//        if (null == role) {
-//            addFieldError(ERROR_KEY, "编辑异常, 查询角色为空");
-//            return INPUT;
-//        }
-//
-//        editRoleRsVo = new EditRoleRsVo(role);
+        return SUCCESS;
+    }
+
+    public String deleteRole() {
+        try {
+            roleService.deleteRole(getId());
+            setResult(ResultUtils.success());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return SUCCESS;
     }
 

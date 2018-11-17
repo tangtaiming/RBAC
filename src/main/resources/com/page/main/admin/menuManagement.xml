@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<user class="menu">
+    <head>
+        <title>menu.management</title>
+        <script src="admin/menu.js" />
+        <link href="admin/menu.css" />
+        <create link="/admin/createMenu" />
+    </head>
+    <body>
+        <head-container>
+            <column title="id" />
+            <column title="name" />
+            <column title="parent.name"/>
+            <column title="type" />
+            <column title="icon" />
+            <column title="action" />
+        </head-container>
+        <search-container>
+            <column type="text" name="id" />
+            <column type="text" name="name" />
+            <column type="text" name="parentName"/>
+            <column type="select" name="type" option="MenuTypeSelect" />
+            <column type="text" name="icon" />
+            <column type="action" style="base">
+                <param type="edit" link="/admin/editMenu" />
+                <param type="delete" link="/admin/deleteMenu" />
+            </column>
+        </search-container>
+        <data-container>
+            <column type="text" name="id" />
+            <column type="text" name="name" />
+            <column type="text" name="parentName"/>
+            <column type="text" name="type" />
+            <column type="text" name="icon" />
+            <column type="action" />
+        </data-container>
+    </body>
+</user>

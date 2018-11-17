@@ -7,6 +7,7 @@ import com.rbac.application.action.vo.ValidateSaveMenuRsVo;
 import com.rbac.application.dao.MenuDao;
 import com.rbac.application.orm.Menu;
 import com.system.core.exception.RbacException;
+import com.system.util.base.PageUtils;
 import org.apache.commons.collections.map.LinkedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ import java.util.Map;
  * @auther ttm
  * @date 2018/8/23
  */
-public class MenuService {
+public class MenuService extends SimpleCoreService<Menu> {
 
     private Logger LOG = LoggerFactory.getLogger(MenuService.class);
 
@@ -42,7 +43,7 @@ public class MenuService {
         List<Menu> menuList = menuDao.queryNotButtonMenuList();
         //默认添加顶级类目
         Menu root = new Menu();
-        root.setMenuId(ROOTID);
+        root.setId(ROOTID);
         root.setName(ROOTNAME);
         root.setParentId(-1L);
         root.setOpen(true);
@@ -95,7 +96,7 @@ public class MenuService {
                 Menu parentMenu = menuDao.findOne(menu.getParentId());
                 if (!(null == parentMenu)) {
                     parentName = parentMenu.getName();
-                    LOG.info("Parent menu, menu id: {}, name: {}", parentMenu.getMenuId(), parentName);
+                    LOG.info("Parent menu, menu id: {}, name: {}", parentMenu.getId(), parentName);
                 }
             }
         }
@@ -154,4 +155,13 @@ public class MenuService {
         return menuRsVo.menuFailMenu("删除菜单失败!");
     }
 
+    @Override
+    public List<Menu> getDataList() {
+        return menuDao.findDataList();
+    }
+
+    @Override
+    public PageUtils getPage() {
+        return menuDao.findPage();
+    }
 }

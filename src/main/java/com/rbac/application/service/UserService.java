@@ -67,15 +67,6 @@ public class UserService extends SimpleCoreService<User> {
         }
     }
 
-    /**
-     * 根据boolean 获取字符串结果 true 成功 / false 失败
-     * @param falg
-     * @return
-     */
-    private String getResult(boolean falg) {
-        return falg ? "success" : "fail";
-    }
-
     public UserVo findUserVoById(String id) {
         User user = findUserOne(Integer.valueOf(id));
         if (null == user) {

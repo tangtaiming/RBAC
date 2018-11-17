@@ -22,6 +22,11 @@
             <!--<result name="input">/design/template/fail.ftl</result>-->
             <result name="success">/design/template/core/entity-edit.ftl</result>
         </action>
+        <action name="deleteRole" class="com.rbac.application.action.RoleEditAction" method="deleteRole">
+            <result name="success">/design/template/ajax-success.ftl</result>
+            <result name="input">/design/template/ajax-fail.ftl</result>
+        </action>
+
         <action name="siteAccess" class="com.rbac.application.action.RoleEditAction" method="siteAccess">
             <result name="success">/design/template/site-access.ftl</result>
             <result name="input">/design/template/fail.ftl</result>

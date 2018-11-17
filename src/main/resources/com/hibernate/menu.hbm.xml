@@ -11,7 +11,7 @@
     <class name="Menu" table="rbac_menu">
         <!-- class下必须要有一个id的子元素 -->
         <!-- id是用于描述主键的 -->
-        <id name="menuId" column="menu_id">
+        <id name="id" column="id">
             <!-- 主键生成策略 -->
             <generator class="native"></generator>
         </id>

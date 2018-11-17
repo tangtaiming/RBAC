@@ -13,7 +13,7 @@ public class Menu implements Serializable {
     /**
      * 菜单ID
      */
-    private Long menuId;
+    private Long id;
 
     /**
      * 父菜单ID，一级菜单为0
@@ -62,12 +62,12 @@ public class Menu implements Serializable {
 
     private List<?> list;
 
-    public void setMenuId(Long menuId) {
-        this.menuId = menuId;
+    public Long getId() {
+        return id;
     }
 
-    public Long getMenuId() {
-        return menuId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     /**
