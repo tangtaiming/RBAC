@@ -48,6 +48,11 @@ public class RbacAction<E> extends ActionSupport {
     private String id;
 
     /**
+     * 请求json
+     */
+    private String requestJson;
+
+    /**
      * 结果json
      */
     private String result;
@@ -164,5 +169,13 @@ public class RbacAction<E> extends ActionSupport {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getRequestJson() {
+        return requestJson;
+    }
+
+    public void setRequestJson(String requestJson) {
+        this.requestJson = requestJson;
     }
 }

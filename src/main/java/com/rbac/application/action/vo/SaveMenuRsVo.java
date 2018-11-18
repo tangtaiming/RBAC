@@ -2,6 +2,7 @@ package com.rbac.application.action.vo;
 
 import com.rbac.application.orm.Menu;
 import com.system.util.base.JsonUtils;
+import com.system.util.enumerate.MenuType;
 
 import java.util.List;
 
@@ -57,47 +58,43 @@ public class SaveMenuRsVo {
      */
     private Integer type;
 
-    public SaveMenuRsVo() {};
+    /**
+     * 是否是父类别
+     */
+    private String isParent;
 
-    public SaveMenuRsVo(Menu menu, List<Menu> noButtonMenu) {
-        this(menu);
-        menuList = noButtonMenu;
-    }
+    /**
+     * 不显示某个节点的 checkbox / radio
+     */
+    private boolean nocheck;
 
-    public SaveMenuRsVo(Menu menu) {
-        this.id = menu.getId();
-        this.name = menu.getName();
-        this.parentId = menu.getParentId();
-        this.parentName = menu.getParentName();
-        this.url = menu.getUrl();
-        this.icon = menu.getIcon();
-        this.perms = menu.getPerms();
-        this.type = menu.getType();
-        this.orderNum = menu.getOrderNum();
-    }
+    private List<SaveMenuRsVo> menuList;
 
-    private List<Menu> menuList;
+//    public SaveMenuRsVo(Menu menu, List<Menu> noButtonMenu) {
+//        this(menu);
+//        menuList = noButtonMenu;
+//    }
 
-    public List<Menu> getMenuList() {
-        return menuList;
-    }
-
-    public void setMenuList(List<Menu> menuList) {
-        this.menuList = menuList;
-    }
+//    public SaveMenuRsVo(Menu menu) {
+//        this.id = menu.getId();
+//        this.name = menu.getName();
+//        this.parentId = menu.getParentId();
+//        this.parentName = menu.getParentName();
+//        this.url = menu.getUrl();
+//        this.icon = menu.getIcon();
+//        this.perms = menu.getPerms();
+//        this.type = menu.getType();
+//        this.orderNum = menu.getOrderNum();
+//        if (!(this.type == MenuType.BUTTON.getType())) {
+//            this.isParent = "true";
+//        } else {
+//            this.isParent = "false";
+//        }
+//    }
 
     public String getMenuJson() {
         return JsonUtils.toJson(menuList);
     }
-
-//    public Long getMenuId() {
-//        return menuId;
-//    }
-//
-//    public void setMenuId(Long menuId) {
-//        this.menuId = menuId;
-//    }
-
 
     public Long getId() {
         return id;
@@ -171,4 +168,27 @@ public class SaveMenuRsVo {
         this.type = type;
     }
 
+    public String getIsParent() {
+        return isParent;
+    }
+
+    public void setIsParent(String isParent) {
+        this.isParent = isParent;
+    }
+
+    public List<SaveMenuRsVo> getMenuList() {
+        return menuList;
+    }
+
+    public void setMenuList(List<SaveMenuRsVo> menuList) {
+        this.menuList = menuList;
+    }
+
+    public boolean isNocheck() {
+        return nocheck;
+    }
+
+    public void setNocheck(boolean nocheck) {
+        this.nocheck = nocheck;
+    }
 }

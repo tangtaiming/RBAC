@@ -7,7 +7,6 @@
         <save link="/admin/saveUser"/>
         <delete link="/admin/deleteUser"/>
         <back link="/admin/userManagement"/>
-        <script src="admin/user.js" />
         <link href="admin/user.css" />
     </head>
     <tabs>

@@ -7,12 +7,17 @@ import com.rbac.application.action.vo.ValidateSaveMenuRsVo;
 import com.rbac.application.dao.MenuDao;
 import com.rbac.application.orm.Menu;
 import com.system.core.exception.RbacException;
+import com.system.util.base.JsonUtils;
 import com.system.util.base.PageUtils;
+import com.system.util.enumerate.MenuType;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.map.LinkedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,20 +43,107 @@ public class MenuService extends SimpleCoreService<Menu> {
         return menuDao.findAllListCount();
     }
 
-    public SaveMenuRsVo findNoButtonMenuList() {
-        SaveMenuRsVo saveMenuRsVo = new SaveMenuRsVo();
-        List<Menu> menuList = menuDao.queryNotButtonMenuList();
-        //默认添加顶级类目
-        Menu root = new Menu();
-        root.setId(ROOTID);
-        root.setName(ROOTNAME);
-        root.setParentId(-1L);
-        root.setOpen(true);
-        menuList.add(0, root);
+    public String fetchMenuByParentId(String id) {
+        List<Menu> oneMenuList = new ArrayList<>();
+        Integer parentId = Integer.valueOf(id);
+        if (parentId == -1) {
+            Map<String, Object> query = new HashMap<>();
+            query.put("parentId", 0);
+            //默认添加顶级类目
+            SaveMenuRsVo rootMenu = new SaveMenuRsVo();
+            rootMenu.setId(ROOTID);
+            rootMenu.setName(ROOTNAME);
+            rootMenu.setParentId(-1L);
+            rootMenu.setIsParent("true");
+            rootMenu.setNocheck(true);
+            oneMenuList = menuDao.findEqList(query);
+            List<SaveMenuRsVo> oneMenuRsList = new ArrayList<>();
+            oneMenuRsList.add(0, rootMenu);
+            if (!CollectionUtils.isEmpty(oneMenuList)) {
+                for (Menu menu : oneMenuList) {
+                    SaveMenuRsVo oneMenuRs = new SaveMenuRsVo();
+                    oneMenuRs.setId(menu.getId());
+                    oneMenuRs.setName(menu.getName());
+                    oneMenuRs.setParentId(menu.getParentId());
+                    oneMenuRs.setParentName(menu.getParentName());
+                    oneMenuRs.setIsParent("true");
+                    oneMenuRsList.add(oneMenuRs);
+                }
+            }
+            return JsonUtils.toJson(oneMenuRsList);
+        } else {
+            Map<String, Object> query = new HashMap<>();
+            query.put("parentId", parentId);
+            oneMenuList = menuDao.findEqList(query);
+            List<SaveMenuRsVo> oneMenuRsList = new ArrayList<>();
+            if (!CollectionUtils.isEmpty(oneMenuList)) {
+                for (Menu menu : oneMenuList) {
+                    if (!(menu.getType() == MenuType.BUTTON.getType())) {
+                        SaveMenuRsVo oneMenuRs = new SaveMenuRsVo();
+                        oneMenuRs.setId(menu.getId());
+                        oneMenuRs.setName(menu.getName());
+                        oneMenuRs.setParentId(menu.getParentId());
+                        oneMenuRs.setParentName(menu.getParentName());
+                        oneMenuRs.setIsParent("true");
+                        oneMenuRsList.add(oneMenuRs);
+                    }
+                }
+            }
 
-        saveMenuRsVo.setMenuList(menuList);
+            return JsonUtils.toJson(oneMenuRsList);
+        }
+    }
+
+    /**
+     * 获取一级类别
+     * @return
+     */
+    public SaveMenuRsVo findOneMenuList() {
+        SaveMenuRsVo saveMenuRsVo = new SaveMenuRsVo();
+//        Map<String, Object> query = new HashMap<>();
+//        query.put("parentId", 0);
+//        SaveMenuRsVo rootMenu = new SaveMenuRsVo();
+//        //默认添加顶级类目
+//        rootMenu.setId(ROOTID);
+//        rootMenu.setName(ROOTNAME);
+//        rootMenu.setParentId(-1L);
+//        rootMenu.setIsParent("true");
+//        List<Menu> oneMenuList = menuDao.findEqList(query);
+//        List<SaveMenuRsVo> oneMenuRsList = new ArrayList<>();
+//        oneMenuRsList.add(0, rootMenu);
+//        if (!CollectionUtils.isEmpty(oneMenuList)) {
+//            for (Menu menu : oneMenuList) {
+//                SaveMenuRsVo oneMenuRs = new SaveMenuRsVo();
+//                oneMenuRs.setId(menu.getId());
+//                oneMenuRs.setName(menu.getName());
+//                oneMenuRs.setParentId(menu.getParentId());
+//                oneMenuRs.setParentName(menu.getParentName());
+//                if (!(menu.getType() == MenuType.BUTTON.getType())) {
+//                    oneMenuRs.setIsParent("true");
+//                } else {
+//                    oneMenuRs.setIsParent("false");
+//                }
+//                oneMenuRsList.add(oneMenuRs);
+//            }
+//        }
+//        saveMenuRsVo.setMenuList(oneMenuRsList);
         return saveMenuRsVo;
     }
+
+//    public SaveMenuRsVo findNoButtonMenuList() {
+//        SaveMenuRsVo saveMenuRsVo = new SaveMenuRsVo();
+//        List<Menu> menuList = menuDao.queryNotButtonMenuList();
+//        //默认添加顶级类目
+//        Menu root = new Menu();
+//        root.setId(ROOTID);
+//        root.setName(ROOTNAME);
+//        root.setParentId(-1L);
+//        root.setOpen(true);
+//        menuList.add(0, root);
+//
+//        saveMenuRsVo.setMenuList(menuList);
+//        return saveMenuRsVo;
+//    }
 
     public boolean saveMenu(SaveMenuReVo menuReVo) {
         Long menuId = menuReVo.getMenuId();
@@ -102,8 +194,9 @@ public class MenuService extends SimpleCoreService<Menu> {
         }
         menu.setParentName(parentName);
         //加入 菜单
-        SaveMenuRsVo saveMenuRsVo = findNoButtonMenuList();
-        return new SaveMenuRsVo(menu, saveMenuRsVo.getMenuList());
+//        SaveMenuRsVo saveMenuRsVo = findNoButtonMenuList();
+        return null;
+//                new SaveMenuRsVo(menu, saveMenuRsVo.getMenuList());
     }
 
     public ValidateSaveMenuRsVo validateSaveMenuData(SaveMenuReVo saveMenuReVo) {

@@ -46,19 +46,19 @@ public class MenuManagementAction extends MainAction {
         return SUCCESS;
     }
 
-    /**
-     * 创建菜单
-     * @return
-     */
-    public String createMenu() {
-        try {
-            _execute();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        saveMenuRsVo = menuService.findNoButtonMenuList();
-        return SUCCESS;
-    }
+//    /**
+//     * 创建菜单
+//     * @return
+//     */
+//    public String createMenu() {
+//        try {
+//            _execute();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        saveMenuRsVo = menuService.findNoButtonMenuList();
+//        return SUCCESS;
+//    }
 
     public String editMenu() {
         try {
@@ -70,28 +70,28 @@ public class MenuManagementAction extends MainAction {
         return SUCCESS;
     }
 
-    /**
-     * 校验菜单
-     */
-    public void validateSaveMenu() {
-        //菜单名称 + 菜单类型确定唯一
-        ValidateSaveMenuRsVo validateTypeAndNameFalg = menuService.validateSaveMenuData(saveMenuReVo);
-        if (!validateTypeAndNameFalg.getCode().equals(200)) {
-            addFieldError(ERROR, validateTypeAndNameFalg.getMessage());
-            return;
-        }
-    }
-
-    /**
-     * 保存菜单
-     * @return
-     */
-    public String saveMenu() {
-        LOG.info(saveMenuReVo.toString());
-        menuService.saveMenu(saveMenuReVo);
-        setResult("success");
-        return SUCCESS;
-    }
+//    /**
+//     * 校验菜单
+//     */
+//    public void validateSaveMenu() {
+//        //菜单名称 + 菜单类型确定唯一
+//        ValidateSaveMenuRsVo validateTypeAndNameFalg = menuService.validateSaveMenuData(saveMenuReVo);
+//        if (!validateTypeAndNameFalg.getCode().equals(200)) {
+//            addFieldError(ERROR, validateTypeAndNameFalg.getMessage());
+//            return;
+//        }
+//    }
+//
+//    /**
+//     * 保存菜单
+//     * @return
+//     */
+//    public String saveMenu() {
+//        LOG.info(saveMenuReVo.toString());
+//        menuService.saveMenu(saveMenuReVo);
+//        setResult("success");
+//        return SUCCESS;
+//    }
 
     /**
      * 删除菜单

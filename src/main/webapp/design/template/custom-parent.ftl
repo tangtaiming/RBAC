@@ -1,2 +1,2 @@
-<input type="hidden" class="form-control" name="${edit.classesName}.parentId" id="${edit.classesName}_parentId" value="">
-<input type="text" readonly="readonly" style="cursor:pointer" class="form-control" name="${edit.classesName}.parentName" id="${edit.classesName}_parentName" value="上级菜单">
+<input type="hidden" name="${edit.classesName}.parentId" id="${edit.classesName}_parentId" value=''>
+<ul id="ztreeMenu" class="ztree"></ul>

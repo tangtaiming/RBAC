@@ -80,7 +80,6 @@ public class Edit {
             List<Map<String, Object>> columnList = new ArrayList<>();
             Element tabElementRow = tabElementList.get(x);
             String tabRowTitle = tabElementRow.getAttributeValue("title");
-//            String tabRowName = tabElementRow.getAttributeValue("name");
             Elements tabColumnList = tabElementRow.getChildElements();
             for (int y = 0; y < tabColumnList.size(); y++) {
                 Map<String, Object> columnMap = new HashMap<>();
@@ -94,7 +93,7 @@ public class Edit {
                 if (tabType.equals("ftl")) {
                     String tabFtl = columnRow.getAttributeValue("ftl");
                     columnMap.put("ftl", tabFtl);
-                } else if (tabType.equals("checkbox")) {
+                } else if (tabType.equals("checkbox") || tabType.equals("radio")) {
                     buildSelect(columnMap, columnRow);
                 }
                 columnList.add(columnMap);
@@ -130,14 +129,26 @@ public class Edit {
     private Map<String, Object> parseHeadXml(Element headElement) {
         //js script
         List<String> jsList = new ArrayList<>();
-        Element headChildScriptElement = headElement.getFirstChildElement("script");
-        String srcAttribute = headChildScriptElement.getAttributeValue("src");
-        jsList.add(srcAttribute);
+        Element headChildScriptElement = headElement.getFirstChildElement("hscript");
+        if (!(null == headChildScriptElement)) {
+            Elements jsElementList = headChildScriptElement.getChildElements("js");
+            for (int x = 0; x < jsElementList.size(); x++) {
+                Element jsElementRow = jsElementList.get(x);
+                String jsPath = jsElementRow.getValue();
+                jsList.add(jsPath);
+            }
+        }
         //css link
         List<String> cssList = new ArrayList<>();
-        Element headChildCssElement = headElement.getFirstChildElement("link");
-        String hrefAttribute = headChildCssElement.getAttributeValue("href");
-        cssList.add(hrefAttribute);
+        Element headChildCssElement = headElement.getFirstChildElement("hstyle");
+        if (!(null == headChildCssElement)) {
+            Elements cssElementList = headChildCssElement.getChildElements("css");
+            for (int x = 0; x < cssElementList.size(); x++) {
+                Element cssElementRow = cssElementList.get(x);
+                String cssPath = cssElementRow.getValue();
+                cssList.add(cssPath);
+            }
+        }
         //title
         Element headChildTitleElement = headElement.getFirstChildElement("title");
         String headTitle = headChildTitleElement.getValue();

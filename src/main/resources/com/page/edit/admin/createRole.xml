@@ -7,7 +7,6 @@
         <save link="/admin/saveRole"/>
         <delete link="/admin/deleteRole"/>
         <back link="/admin/roleManagement"/>
-        <script src="admin/role.js" />
         <link href="admin/role.css" />
     </head>
     <tabs>

@@ -8,19 +8,23 @@
             <!--<result name="success">/design/template/menu-management.ftl</result>-->
             <result name="success">/design/template/core/list-manager.ftl</result>
         </action>
-        <action name="createMenu" class="com.rbac.application.action.MenuManagementAction" method="createMenu">
-            <result name="success">/design/template/create-menu.ftl</result>
+        <action name="createMenu" class="com.rbac.application.action.MenuEditAction" method="createMenu">
+            <!--<result name="success">/design/template/create-menu.ftl</result>-->
+            <result name="success">/design/template/core/entity-edit.ftl</result>
         </action>
-        <action name="saveMenu" class="com.rbac.application.action.MenuManagementAction" method="saveMenu">
+        <action name="saveMenu" class="com.rbac.application.action.MenuEditAction" method="saveMenu">
             <result name="success">/design/template/save-result.ftl</result>
             <result name="input">/design/template/ajax-fail.ftl</result>
         </action>
-        <action name="editMenu" class="com.rbac.application.action.MenuManagementAction" method="editMenu">
+        <action name="editMenu" class="com.rbac.application.action.MenuEditAction" method="editMenu">
             <result name="success">/design/template/edit-menu.ftl</result>
         </action>
-        <action name="deleteMenu" class="com.rbac.application.action.MenuManagementAction" method="deleteMenu">
+        <action name="deleteMenu" class="com.rbac.application.action.MenuEditAction" method="deleteMenu">
             <result name="success">/design/template/ajax-success.ftl</result>
             <result name="error">/design/template/result/fail.ftl</result>
+        </action>
+        <action name="fetchMenuByParentId" class="com.rbac.application.action.MenuEditAction" method="fetchMenuByParentId">
+            <result name="success">/design/template/ajax-success.ftl</result>
         </action>
     </package>
 </struts>

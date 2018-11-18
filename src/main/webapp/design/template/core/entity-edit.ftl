@@ -6,12 +6,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html>
 <#include "adminlte-head.ftl"/>
 <#include "adminlte-create-customjs.ftl" />
+<#if edit.headList.cssList??>
+    <#list edit.headList.cssList as cssPath>
+        <link type="text/css" rel="stylesheet" href="${cssPath}?time=${time}">
+    </#list>
+</#if>
 <script type="text/javascript" src="/design/static/plugins/layer/layer.js"></script>
 <script type="text/javascript" src="/design/static/js/jquery.pluginPage.js?time=${time}"></script>
 <script type="text/javascript" src="/design/static/js/jquery.pluginMyFilter.js?time=${time}"></script>
 <script type="text/javascript" src="/design/static/js/jquery.pluginDialog.js?time=${time}"></script>
 <script type="text/javascript" src="/design/static/js/jquery.pluginAjax.js?time=${time}"></script>
+<#if edit.headList.jsList?? && (edit.headList.jsList?size > 0)>
+    <#list edit.headList.jsList as jsPath>
+        <script type="text/javascript" src="${jsPath}?time=${time}"></script>
+    </#list>
+</#if>
 <script type="text/javascript" src="/design/static/plugins/select2/dist/js/select2.min.js"></script>
+<style>
+    .checkbox-inline+.checkbox-inline, .radio-inline+.radio-inline {
+        margin-left: 0px;
+    }
+    .checkbox-inline, .radio-inline {
+        margin-right: 10px;
+    }
+</style>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
     <!-- Main Header -->
@@ -89,7 +107,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <#assign columnName=column["name"] />
                                         <#assign columnType=column["type"] />
                                         <#assign columnTitle=column["title"] />
-                                        <div class="form-group">
+                                        <div id="group_${edit.classesName}_${columnName}" class="form-group">
                                             <label id="field_${columnName}" for="${edit.classesName}_${columnName}" class="col-sm-2 control-label required-field"><@s.text name="${columnTitle}"/></label>
                                             <div class="col-sm-6">
                                             <#-- 文本域 -->
@@ -102,12 +120,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                                                 <#-- 复选框 -->
                                                 <#elseif columnType=="checkbox">
-                                                <div class="checkbox checkbox-${columnName}">
+                                                <div class="checkbox-${columnName}">
                                                     <#assign columnOption=column["option"] />
                                                     <#list columnOption?keys as optionKey>
                                                         <#-- 选中数据勾选 -->
                                                         <#assign choseStyle="" />
-                                                        <#if entity??>
+                                                        <#if entity?? && entity[columnName]??>
                                                             <#list entity[columnName] as entityRow>
                                                                 <#if entityRow?string==optionKey>
                                                                     <#assign choseStyle='checked="checked"' />
@@ -115,8 +133,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                                 </#if>
                                                             </#list>
                                                         </#if>
-                                                        <label>
+                                                        <label class="checkbox-inline">
                                                             <input type="checkbox" ${choseStyle} name="${edit.classesName}.${columnName}" id="${edit.classesName}_${columnName}" value="${optionKey}">${columnOption[optionKey]!' '}
+                                                        </label>
+                                                    </#list>
+                                                </div>
+
+                                                <#elseif columnType=="radio">
+                                                <#-- 单选 -->
+                                                <div class="radio-${columnName}">
+                                                    <#assign columnOption=column["option"] />
+                                                    <#list columnOption?keys as optionKey>
+                                                    <#-- 选中数据勾选 -->
+                                                        <#assign choseStyle="" />
+                                                        <#if entity?? && entity[columnName]??>
+                                                            <#list entity[columnName] as entityRow>
+                                                                <#if entityRow?string==optionKey>
+                                                                    <#assign choseStyle='checked="checked"' />
+                                                                    <#break >
+                                                                </#if>
+                                                            </#list>
+                                                        </#if>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" ${choseStyle} name="${edit.classesName}.${columnName}" id="${edit.classesName}_${columnName}" value="${optionKey}">${columnOption[optionKey]!' '}
                                                         </label>
                                                     </#list>
                                                 </div>
