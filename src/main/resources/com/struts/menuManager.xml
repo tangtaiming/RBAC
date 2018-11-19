@@ -17,11 +17,12 @@
             <result name="input">/design/template/ajax-fail.ftl</result>
         </action>
         <action name="editMenu" class="com.rbac.application.action.MenuEditAction" method="editMenu">
-            <result name="success">/design/template/edit-menu.ftl</result>
+            <!--<result name="success">/design/template/edit-menu.ftl</result>-->
+            <result name="success">/design/template/core/entity-edit.ftl</result>
         </action>
         <action name="deleteMenu" class="com.rbac.application.action.MenuEditAction" method="deleteMenu">
-            <result name="success">/design/template/ajax-success.ftl</result>
-            <result name="error">/design/template/result/fail.ftl</result>
+            <result name="success">/design/template/save-result.ftl</result>
+            <result name="input">/design/template/ajax-fail.ftl</result>
         </action>
         <action name="fetchMenuByParentId" class="com.rbac.application.action.MenuEditAction" method="fetchMenuByParentId">
             <result name="success">/design/template/ajax-success.ftl</result>

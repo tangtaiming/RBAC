@@ -126,12 +126,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                         <#-- 选中数据勾选 -->
                                                         <#assign choseStyle="" />
                                                         <#if entity?? && entity[columnName]??>
-                                                            <#list entity[columnName] as entityRow>
-                                                                <#if entityRow?string==optionKey>
-                                                                    <#assign choseStyle='checked="checked"' />
-                                                                    <#break >
-                                                                </#if>
-                                                            </#list>
+                                                            <#if entity[columnName]?string==optionKey>
+                                                                <#assign choseStyle='checked="checked"' />
+                                                                <#break />
+                                                            </#if>
                                                         </#if>
                                                         <label class="checkbox-inline">
                                                             <input type="checkbox" ${choseStyle} name="${edit.classesName}.${columnName}" id="${edit.classesName}_${columnName}" value="${optionKey}">${columnOption[optionKey]!' '}
@@ -143,21 +141,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <#-- 单选 -->
                                                 <div class="radio-${columnName}">
                                                     <#assign columnOption=column["option"] />
-                                                    <#list columnOption?keys as optionKey>
-                                                    <#-- 选中数据勾选 -->
-                                                        <#assign choseStyle="" />
-                                                        <#if entity?? && entity[columnName]??>
-                                                            <#list entity[columnName] as entityRow>
-                                                                <#if entityRow?string==optionKey>
-                                                                    <#assign choseStyle='checked="checked"' />
-                                                                    <#break >
-                                                                </#if>
-                                                            </#list>
-                                                        </#if>
-                                                        <label class="radio-inline">
-                                                            <input type="radio" ${choseStyle} name="${edit.classesName}.${columnName}" id="${edit.classesName}_${columnName}" value="${optionKey}">${columnOption[optionKey]!' '}
-                                                        </label>
-                                                    </#list>
+                                                    <#if entity?? && entity[columnName]??>
+                                                        <#list columnOption?keys as optionKey>
+                                                            <#-- 选中数据勾选 -->
+                                                            <#assign choseStyle="" />
+                                                            <#if entity[columnName]?string==optionKey>
+                                                                <#assign choseStyle='checked="checked"' />
+                                                            </#if>
+                                                            <label class="radio-inline">
+                                                                <input type="radio" ${choseStyle} name="${edit.classesName}.${columnName}" id="${edit.classesName}_${columnName}" value="${optionKey}">${columnOption[optionKey]!' '}
+                                                            </label>
+                                                        </#list>
+                                                    <#else>
+                                                        <#list columnOption?keys as optionKey>
+                                                            <#-- 选中数据勾选 -->
+                                                            <#assign choseStyle="" />
+                                                            <#if optionKey=='1'>
+                                                                <#assign choseStyle='checked="checked"' />
+                                                            </#if>
+                                                            <label class="radio-inline">
+                                                                <input type="radio" ${choseStyle} name="${edit.classesName}.${columnName}" id="${edit.classesName}_${columnName}" value="${optionKey}">${columnOption[optionKey]!' '}
+                                                            </label>
+                                                        </#list>
+                                                    </#if>
                                                 </div>
 
                                                 <#-- 自定义ftl页面 -->

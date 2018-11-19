@@ -50,23 +50,26 @@ public class MenuService extends SimpleCoreService<Menu> {
         return saveMenuReVo;
     }
 
-//    public SaveMenuRsVo editMenu(String id) {
-//        Menu menu = menuDao.findOne(Long.valueOf(id));
-//        SaveMenuReVo saveMenuReVo = new SaveMenuReVo();
-//        if (!(null == menu)) {
-//            saveMenuReVo.setId(menu.getId());
-//            saveMenuReVo.setName(menu.getName());
+    public SaveMenuReVo editMenu(String id) {
+        Menu menu = menuDao.findOne(Long.valueOf(id));
+        SaveMenuReVo saveMenuReVo = new SaveMenuReVo();
+        if (!(null == menu)) {
+            saveMenuReVo.setId(menu.getId());
+            saveMenuReVo.setName(menu.getName());
 //            saveMenuReVo.setParentId(menu.getParentId());
 //            saveMenuReVo.setParentName(menu.getParentName());
-//            saveMenuReVo.setUrl(menu.getUrl());
-//            saveMenuReVo.setIcon(menu.getIcon());
-//            saveMenuReVo.setType(menu.getType());
-//            Menu parentMenu = menuDao.findOne(Long.valueOf(id));
-//
-//        }
-//
-//        return saveMenuReVo;
-//    }
+            saveMenuReVo.setUrl(menu.getUrl());
+            saveMenuReVo.setIcon(menu.getIcon());
+            saveMenuReVo.setType(menu.getType());
+            Menu parentMenu = menuDao.findOne(Long.valueOf(menu.getParentId()));
+            if (!(null == parentMenu)) {
+                saveMenuReVo.setParentId(parentMenu.getParentId());
+                saveMenuReVo.setParentName(parentMenu.getParentName());
+            }
+        }
+
+        return saveMenuReVo;
+    }
 
     public String fetchMenuByParentId(String id) {
         List<Menu> oneMenuList = new ArrayList<>();

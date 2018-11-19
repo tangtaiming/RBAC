@@ -9,7 +9,18 @@ $(document).ready(function() {
     //加载树
     // $.fn.menu('initTree');
     //默认勾选
-    $('input[id="saveMenuReVo_type"]').get(1).checked = true;
+    // var typeFalg = false;
+    // var typeElement = $('input[id="saveMenuReVo_type"]');
+    // typeElement.each(function(i, element) {
+    //     console.log("i: " + i + " checked: " + element.checked)
+    //     if (element.checked) {
+    //         typeFalg = $(this).checked;
+    //         return false;
+    //     }
+    // });
+    // if (typeFalg == false) {
+    //     $('input[id="saveMenuReVo_type"]').get(1).checked = true;
+    // }
     $.fn.menu('cutoverType');
     // var treeObj = $("#ztreeMenu");
     // var treeValue = $('#tree_json').val();

@@ -83,22 +83,6 @@ public class MenuManagementAction extends MainAction {
 //        return SUCCESS;
 //    }
 
-    /**
-     * 删除菜单
-     * @return
-     */
-    public String deleteMenu() {
-        try {
-            String result = menuService.deleteMenu(getId());
-            setResult(result);
-            return SUCCESS;
-        } catch (Exception e) {
-            LOG.error("Delete error {}", e);
-            addFieldError("error", "删除菜单异常！");
-            return ERROR;
-        }
-    }
-
     public SaveMenuReVo getSaveMenuReVo() {
         return saveMenuReVo;
     }

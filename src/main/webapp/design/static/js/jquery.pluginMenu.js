@@ -35,7 +35,7 @@
         /**
          * 请求加载tree 树
          */
-        initTree: function () {
+        initTree: function (index) {
             var params = {};
             params['id'] = -1;
             $.ajax({
@@ -46,7 +46,12 @@
                     if (!("" == response)) {
                         var treeObj = $("#ztreeMenu");
                         console.log(response);
-                        $.fn.zTree.init(treeObj, zrteeSetting, JSON.parse(response));
+                        var ztreeObj = $.fn.zTree.init(treeObj, zrteeSetting, JSON.parse(response));
+                        //确定按钮绑定一个事件
+                        $("#ztreeButton").bind("click", ztreeObj, function(){
+                            //确定类别之后 关闭页面
+                            layer.close(index);
+                        });
                     }
                 },
                 error: function() {
@@ -64,29 +69,7 @@
                 area: ['200px', '340px'], //宽高
                 content: ztreeHtml,
                 success: function(layero, index){
-                    $.fn.menu('initTree');
-                    // var ztreeObj = $.fn.zTree.init($("#ztreeMenu"), zrteeSetting, []);
-                    //打开获取查询选中值
-                    //获取节点并且选中节点
-                    // var parentId = $('#parentId').val();
-                    // var selectNode = ztreeObj.getNodeByParam("menuId", parentId, null);
-                    // ztreeObj.selectNode(selectNode);
-                    //确定按钮绑定一个事件
-                    // $("#ztreeButton").bind("click", ztreeObj, function(){
-                    //     //获取选中 名称 和 id 设置到对应的 text文本中
-                    //     var selectNodes = ztreeObj.getSelectedNodes();
-                    //     if (!(null == selectNodes) && selectNodes.length == 1) {
-                    //         var node = selectNodes[0];
-                    //         // console.log('id: ' + node.menuId);
-                    //         // console.log('name: ' + node.name);
-                    //         $('#parentId').val(node.menuId);
-                    //         $('#parentName').val(node.name);
-                    //         //确定类别之后 关闭页面
-                    //         layer.close(index);
-                    //     } else {
-                    //         alert('不允许选中多个类别!');
-                    //     }
-                    // });
+                    $.fn.menu('initTree', index);
                 }
             });
         }

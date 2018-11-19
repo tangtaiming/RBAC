@@ -48,16 +48,16 @@ public class MenuEditAction extends EditAction<SaveMenuReVo> {
         return SUCCESS;
     }
 
-//    public String editMenu() {
-//        try {
-//            _execute();
-//            setEntity(menuService.editMenu(getId()));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+    public String editMenu() {
+        try {
+            _execute();
+            setEntity(menuService.editMenu(getId()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 //        saveMenuRsVo = menuService.findEditPageData(getId());
-//        return SUCCESS;
-//    }
+        return SUCCESS;
+    }
 
     /**
      * 校验菜单
@@ -79,6 +79,22 @@ public class MenuEditAction extends EditAction<SaveMenuReVo> {
         menuService.saveMenu(saveMenuReVo);
         setResult(ResultUtils.success());
         return SUCCESS;
+    }
+
+    /**
+     * 删除菜单
+     * @return
+     */
+    public String deleteMenu() {
+        try {
+            String result = menuService.deleteMenu(getId());
+            setResult(ResultUtils.success());
+            return SUCCESS;
+        } catch (Exception e) {
+            LOG.error("Delete error {}", e);
+            addFieldError("error", "删除菜单异常！");
+            return ERROR;
+        }
     }
 
     public SaveMenuReVo getSaveMenuReVo() {
