@@ -6,13 +6,14 @@ import com.rbac.application.action.vo.SaveMenuRsVo;
 import com.rbac.application.action.vo.ValidateSaveMenuRsVo;
 import com.rbac.application.orm.Menu;
 import com.rbac.application.service.MenuService;
+import com.system.util.base.ResultUtils;
 
 /**
  * 菜单编辑请求
  * @auther ttm
  * @date 2018/11/18 0018
  **/
-public class MenuEditAction extends EditAction<SaveMenuRsVo> {
+public class MenuEditAction extends EditAction<SaveMenuReVo> {
 
     private MenuService menuService = new MenuService();
 
@@ -40,12 +41,23 @@ public class MenuEditAction extends EditAction<SaveMenuRsVo> {
     public String createMenu() {
         try {
             _execute();
-//            setEntity(menuService.findOneMenuList());
+            setEntity(menuService.createMenu());
         } catch (Exception e) {
             e.printStackTrace();
         }
         return SUCCESS;
     }
+
+//    public String editMenu() {
+//        try {
+//            _execute();
+//            setEntity(menuService.editMenu(getId()));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        saveMenuRsVo = menuService.findEditPageData(getId());
+//        return SUCCESS;
+//    }
 
     /**
      * 校验菜单
@@ -64,11 +76,24 @@ public class MenuEditAction extends EditAction<SaveMenuRsVo> {
      * @return
      */
     public String saveMenu() {
-        LOG.info(saveMenuReVo.toString());
         menuService.saveMenu(saveMenuReVo);
-        setResult("success");
+        setResult(ResultUtils.success());
         return SUCCESS;
     }
 
+    public SaveMenuReVo getSaveMenuReVo() {
+        return saveMenuReVo;
+    }
 
+    public void setSaveMenuReVo(SaveMenuReVo saveMenuReVo) {
+        this.saveMenuReVo = saveMenuReVo;
+    }
+
+    public SaveMenuRsVo getSaveMenuRsVo() {
+        return saveMenuRsVo;
+    }
+
+    public void setSaveMenuRsVo(SaveMenuRsVo saveMenuRsVo) {
+        this.saveMenuRsVo = saveMenuRsVo;
+    }
 }

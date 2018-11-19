@@ -31,9 +31,9 @@ public class MenuService extends SimpleCoreService<Menu> {
 
     private MenuDao menuDao = new MenuDao();
 
-    private static final Long ROOTID = 0L;
+    public static final Long ROOTID = 0L;
 
-    private static final String ROOTNAME = "一级菜单";
+    public static final String ROOTNAME = "一级菜单";
 
     public List<Menu> findMenuAllList() {
         return menuDao.findAllList();
@@ -42,6 +42,31 @@ public class MenuService extends SimpleCoreService<Menu> {
     public int findMenuAllListCount() {
         return menuDao.findAllListCount();
     }
+
+    public SaveMenuReVo createMenu() {
+        SaveMenuReVo saveMenuReVo = new SaveMenuReVo();
+        saveMenuReVo.setParentId(ROOTID);
+        saveMenuReVo.setParentName(ROOTNAME);
+        return saveMenuReVo;
+    }
+
+//    public SaveMenuRsVo editMenu(String id) {
+//        Menu menu = menuDao.findOne(Long.valueOf(id));
+//        SaveMenuReVo saveMenuReVo = new SaveMenuReVo();
+//        if (!(null == menu)) {
+//            saveMenuReVo.setId(menu.getId());
+//            saveMenuReVo.setName(menu.getName());
+//            saveMenuReVo.setParentId(menu.getParentId());
+//            saveMenuReVo.setParentName(menu.getParentName());
+//            saveMenuReVo.setUrl(menu.getUrl());
+//            saveMenuReVo.setIcon(menu.getIcon());
+//            saveMenuReVo.setType(menu.getType());
+//            Menu parentMenu = menuDao.findOne(Long.valueOf(id));
+//
+//        }
+//
+//        return saveMenuReVo;
+//    }
 
     public String fetchMenuByParentId(String id) {
         List<Menu> oneMenuList = new ArrayList<>();
@@ -55,7 +80,7 @@ public class MenuService extends SimpleCoreService<Menu> {
             rootMenu.setName(ROOTNAME);
             rootMenu.setParentId(-1L);
             rootMenu.setIsParent("true");
-            rootMenu.setNocheck(true);
+            rootMenu.setNocheck(false);
             oneMenuList = menuDao.findEqList(query);
             List<SaveMenuRsVo> oneMenuRsList = new ArrayList<>();
             oneMenuRsList.add(0, rootMenu);
@@ -146,17 +171,19 @@ public class MenuService extends SimpleCoreService<Menu> {
 //    }
 
     public boolean saveMenu(SaveMenuReVo menuReVo) {
-        Long menuId = menuReVo.getMenuId();
+        Long menuId = menuReVo.getId();
         if (null == menuId) {
             Menu menu = new Menu();
             menu.setName(menuReVo.getName());
             menu.setUrl(menuReVo.getUrl());
-            menu.setPerms(menuReVo.getPerms());
             menu.setIcon(menuReVo.getIcon());
             menu.setType(menuReVo.getType());
-            menu.setOrderNum(menuReVo.getOrderNum());
+            menu.setParentId(menuReVo.getId());
+            menu.setParentName(menuReVo.getParentName());
             menu.setParentId(menuReVo.getParentId());
             menu.setParentName(menuReVo.getParentName());
+            menu.setOrderNum(0);
+            menu.setPerms("");
             Long createMenuId = (Long) menuDao.save(menu);
             return (null == createMenuId) ? false : true;
         } else {
@@ -164,14 +191,13 @@ public class MenuService extends SimpleCoreService<Menu> {
             if (null == findMenu) {
                 return false;
             }
-
             findMenu.setType(menuReVo.getType());
             findMenu.setName(menuReVo.getName());
             findMenu.setParentId(menuReVo.getParentId());
             findMenu.setUrl(menuReVo.getUrl());
-            findMenu.setPerms(menuReVo.getPerms());
-            findMenu.setOrderNum(menuReVo.getOrderNum());
             findMenu.setIcon(menuReVo.getIcon());
+            findMenu.setPerms("");
+            findMenu.setOrderNum(0);
             menuDao.update(findMenu);
         }
         return true;
@@ -201,7 +227,7 @@ public class MenuService extends SimpleCoreService<Menu> {
 
     public ValidateSaveMenuRsVo validateSaveMenuData(SaveMenuReVo saveMenuReVo) {
         ValidateSaveMenuRsVo validateVo = new ValidateSaveMenuRsVo();
-        if (null == saveMenuReVo.getMenuId()) {
+        if (null == saveMenuReVo.getId()) {
             Map<String, Object> typeAndNameQuery = new LinkedMap();
             typeAndNameQuery.put("type", saveMenuReVo.getType());
             typeAndNameQuery.put("name", saveMenuReVo.getName());

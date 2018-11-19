@@ -36,7 +36,7 @@
                     <div class="col-lg-12">
                         <div class="text-right">
                             <div class="btn-group">
-                                <a href="${main.head.createLink!''}" target="_blank" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus-square-o"></i> 新增</a>
+                                <a href="${main.head.createLink!''}" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus-square-o"></i> 新增</a>
                                 <a class="btn btn-primary btn-sm btn-flat"><i class="fa fa-mail-reply"></i> 重置</a>
                                 <a id="filter-submit" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> 搜索</a>
                             </div>
@@ -106,7 +106,7 @@
                                                     <#if dataStyle=="base">
                                                         <#list actionLink as alink>
                                                             <#if alink.editType="edit">
-                                                                <a href="${alink.editLink}?id=${row.id}" target="_blank" class="btn btn-primary btn-xs btn-flat"><i class="fa fa-pencil-square-o"></i> 编辑</a>
+                                                                <a href="${alink.editLink}?id=${row.id}" class="btn btn-primary btn-xs btn-flat"><i class="fa fa-pencil-square-o"></i> 编辑</a>
                                                                 <#elseif alink.editType="delete">
                                                                 <a class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash-o"></i> 删除</a>
                                                             </#if>

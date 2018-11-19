@@ -1,4 +1,8 @@
 (function( $ ) {
+    var param = {
+        rootId:0,
+        rootName:'一级菜单'
+    }
 
     var methods = {
         /**
@@ -15,12 +19,17 @@
                     return false;
                 }
             });
-            $('#group_saveMenuReVo_parentId').show();
+            // $('#group_saveMenuReVo_parentId').show();
             $('#group_saveMenuReVo_url').show();
+            $('#saveMenuReVo_url').val('');
+            $('#saveMenuReVo_parentId').val(param.rootId);
+            $('#saveMenuReVo_parentName').val(param.rootName);
             if (choseTypeValue == "0") {
                 //目录
-                $('#group_saveMenuReVo_parentId').hide();
+                // $('#group_saveMenuReVo_parentId').hide();
                 $('#group_saveMenuReVo_url').hide();
+                // $('#saveMenuReVo_parentId').val('');
+                // $('#saveMenuReVo_parentName').val('');
             }
         },
         /**
@@ -37,7 +46,7 @@
                     if (!("" == response)) {
                         var treeObj = $("#ztreeMenu");
                         console.log(response);
-                        var ztree = $.fn.zTree.init(treeObj, zrteeSetting, JSON.parse(response));
+                        $.fn.zTree.init(treeObj, zrteeSetting, JSON.parse(response));
                     }
                 },
                 error: function() {
@@ -45,16 +54,42 @@
                 }
             });
         },
-        // /**
-        //  * 选中菜单
-        //  * @param event
-        //  * @param treeId
-        //  * @param treeNode
-        //  */
-        // choseMenu: function (event, treeId, treeNode) {
-        //     alert(treeNode ? treeNode.tId + ", " + treeNode.name : "isRoot");
-        //
-        // }
+        tree: function () {
+            var ztreeHtml = '<ul id="ztreeMenu" style="margin-left:10px" class="ztree"></ul>';
+            ztreeHtml += '<div class="layui-layer-btn layui-layer-btn-"><input id="ztreeButton" type="button" class="btn btn-primary btn-sm btn-flat" value="确定" /></div>'
+            //页面层
+            layer.open({
+                type: 1,
+                skin: 'layui-layer-rim', //加上边框
+                area: ['200px', '340px'], //宽高
+                content: ztreeHtml,
+                success: function(layero, index){
+                    $.fn.menu('initTree');
+                    // var ztreeObj = $.fn.zTree.init($("#ztreeMenu"), zrteeSetting, []);
+                    //打开获取查询选中值
+                    //获取节点并且选中节点
+                    // var parentId = $('#parentId').val();
+                    // var selectNode = ztreeObj.getNodeByParam("menuId", parentId, null);
+                    // ztreeObj.selectNode(selectNode);
+                    //确定按钮绑定一个事件
+                    // $("#ztreeButton").bind("click", ztreeObj, function(){
+                    //     //获取选中 名称 和 id 设置到对应的 text文本中
+                    //     var selectNodes = ztreeObj.getSelectedNodes();
+                    //     if (!(null == selectNodes) && selectNodes.length == 1) {
+                    //         var node = selectNodes[0];
+                    //         // console.log('id: ' + node.menuId);
+                    //         // console.log('name: ' + node.name);
+                    //         $('#parentId').val(node.menuId);
+                    //         $('#parentName').val(node.name);
+                    //         //确定类别之后 关闭页面
+                    //         layer.close(index);
+                    //     } else {
+                    //         alert('不允许选中多个类别!');
+                    //     }
+                    // });
+                }
+            });
+        }
     }
 
     $.fn.menu = function( method ) {

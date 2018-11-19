@@ -18,7 +18,7 @@
         <search-container>
             <column type="text" name="id" />
             <column type="text" name="name" />
-            <column type="text" name="parentName"/>
+            <column type="select" name="parentId" option="MenuParentName"/>
             <column type="select" name="type" option="MenuTypeSelect" />
             <column type="text" name="icon" />
             <column type="action" style="base">
@@ -29,7 +29,7 @@
         <data-container>
             <column type="text" name="id" />
             <column type="text" name="name" />
-            <column type="text" name="parentName"/>
+            <column type="text" name="parentId"/>
             <column type="text" name="type" />
             <column type="text" name="icon" />
             <column type="action" />

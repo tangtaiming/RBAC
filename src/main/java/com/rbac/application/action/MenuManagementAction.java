@@ -60,16 +60,6 @@ public class MenuManagementAction extends MainAction {
 //        return SUCCESS;
 //    }
 
-    public String editMenu() {
-        try {
-            _execute();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        saveMenuRsVo = menuService.findEditPageData(getId());
-        return SUCCESS;
-    }
-
 //    /**
 //     * 校验菜单
 //     */

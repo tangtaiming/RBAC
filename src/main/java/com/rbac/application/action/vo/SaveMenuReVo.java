@@ -12,7 +12,7 @@ public class SaveMenuReVo implements Serializable {
     /**
      * 菜单ID
      */
-    private Long menuId;
+    private Long id;
 
     /**
      * 菜单名称
@@ -54,12 +54,12 @@ public class SaveMenuReVo implements Serializable {
      */
     private Integer type;
 
-    public Long getMenuId() {
-        return menuId;
+    public Long getId() {
+        return id;
     }
 
-    public void setMenuId(Long menuId) {
-        this.menuId = menuId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -126,18 +126,4 @@ public class SaveMenuReVo implements Serializable {
         this.type = type;
     }
 
-    @Override
-    public String toString() {
-        return "SaveMenuReVo{" +
-                "menuId=" + menuId +
-                ", name='" + name + '\'' +
-                ", parentId='" + parentId + '\'' +
-                ", parentName='" + parentName + '\'' +
-                ", url='" + url + '\'' +
-                ", perms='" + perms + '\'' +
-                ", orderNum=" + orderNum +
-                ", icon='" + icon + '\'' +
-                ", type=" + type +
-                '}';
-    }
 }
