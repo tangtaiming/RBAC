@@ -6,7 +6,8 @@
     <package name="accessManager" namespace="/admin" extends="rbac">
         <action name="accessManagement" class="com.rbac.application.action.AccessManagementAction"
                 method="accessManagement">
-            <result name="success">/design/template/access-management.ftl</result>
+            <!--<result name="success">/design/template/access-management.ftl</result>-->
+            <result name="success">/design/template/core/list-manager.ftl</result>
         </action>
         <action name="createAccess" class="com.rbac.application.action.AccessManagementAction"
                 method="createAccess">

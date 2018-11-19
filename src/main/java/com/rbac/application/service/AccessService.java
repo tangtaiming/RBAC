@@ -6,6 +6,7 @@ import com.rbac.application.dao.AccessDao;
 import com.rbac.application.dao.RoleDao;
 import com.rbac.application.orm.Access;
 import com.system.util.base.JsonUtils;
+import com.system.util.base.PageUtils;
 import com.system.util.enumerate.Status;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -22,7 +23,7 @@ import java.util.List;
  * @auther ttm
  * @date 2018/7/28 0028
  **/
-public class AccessService {
+public class AccessService extends SimpleCoreService<Access> {
 
     private Logger LOG = LoggerFactory.getLogger(AccessService.class);
 
@@ -118,4 +119,13 @@ public class AccessService {
         return accessDao.findAllListCount();
     }
 
+    @Override
+    public List<Access> getDataList() {
+        return accessDao.findDataList();
+    }
+
+    @Override
+    public PageUtils getPage() {
+        return accessDao.findPage();
+    }
 }

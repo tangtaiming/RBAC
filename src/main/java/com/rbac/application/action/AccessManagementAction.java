@@ -1,5 +1,6 @@
 package com.rbac.application.action;
 
+import com.rbac.application.action.core.MainAction;
 import com.rbac.application.action.core.RbacAction;
 import com.rbac.application.action.dto.SaveAccessRsDto;
 import com.rbac.application.action.vo.CreateAccessRsVo;
@@ -13,7 +14,7 @@ import java.util.List;
  * @auther ttm
  * @date 2018/7/28 0028
  **/
-public class AccessManagementAction extends RbacAction {
+public class AccessManagementAction extends MainAction {
 
     private AccessService accessService = new AccessService();
 
@@ -25,17 +26,21 @@ public class AccessManagementAction extends RbacAction {
 
     private CreateAccessRsVo accessRsVo;
 
+    private Access access;
+
     private static final String ERROR_KEY = "error";
 
     public String accessManagement() {
         try {
             _execute();
+            setDataList(accessService.getDataList());
+            setPage(accessService.getPage());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        List<Access> accessList = accessService.findAccessAllList();
-        setAccessList(accessList);
-        int count = accessService.findAccessAllListCount();
+//        List<Access> accessList = accessService.findAccessAllList();
+//        setAccessList(accessList);
+//        int count = accessService.findAccessAllListCount();
 //        setTotalRows(count);
         return SUCCESS;
     }
@@ -122,5 +127,13 @@ public class AccessManagementAction extends RbacAction {
 
     public void setAccessRsVo(CreateAccessRsVo accessRsVo) {
         this.accessRsVo = accessRsVo;
+    }
+
+    public Access getAccess() {
+        return access;
+    }
+
+    public void setAccess(Access access) {
+        this.access = access;
     }
 }
