@@ -44,5 +44,7 @@
         <mapping resource="com/hibernate/role-access.hbm.xml"></mapping>
         <mapping resource="com/hibernate/menu.hbm.xml"></mapping>
         <mapping resource="com/hibernate/review.hbm.xml"></mapping>
+        <mapping resource="com/hibernate/role-menu.hbm.xml"></mapping>
+
     </session-factory>
 </hibernate-configuration>

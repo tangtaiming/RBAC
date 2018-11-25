@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entity class="accessRsDto">
+    <head>
+        <title>access.create</title>
+        <mtitle>access.management</mtitle>
+        <mlink link="/admin/accessManagement" />
+        <save link="/admin/saveAccess"/>
+        <delete link="/admin/deleteAccess"/>
+        <back link="/admin/accessManagement"/>
+        <hstyle>
+            <css>/design/static/plugins/zTree_v3/css/zTreeStyle/zTreeStyle.css</css>
+        </hstyle>
+        <hscript>
+            <js>/design/static/js/jquery.pluginMenu.js</js>
+            <js>/design/static/js/saveMenu.js</js>
+            <js>/design/static/plugins/zTree_v3/js/jquery.ztree.all.js</js>
+            <js>/design/static/js/ztree.plugin.js</js>
+        </hscript>
+    </head>
+    <tabs>
+        <tab title="tab.menu.info">
+            <column type="radio" title="type" name="type" option="MenuTypeRadio" />
+            <column type="text" title="name" name="name" />
+            <column type="ftl" title="parentId" name="parentId" ftl="/design/template/custom-parent.ftl" />
+            <column type="text" title="url" name="url" />
+            <column type="text" title="icon" name="icon" />
+        </tab>
+    </tabs>
+</entity>

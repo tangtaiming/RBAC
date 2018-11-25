@@ -11,8 +11,6 @@ public class AccessManagementRsDto {
 
     private String title;
 
-    private String urls;
-
     public Integer getId() {
         return id;
     }
@@ -29,11 +27,4 @@ public class AccessManagementRsDto {
         this.title = title;
     }
 
-    public String getUrls() {
-        return urls;
-    }
-
-    public void setUrls(String urls) {
-        this.urls = urls;
-    }
 }

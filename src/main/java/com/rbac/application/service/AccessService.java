@@ -47,7 +47,6 @@ public class AccessService extends SimpleCoreService<Access> {
                 AccessManagementRsDto createAccessRsDto = new AccessManagementRsDto();
                 createAccessRsDto.setId(row.getId());
                 createAccessRsDto.setTitle(row.getTitle());
-                createAccessRsDto.setUrls(row.getUrls());
                 accessRsDto.add(createAccessRsDto);
             }
         }
@@ -64,7 +63,6 @@ public class AccessService extends SimpleCoreService<Access> {
         if (null != accessId) {
             Access findAccess = accessDao.findOne(accessId);
             if (null != findAccess) {
-                findAccess.setUrls(JsonUtils.toJson(urls));
                 findAccess.setTitle(accessRsDto.getTitle());
                 findAccess.setUpdateDate(time);
                 accessDao.update(findAccess);
@@ -76,7 +74,6 @@ public class AccessService extends SimpleCoreService<Access> {
             createAccess.setUpdateDate(time);
             createAccess.setStatus(Status.OPEN.getStatus());
             createAccess.setTitle(accessRsDto.getTitle());
-            createAccess.setUrls(JsonUtils.toJson(urls));
             Integer createAccessId = (Integer) accessDao.save(createAccess);
             saveFalg = (null != createAccessId ? true : false);
         }
@@ -90,7 +87,6 @@ public class AccessService extends SimpleCoreService<Access> {
             SaveAccessRsDto accessRsDto = new SaveAccessRsDto();
             accessRsDto.setId(access.getId());
             accessRsDto.setTitle(access.getTitle());
-            accessRsDto.setUrls(parseUrls(access.getUrls()));
             return accessRsDto;
         }
 

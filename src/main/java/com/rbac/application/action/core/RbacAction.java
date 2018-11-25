@@ -93,7 +93,7 @@ public class RbacAction<E> extends ActionSupport {
                             for (RoleAccess roleAccessRow : roleAccessList) {
                                 Access access = accessService.findAccessOne(roleAccessRow.getAccessId());
                                 if (!(null == access)) {
-                                    String uri = access.getUrls();
+                                    String uri = null;
                                     List<String> uriList = (List<String>) JsonUtils.fromJson(uri, List.class);
                                     chooseAccessList.addAll(uriList);
                                 }

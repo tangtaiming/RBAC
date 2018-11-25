@@ -45,16 +45,6 @@ public class AccessManagementAction extends MainAction {
         return SUCCESS;
     }
 
-    public String createAccess() {
-        try {
-            _execute();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        accessRsVo = new CreateAccessRsVo();
-        return SUCCESS;
-    }
-
     public void validateSaveAccess() {
         Integer accessId = accessRsDto.getId();
         if (StringUtils.isEmpty(accessRsDto.getTitle())) {

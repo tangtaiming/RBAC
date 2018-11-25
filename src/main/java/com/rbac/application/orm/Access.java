@@ -18,12 +18,17 @@ public class Access implements Serializable {
     /**
      * 权限地址
      */
-    private String urls;
+    private String url;
 
     /**
      * 状态
      */
     private Integer status;
+
+    /**
+     * 菜单id
+     */
+    private Integer menuId;
 
     private String createDate;
 
@@ -45,12 +50,12 @@ public class Access implements Serializable {
         this.title = title;
     }
 
-    public String getUrls() {
-        return urls;
+    public String getUrl() {
+        return url;
     }
 
-    public void setUrls(String urls) {
-        this.urls = urls;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Integer getStatus() {
@@ -59,6 +64,14 @@ public class Access implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(Integer menuId) {
+        this.menuId = menuId;
     }
 
     public String getCreateDate() {
