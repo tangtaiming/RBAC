@@ -7,7 +7,7 @@ import com.rbac.application.service.RoleService;
 import com.system.util.base.ResultUtils;
 import org.apache.commons.lang.StringUtils;
 
-public class RoleEditAction extends EditAction {
+public class RoleEditAction extends EditAction<EditRoleRsVo> {
 
     private EditRoleRsVo editRoleRsVo;
 
@@ -22,6 +22,7 @@ public class RoleEditAction extends EditAction {
     public String createRole() {
         try {
             _execute();
+            setEntity(roleService.createRole());
         } catch (Exception e) {
             e.printStackTrace();
         }

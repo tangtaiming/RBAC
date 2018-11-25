@@ -1,10 +1,12 @@
 package com.rbac.application.service;
 
+import com.rbac.application.action.orm.MenuOrm;
 import com.rbac.application.action.vo.EditRoleRsVo;
 import com.rbac.application.action.vo.RoleManagementRsVo;
 import com.rbac.application.action.vo.SaveSiteAccessReVo;
 import com.rbac.application.dao.RoleAccessDao;
 import com.rbac.application.dao.RoleDao;
+import com.rbac.application.orm.Menu;
 import com.rbac.application.orm.Role;
 import com.rbac.application.orm.RoleAccess;
 import com.system.util.base.PageUtils;
@@ -32,6 +34,27 @@ public class RoleService extends SimpleCoreService<Role> {
     private RoleDao roleDao = new RoleDao();
 
     private RoleAccessDao roleAccessDao = new RoleAccessDao();
+
+    private MenuService menuService = new MenuService();
+
+    public EditRoleRsVo createRole() {
+        List<Menu> menuList = menuService.findMenuAllList();
+        EditRoleRsVo editRoleRsVo = new EditRoleRsVo();
+        if (!CollectionUtils.isEmpty(menuList)) {
+            List<MenuOrm> menuOrmList = new ArrayList<>();
+            for (Menu menu : menuList) {
+                MenuOrm menuOrm = new MenuOrm();
+                menuOrm.setId(menu.getId());
+                menuOrm.setName(menu.getName());
+                menuOrm.setParentId(menu.getParentId());
+                menuOrm.setIsParent("true");
+                menuOrmList.add(menuOrm);
+            }
+            editRoleRsVo.setMenuOrmList(menuOrmList);
+        }
+
+        return editRoleRsVo;
+    }
 
     /**
      * 获取角色集合

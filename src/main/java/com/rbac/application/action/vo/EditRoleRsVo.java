@@ -1,6 +1,9 @@
 package com.rbac.application.action.vo;
 
+import com.rbac.application.action.orm.MenuOrm;
 import com.rbac.application.orm.Role;
+
+import java.util.List;
 
 /**
  * @auther ttm
@@ -11,6 +14,8 @@ public class EditRoleRsVo {
     private Integer id;
 
     private String name;
+
+    private List<MenuOrm> menuOrmList;
 
     public EditRoleRsVo() {
     }
@@ -34,5 +39,13 @@ public class EditRoleRsVo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<MenuOrm> getMenuOrmList() {
+        return menuOrmList;
+    }
+
+    public void setMenuOrmList(List<MenuOrm> menuOrmList) {
+        this.menuOrmList = menuOrmList;
     }
 }

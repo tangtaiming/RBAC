@@ -7,11 +7,19 @@
         <save link="/admin/saveRole"/>
         <delete link="/admin/deleteRole"/>
         <back link="/admin/roleManagement"/>
-        <link href="admin/role.css" />
+        <hstyle>
+            <css>/design/static/plugins/zTree_v3/css/zTreeStyle/zTreeStyle.css</css>
+        </hstyle>
+        <hscript>
+            <js>/design/static/plugins/zTree_v3/js/jquery.ztree.all.js</js>
+            <js>/design/static/js/jquery.pluginRole.js</js>
+            <js>/design/static/js/jquery.ztree.checkbox.plugin.js</js>
+        </hscript>
     </head>
     <tabs>
         <tab title="tab.role.info">
             <column type="text" title="name" name="name" />
+            <column type="ftl" title="menu.id" name="menuId" ftl="/design/template/custom-page-menu-id.ftl" />
         </tab>
     </tabs>
 </entity>

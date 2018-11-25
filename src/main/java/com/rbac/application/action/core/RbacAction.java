@@ -82,26 +82,26 @@ public class RbacAction<E> extends ActionSupport {
                 //根据用户查询用户对于的组，
                 //根据用户组查下组下面的权限
                 UserService userService = new UserService();
-                List<Integer> userRoleIdList = userService.findUserRoleColumnRoleIdByUserId(Integer.valueOf(userId));
-                if (!CollectionUtils.isEmpty(userRoleIdList) && CollectionUtils.isEmpty(chooseAccessList)) {
-                    chooseAccessList = new HashSet<>();
-                    RoleService roleService = new RoleService();
-                    for (Integer userRoleIdRow : userRoleIdList) {
-                        List<RoleAccess> roleAccessList = roleService.findRoleAccessByRoleId(userRoleIdRow);
-                        if (!(CollectionUtils.isEmpty(roleAccessList))) {
-                            AccessService accessService = new AccessService();
-                            for (RoleAccess roleAccessRow : roleAccessList) {
-                                Access access = accessService.findAccessOne(roleAccessRow.getAccessId());
-                                if (!(null == access)) {
-                                    String uri = null;
-                                    List<String> uriList = (List<String>) JsonUtils.fromJson(uri, List.class);
-                                    chooseAccessList.addAll(uriList);
-                                }
-                            }
-                        }
-                    }
-                    LOG.info("access uri: " + chooseAccessList.toString());
-                }
+//                List<Integer> userRoleIdList = userService.findUserRoleColumnRoleIdByUserId(Integer.valueOf(userId));
+//                if (!CollectionUtils.isEmpty(userRoleIdList) && CollectionUtils.isEmpty(chooseAccessList)) {
+//                    chooseAccessList = new HashSet<>();
+//                    RoleService roleService = new RoleService();
+//                    for (Integer userRoleIdRow : userRoleIdList) {
+//                        List<RoleAccess> roleAccessList = roleService.findRoleAccessByRoleId(userRoleIdRow);
+//                        if (!(CollectionUtils.isEmpty(roleAccessList))) {
+//                            AccessService accessService = new AccessService();
+//                            for (RoleAccess roleAccessRow : roleAccessList) {
+//                                Access access = accessService.findAccessOne(roleAccessRow.getAccessId());
+//                                if (!(null == access)) {
+//                                    String uri = null;
+//                                    List<String> uriList = (List<String>) JsonUtils.fromJson(uri, List.class);
+//                                    chooseAccessList.addAll(uriList);
+//                                }
+//                            }
+//                        }
+//                    }
+//                    LOG.info("access uri: " + chooseAccessList.toString());
+//                }
             }
         }
         //实例化导航

@@ -20,7 +20,7 @@
             如果length忽略不写，且你的表是自动创建这种方案，那么length的默认长度是255
         -->
         <property name="title" column="title"></property>
-        <property name="urls" column="urls"></property>
+        <property name="url" column="url"></property>
         <property name="status" column="status"></property>
         <property name="createDate" column="create_date"></property>
         <property name="updateDate" column="update_date"></property>
