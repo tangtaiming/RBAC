@@ -13,8 +13,5 @@ var zrteeSetting = {
     check: {
         enable: true,
         chkboxType: { "Y" : "ps", "N" : "ps" }
-    },
-    callback: {
-        onCheck: choseMenu
     }
 };

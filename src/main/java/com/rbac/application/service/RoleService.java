@@ -9,6 +9,7 @@ import com.rbac.application.dao.RoleDao;
 import com.rbac.application.orm.Menu;
 import com.rbac.application.orm.Role;
 import com.rbac.application.orm.RoleAccess;
+import com.system.util.base.JsonUtils;
 import com.system.util.base.PageUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
@@ -50,7 +51,7 @@ public class RoleService extends SimpleCoreService<Role> {
                 menuOrm.setIsParent("true");
                 menuOrmList.add(menuOrm);
             }
-            editRoleRsVo.setMenuOrmList(menuOrmList);
+            editRoleRsVo.setMenuJson(JsonUtils.toJson(menuOrmList));
         }
 
         return editRoleRsVo;

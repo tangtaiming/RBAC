@@ -12,8 +12,8 @@
         </hstyle>
         <hscript>
             <js>/design/static/plugins/zTree_v3/js/jquery.ztree.all.js</js>
-            <js>/design/static/js/jquery.pluginRole.js</js>
             <js>/design/static/js/jquery.ztree.checkbox.plugin.js</js>
+            <js>/design/static/js/jquery.pluginMenu.js</js>
         </hscript>
     </head>
     <tabs>

@@ -15,7 +15,7 @@ public class EditRoleRsVo {
 
     private String name;
 
-    private List<MenuOrm> menuOrmList;
+    private String menuJson;
 
     public EditRoleRsVo() {
     }
@@ -41,11 +41,11 @@ public class EditRoleRsVo {
         this.name = name;
     }
 
-    public List<MenuOrm> getMenuOrmList() {
-        return menuOrmList;
+    public String getMenuJson() {
+        return menuJson;
     }
 
-    public void setMenuOrmList(List<MenuOrm> menuOrmList) {
-        this.menuOrmList = menuOrmList;
+    public void setMenuJson(String menuJson) {
+        this.menuJson = menuJson;
     }
 }
