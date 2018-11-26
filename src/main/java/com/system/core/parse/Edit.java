@@ -155,6 +155,8 @@ public class Edit {
         //button
         Element headChildSaveElement = headElement.getFirstChildElement("save");
         String saveLink = headChildSaveElement.getAttributeValue("link");
+        String saveFundion = headChildSaveElement.getAttributeValue("function");
+
         Element headChildDeleteElement = headElement.getFirstChildElement("delete");
         String deleteLink = headChildDeleteElement.getAttributeValue("link");
         Element headChildBackElement = headElement.getFirstChildElement("back");
@@ -173,6 +175,9 @@ public class Edit {
         headMap.put("saveLink", saveLink);
         headMap.put("deleteLink", deleteLink);
         headMap.put("backLink", backLink);
+        if (!(null == saveFundion)) {
+            headMap.put("saveFunction", saveFundion);
+        }
 
         setTitle(headTitle);
         setMtitle(mtitle);

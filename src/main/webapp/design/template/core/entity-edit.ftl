@@ -73,8 +73,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                             <#-- 重置 -->
                             <a onclick="window.location.reload();" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-mail-reply"></i> <@s.text name="reset"/></a>
-                            <a onclick='$.fn.myAjax("saveFrom", "${edit.headList.saveLink}")' class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> <@s.text name="save.entity"/></a>
-                            <a onclick='$.fn.myAjax("saveFromAndBack", "${edit.headList.saveLink}", "${edit.mlink!''}")' class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> <@s.text name="save.entity.back"/></a>
+
+                            <#if edit.headList.saveFunction??>
+                                <a onclick='${edit.headList.saveFunction}("${edit.headList.saveLink}")' class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> <@s.text name="save.entity"/></a>
+                                <a onclick='${edit.headList.saveFunction}AndBack("${edit.headList.saveLink}", "${edit.mlink!''}")' class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> <@s.text name="save.entity.back"/></a>
+                            <#else>
+                                <a onclick='$.fn.myAjax("saveFrom", "${edit.headList.saveLink}")' class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> <@s.text name="save.entity"/></a>
+                                <a onclick='$.fn.myAjax("saveFromAndBack", "${edit.headList.saveLink}", "${edit.mlink!''}")' class="btn btn-primary btn-sm btn-flat"><i class="fa fa-search"></i> <@s.text name="save.entity.back"/></a>
+                            </#if>
                         </div>
                     </div>
                     <div class="nav-tabs-custom">

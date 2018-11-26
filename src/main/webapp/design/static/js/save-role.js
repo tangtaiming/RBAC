@@ -1,3 +1,3 @@
-function initzTree(zTreeJson) {
-    $.fn.zTree.init(treeObj, zrteeSetting, JSON.parse(zTreeJson));
+function saveRoleEntity(url) {
+    alert("request url:" + url);
 }

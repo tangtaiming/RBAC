@@ -75,7 +75,6 @@
         },
         initzTree: function (zTreeId , menuJson) {
             $.fn.zTree.init($(zTreeId), zrteeSetting, JSON.parse(menuJson));
-
         }
     }
 
