@@ -1,3 +1,4 @@
 function saveRoleEntity(url) {
-    alert("request url:" + url);
+    var params = $('#entity-form').serialize();
+    $.fn.myAjax('saveEntityFrom', url, params);
 }

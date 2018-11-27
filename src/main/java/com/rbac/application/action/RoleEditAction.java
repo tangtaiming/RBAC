@@ -34,13 +34,13 @@ public class RoleEditAction extends EditAction<EditRoleRsVo> {
      */
     public void validateSaveRole() {
         if (StringUtils.isEmpty(editRoleRsVo.getName())) {
-            addFieldError(ERROR_KEY, "角色名称不能为空");
+            addFieldError(ERROR_KEY, ResultUtils.fail("角色名称不能为空"));
             return;
         }
 
         Role findRole = roleService.findRoleByName(editRoleRsVo.getName());
         if (null != findRole) {
-            addFieldError(ERROR_KEY, "角色名称已经存在, 保存失败");
+            addFieldError(ERROR_KEY, ResultUtils.fail("角色名称已经存在, 保存失败"));
             return;
         }
     }

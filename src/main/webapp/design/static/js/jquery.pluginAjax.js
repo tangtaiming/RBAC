@@ -29,33 +29,9 @@
          * @param uri
          */
         saveFrom: function(uri) {
-            //显示加载
-            var loadIndex = $.fn.dialog('load');
             //获取数据
             var params = $('#entity-form').serialize();
-            $.ajax({
-                url: uri,
-                type: 'POST',
-                data: params,
-                success: function ( response ) {
-                    $.fn.dialog('close', loadIndex);
-                    if (!("" == response)) {
-                        var result = JSON.parse(response);
-                        var pcode = result.code;
-                        var pmsg = result.msg;
-                        if (200 == pcode) {
-                            $.fn.dialog('success', pmsg);
-                        } else {
-                            $.fn.dialog('fail', pmsg);
-                        }
-                    }
-
-                },
-                error: function() {
-                    $.fn.dialog('close', loadIndex);
-                    $.fn.dialog('error');
-                }
-            });
+            $.fn.myAjax('saveEntityFrom', uri, params);
         },
         /**
          * 保存并且返回
@@ -139,6 +115,35 @@
                         $.fn.dialog('error');
                     }
                 });
+            });
+        },
+        saveEntityFrom: function(uri, params) {
+            //显示加载
+            var loadIndex = $.fn.dialog('load');
+            //获取数据
+            // var params = $('#entity-form').serialize();
+            $.ajax({
+                url: uri,
+                type: 'POST',
+                data: params,
+                success: function ( response ) {
+                    $.fn.dialog('close', loadIndex);
+                    if (!("" == response)) {
+                        var result = JSON.parse(response);
+                        var pcode = result.code;
+                        var pmsg = result.msg;
+                        if (200 == pcode) {
+                            $.fn.dialog('success', pmsg);
+                        } else {
+                            $.fn.dialog('fail', pmsg);
+                        }
+                    }
+
+                },
+                error: function() {
+                    $.fn.dialog('close', loadIndex);
+                    $.fn.dialog('error');
+                }
             });
         }
     }
