@@ -16,12 +16,12 @@
             <save link="/admin/saveRole"></save>
             <delete link="/admin/deleteRole"></delete>
         </role.management>
-        <!--权限管理-->
-        <access.management link="/admin/accessManagement">
-            <create link="/admin/createAccess"></create>
-            <edit link="/admin/editAccess"></edit>
-            <save link="/admin/saveAccess"></save>
-            <delete link="/admin/deleteAccess"></delete>
-        </access.management>
+        <!-- 菜单管理 -->
+        <menu.management link="/admin/menuManagement">
+            <create link="/admin/createMenu"></create>
+            <edit link="/admin/editMenu"></edit>
+            <save link="/admin/saveMenu"></save>
+            <delete link="/admin/deleteMenu"></delete>
+        </menu.management>
     </basic.site>
 </navigator>
