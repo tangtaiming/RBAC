@@ -14,7 +14,7 @@ public class RoleMenu implements Serializable {
     /**
      * 菜单ID
      */
-    private Integer menuId;
+    private Long menuId;
 
     /**
      * 角色ID
@@ -29,11 +29,11 @@ public class RoleMenu implements Serializable {
         this.id = id;
     }
 
-    public Integer getMenuId() {
+    public Long getMenuId() {
         return menuId;
     }
 
-    public void setMenuId(Integer menuId) {
+    public void setMenuId(Long menuId) {
         this.menuId = menuId;
     }
 

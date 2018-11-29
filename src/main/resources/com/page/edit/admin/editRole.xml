@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<entity class="editRoleRsVo">
+<entity class="saveRoleReVo">
     <head>
         <title>role.edit</title>
         <mtitle>role.management</mtitle>
         <mlink link="/admin/roleManagement" />
-        <save link="/admin/saveRole"/>
+        <save link="/admin/saveRole" function="saveRoleEntity"/>
         <delete link="/admin/deleteRole"/>
         <back link="/admin/roleManagement"/>
-        <link href="admin/role.css" />
+        <hstyle>
+            <css>/design/static/plugins/zTree_v3/css/zTreeStyle/zTreeStyle.css</css>
+        </hstyle>
+        <hscript>
+            <js>/design/static/plugins/zTree_v3/js/jquery.ztree.all.js</js>
+            <js>/design/static/js/jquery.ztree.checkbox.plugin.js</js>
+            <js>/design/static/js/jquery.pluginMenu.js</js>
+            <js>/design/static/js/save-role.js</js>
+        </hscript>
     </head>
     <tabs>
         <tab title="tab.role.info">
             <column type="text" title="name" name="name" />
+            <column type="ftl" title="menu.id" name="menuId" ftl="/design/template/custom-page-menu-id.ftl" />
         </tab>
     </tabs>
 </entity>

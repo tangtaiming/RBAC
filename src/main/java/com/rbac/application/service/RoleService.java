@@ -3,12 +3,14 @@ package com.rbac.application.service;
 import com.rbac.application.action.orm.MenuOrm;
 import com.rbac.application.action.vo.EditRoleRsVo;
 import com.rbac.application.action.vo.RoleManagementRsVo;
+import com.rbac.application.action.vo.SaveRoleReVo;
 import com.rbac.application.action.vo.SaveSiteAccessReVo;
 import com.rbac.application.dao.RoleAccessDao;
 import com.rbac.application.dao.RoleDao;
 import com.rbac.application.orm.Menu;
 import com.rbac.application.orm.Role;
 import com.rbac.application.orm.RoleAccess;
+import com.rbac.application.orm.RoleMenu;
 import com.system.util.base.JsonUtils;
 import com.system.util.base.PageUtils;
 import org.apache.commons.collections.CollectionUtils;
@@ -38,22 +40,33 @@ public class RoleService extends SimpleCoreService<Role> {
 
     private MenuService menuService = new MenuService();
 
-    public EditRoleRsVo createRole() {
+    private RoleMenuService roleMenuService = new RoleMenuService();
+
+    private String toMenuJson(List<Long> choseMenu) {
         List<Menu> menuList = menuService.findMenuAllList();
-        EditRoleRsVo editRoleRsVo = new EditRoleRsVo();
+        List<MenuOrm> menuOrmList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(menuList)) {
-            List<MenuOrm> menuOrmList = new ArrayList<>();
             for (Menu menu : menuList) {
                 MenuOrm menuOrm = new MenuOrm();
-                menuOrm.setId(menu.getId());
+                Long menuId = menu.getId();
+                menuOrm.setId(menuId);
                 menuOrm.setName(menu.getName());
                 menuOrm.setParentId(menu.getParentId());
                 menuOrm.setIsParent("true");
+                if (choseMenu.contains(menuId)) {
+                    menuOrm.setChecked("true");
+                } else {
+                    menuOrm.setChecked("false");
+                }
                 menuOrmList.add(menuOrm);
             }
-            editRoleRsVo.setMenuJson(JsonUtils.toJson(menuOrmList));
         }
+        return JsonUtils.toJson(menuOrmList);
+    }
 
+    public EditRoleRsVo createRole() {
+        EditRoleRsVo editRoleRsVo = new EditRoleRsVo();
+        editRoleRsVo.setMenuJson(toMenuJson(new ArrayList<>()));
         return editRoleRsVo;
     }
 
@@ -67,17 +80,18 @@ public class RoleService extends SimpleCoreService<Role> {
         return roleList;
     }
 
-    public boolean saveRole(EditRoleRsVo role) {
+    public boolean saveRole(SaveRoleReVo role) {
         Integer roleId = role.getId();
         String format = "yyyy-MM-dd hh:mm:ss";
         String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(format));
+        boolean saveRoleFalg = false;
         if (null != roleId) {
             Role findRole = findRoleOne(roleId);
             if (null != findRole) {
                 findRole.setName(role.getName());
                 findRole.setUpdateDate(currentTime);
                 roleDao.update(findRole);
-                return true;
+                saveRoleFalg = true;
             }
         } else {
             Role createRole = new Role();
@@ -86,17 +100,59 @@ public class RoleService extends SimpleCoreService<Role> {
             createRole.setStatus(1);
             createRole.setName(role.getName());
             roleDao.save(createRole);
-            return true;
+            roleId = createRole.getId();
+            saveRoleFalg = true;
         }
 
-        return false;
+        if (saveRoleFalg) {
+            //当前角色与菜单
+            List<Long> currentMenuIdList = role.getMenuIdList();
+            /**
+             * 找出删除的角色
+             * 假如已有的角色集合是A，界面传递过得角色集合是B
+             * 角色集合A当中的某个角色不在角色集合B当中，就应该删除
+             */
+            List<RoleMenu> oldRoleMenuList = roleMenuService.findRoleMenuByRoleId(roleId);
+            List<Long> oldMenuIdList = new ArrayList<>();
+            if (!CollectionUtils.isEmpty(oldRoleMenuList)) {
+                for (RoleMenu roleMenu : oldRoleMenuList) {
+                    Long oldMenuId = roleMenu.getMenuId();
+                    oldMenuIdList.add(oldMenuId);
+                    if (!currentMenuIdList.contains(oldMenuId)) {
+                        roleMenuService.deleteRoleMenu(roleMenu);
+                        LOG.info("Delete id: " + roleMenu.getId() + " menuId: " + oldMenuId + " roleId: " + roleMenu.getRoleId() + " success");
+                    }
+                }
+
+            }
+
+            /**
+             * 找出添加的角色
+             * 假如已有的角色集合是A，界面传递过得角色集合是B
+             * 角色集合B当中的某个角色不在角色集合A当中，就应该添加
+             */
+            if (!CollectionUtils.isEmpty(currentMenuIdList)) {
+                for (Long currentMenuId : currentMenuIdList) {
+                    if (!oldMenuIdList.contains(currentMenuId)) {
+                        RoleMenu roleMenu = new RoleMenu();
+                        roleMenu.setRoleId(roleId);
+                        roleMenu.setMenuId(currentMenuId);
+                        roleMenuService.saveRoleMenu(roleMenu);
+                        LOG.info("Save id: " + roleMenu.getId() + " menuId: " + currentMenuId + " roleId: " + roleId + " success");
+                    }
+                }
+            }
+        }
+        return saveRoleFalg;
     }
 
     public EditRoleRsVo findEditRoleRsVoOne(String id) {
         Role role = findRoleOne(id);
         EditRoleRsVo editRoleRsVo = null;
         if (!(null == role)) {
+            List<Long> choseMenuIdList = roleMenuService.findMenuIdByRoleId(role.getId());
             editRoleRsVo = new EditRoleRsVo(role);
+            editRoleRsVo.setMenuJson(toMenuJson(choseMenuIdList));
         }
 
         return editRoleRsVo;

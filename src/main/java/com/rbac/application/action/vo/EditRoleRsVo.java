@@ -2,7 +2,10 @@ package com.rbac.application.action.vo;
 
 import com.rbac.application.action.orm.MenuOrm;
 import com.rbac.application.orm.Role;
+import com.rbac.application.orm.RoleMenu;
+import org.apache.commons.collections.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,6 +18,11 @@ public class EditRoleRsVo {
 
     private String name;
 
+    /**
+     * 选中菜单
+     */
+    private List<Long> choseMenu;
+
     private String menuJson;
 
     public EditRoleRsVo() {
@@ -24,6 +32,7 @@ public class EditRoleRsVo {
         id = role.getId();
         name = role.getName();
     }
+
 
     public Integer getId() {
         return id;
@@ -47,5 +56,13 @@ public class EditRoleRsVo {
 
     public void setMenuJson(String menuJson) {
         this.menuJson = menuJson;
+    }
+
+    public List<Long> getChoseMenu() {
+        return choseMenu;
+    }
+
+    public void setChoseMenu(List<Long> choseMenu) {
+        this.choseMenu = choseMenu;
     }
 }

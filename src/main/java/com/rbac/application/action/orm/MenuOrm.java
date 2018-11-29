@@ -31,6 +31,11 @@ public class MenuOrm {
      */
     private boolean nocheck;
 
+    /**
+     * 是否选中
+     */
+    private String checked;
+
     public Long getId() {
         return id;
     }
@@ -69,5 +74,13 @@ public class MenuOrm {
 
     public void setNocheck(boolean nocheck) {
         this.nocheck = nocheck;
+    }
+
+    public String getChecked() {
+        return checked;
+    }
+
+    public void setChecked(String checked) {
+        this.checked = checked;
     }
 }
