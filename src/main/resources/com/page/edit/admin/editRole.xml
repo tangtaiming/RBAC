@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<entity class="editRoleRsVo">
+<entity class="saveRoleReVo">
     <head>
         <title>role.edit</title>
         <mtitle>role.management</mtitle>
@@ -12,6 +12,7 @@
     <tabs>
         <tab title="tab.role.info">
             <column type="text" title="name" name="name" />
+            <column type="ftl" title="menu.id" name="menuId" ftl="/design/template/custom-page-menu-id.ftl" />
         </tab>
     </tabs>
 </entity>

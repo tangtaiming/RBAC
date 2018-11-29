@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<entity class="editRoleRsVo">
+<entity class="saveRoleReVo">
     <head>
         <title>role.create</title>
         <mtitle>role.management</mtitle>

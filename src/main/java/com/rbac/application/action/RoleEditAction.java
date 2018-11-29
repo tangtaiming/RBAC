@@ -2,6 +2,7 @@ package com.rbac.application.action;
 
 import com.rbac.application.action.core.EditAction;
 import com.rbac.application.action.vo.EditRoleRsVo;
+import com.rbac.application.action.vo.SaveRoleReVo;
 import com.rbac.application.orm.Role;
 import com.rbac.application.service.RoleService;
 import com.system.util.base.ResultUtils;
@@ -10,6 +11,8 @@ import org.apache.commons.lang.StringUtils;
 public class RoleEditAction extends EditAction<EditRoleRsVo> {
 
     private EditRoleRsVo editRoleRsVo;
+
+    private SaveRoleReVo saveRoleReVo;
 
     private RoleService roleService = new RoleService();
 
@@ -33,12 +36,12 @@ public class RoleEditAction extends EditAction<EditRoleRsVo> {
      * 验证数据
      */
     public void validateSaveRole() {
-        if (StringUtils.isEmpty(editRoleRsVo.getName())) {
+        if (StringUtils.isEmpty(saveRoleReVo.getName())) {
             addFieldError(ERROR_KEY, ResultUtils.fail("角色名称不能为空"));
             return;
         }
 
-        Role findRole = roleService.findRoleByName(editRoleRsVo.getName());
+        Role findRole = roleService.findRoleByName(saveRoleReVo.getName());
         if (null != findRole) {
             addFieldError(ERROR_KEY, ResultUtils.fail("角色名称已经存在, 保存失败"));
             return;
@@ -46,8 +49,8 @@ public class RoleEditAction extends EditAction<EditRoleRsVo> {
     }
 
     public String saveRole() {
-        LOG.info("Save role show: " + editRoleRsVo.toString());
-        roleService.saveRole(editRoleRsVo);
+        LOG.info("Save role show: " + saveRoleReVo.toString());
+        roleService.saveRole(saveRoleReVo);
         setResult(ResultUtils.success());
         return SUCCESS;
     }
@@ -76,7 +79,13 @@ public class RoleEditAction extends EditAction<EditRoleRsVo> {
         return SUCCESS;
     }
 
+    public SaveRoleReVo getSaveRoleReVo() {
+        return saveRoleReVo;
+    }
 
+    public void setSaveRoleReVo(SaveRoleReVo saveRoleReVo) {
+        this.saveRoleReVo = saveRoleReVo;
+    }
 
     public EditRoleRsVo getEditRoleRsVo() {
         return editRoleRsVo;
