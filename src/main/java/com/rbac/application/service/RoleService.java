@@ -232,8 +232,16 @@ public class RoleService extends SimpleCoreService<Role> {
         boolean deleteRoleFalg = false;
         if (!(null == role)) {
             deleteRoleFalg = roleDao.delete(role);
+            LOG.info("Delete role id:" + role.getId() + " role name: " + role.getName() + " result: " + getResult(deleteRoleFalg));
+            List<RoleMenu> roleMenuList = roleMenuService.findRoleMenuByRoleId(role.getId());
+            if (!CollectionUtils.isEmpty(roleMenuList)) {
+                for (RoleMenu roleMenu : roleMenuList) {
+                    roleMenuService.deleteRoleMenu(roleMenu);
+                    LOG.info("Delete role menu id: " + roleMenu.getId());
+                }
+            }
         }
-        LOG.info("Delete role id:" + role.getId() + " role name: " + role.getName() + " result: " + getResult(deleteRoleFalg));
+
         return deleteRoleFalg;
     }
 

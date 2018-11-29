@@ -21,9 +21,8 @@
             });
             // $('#group_saveMenuReVo_parentId').show();
             $('#group_saveMenuReVo_url').show();
-            $('#saveMenuReVo_url').val('');
-            $('#saveMenuReVo_parentId').val(param.rootId);
-            $('#saveMenuReVo_parentName').val(param.rootName);
+            // $('#saveMenuReVo_parentId').val(param.rootId);
+            // $('#saveMenuReVo_parentName').val(param.rootName);
             if (choseTypeValue == "0") {
                 //目录
                 // $('#group_saveMenuReVo_parentId').hide();

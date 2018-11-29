@@ -46,6 +46,15 @@ public class NavigatorRsVo {
     }
 
     /**
+     * 查询数据库获取导航
+     * @param all
+     * @return
+     */
+//    public LinkedList navigatorByMysql(boolean all) {
+//
+//    }
+
+    /**
      * 导航菜单
      * @param all
      * @return

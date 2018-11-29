@@ -132,10 +132,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                         <#-- 选中数据勾选 -->
                                                         <#assign choseStyle="" />
                                                         <#if entity?? && entity[columnName]??>
-                                                            <#if entity[columnName]?string==optionKey>
-                                                                <#assign choseStyle='checked="checked"' />
-                                                                <#break />
-                                                            </#if>
+                                                            <#list entity[columnName] as columnRow>
+                                                                <#if columnRow?string==optionKey>
+                                                                    <#assign choseStyle='checked="checked"' />
+                                                                    <#break />
+                                                                </#if>
+                                                            </#list>
                                                         </#if>
                                                         <label class="checkbox-inline">
                                                             <input type="checkbox" ${choseStyle} name="${edit.classesName}.${columnName}" id="${edit.classesName}_${columnName}" value="${optionKey}">${columnOption[optionKey]!' '}

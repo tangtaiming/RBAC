@@ -63,8 +63,11 @@ public class MenuService extends SimpleCoreService<Menu> {
             saveMenuReVo.setType(menu.getType());
             Menu parentMenu = menuDao.findOne(Long.valueOf(menu.getParentId()));
             if (!(null == parentMenu)) {
-                saveMenuReVo.setParentId(parentMenu.getParentId());
-                saveMenuReVo.setParentName(parentMenu.getParentName());
+                saveMenuReVo.setParentId(parentMenu.getId());
+                saveMenuReVo.setParentName(parentMenu.getName());
+            } else if (null == menu.getParentId() || 0 == menu.getParentId()) {
+                saveMenuReVo.setParentId(ROOTID);
+                saveMenuReVo.setParentName(ROOTNAME);
             }
         }
 
