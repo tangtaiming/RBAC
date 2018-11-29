@@ -55,7 +55,7 @@ public class MenuEditAction extends EditAction<SaveMenuReVo> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        saveMenuRsVo = menuService.findEditPageData(getId());
+        saveMenuRsVo = menuService.findEditPageData(getId());
         return SUCCESS;
     }
 

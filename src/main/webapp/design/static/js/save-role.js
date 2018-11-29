@@ -1,4 +1,7 @@
 function saveRoleEntity(url) {
     var params = $('#entity-form').serialize();
-    $.fn.myAjax('saveEntityFrom', url, params);
+    var treeObj = $.fn.zTree.getZTreeObj("ztreeMenu");
+    var chose = treeObj.getCheckedNodes(true);
+    console.log('chose: ' + JSON.stringify(chose));
+    // $.fn.myAjax('saveEntityFrom', url, params);
 }
