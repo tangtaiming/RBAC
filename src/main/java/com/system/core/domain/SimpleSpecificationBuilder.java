@@ -31,7 +31,7 @@ public class SimpleSpecificationBuilder<T> {
      * 完成条件的添加
      * @return
      */
-    public SimpleSpecificationBuilder add(String key,String oper,Object value,String join) {
+    public SimpleSpecificationBuilder add(String key, String oper, Object value, String join) {
         SpecificationOperator so = new SpecificationOperator();
         so.setKey(key);
         so.setValue(value);

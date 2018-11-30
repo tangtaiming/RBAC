@@ -243,6 +243,37 @@ public abstract class BaseDao<E extends Serializable> {
         return datas;
     }
 
+    /**
+     * 条件查询只适用于 not eq
+     * @param query
+     * @return
+     */
+    public List<E> findNotEqList(Map<String, Object> query) {
+        List<E> datas = new ArrayList<E>();
+        try {
+            session = HibernateUtils.getSession();
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(classes);
+            Root root = criteriaQuery.from(classes);
+            List<Predicate> queryPredicateList = new ArrayList<>();
+            for (String key : query.keySet()) {
+                Predicate predicate = criteriaBuilder.notEqual(root.get(key), query.get(key));
+                queryPredicateList.add(predicate);
+            }
+            criteriaQuery.where(queryPredicateList.toArray(new Predicate[]{}));
+
+
+            Query findQuery = session.createQuery(criteriaQuery);
+            datas = findQuery.getResultList();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            HibernateUtils.closeSession(session);
+        }
+
+        return datas;
+    }
+
     public E findEqOne(Map<String, Object> query) throws RbacException {
         E entity = null;
         try {

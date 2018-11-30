@@ -8,6 +8,7 @@ import com.rbac.application.service.MenuService;
 import com.rbac.application.service.ReviewService;
 import com.rbac.application.service.UserService;
 import com.system.core.dao.BaseDao;
+import com.system.core.vo.NavigatorRsVo;
 import com.system.util.base.DumperUtils;
 import com.system.util.base.HibernateUtils;
 import com.system.util.base.JsonUtils;
@@ -183,6 +184,27 @@ public class HibernateTest {
                     + review.getReviewDate());
             System.out.println();
         }
+    }
+
+    @Test
+    public void findMenuNotEq() {
+        MenuService menuService = new MenuService();
+        List<Menu> menuList = menuService.findNotEqButtonMenu();
+        DumperUtils.dump(menuList);
+    }
+
+    @Test
+    public void findMenuList() {
+        MenuService menuService = new MenuService();
+        List<Menu> menuList = menuService.fetchMenuAllList(new ArrayList<>());
+        System.out.println(JsonUtils.toJson(menuList));
+    }
+
+    @Test
+    public void findNav() {
+        NavigatorRsVo navigatorRsVo = new NavigatorRsVo();
+
+        DumperUtils.dump(navigatorRsVo.getNavAll());
     }
 
 }

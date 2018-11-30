@@ -74,6 +74,61 @@ public class MenuService extends SimpleCoreService<Menu> {
         return saveMenuReVo;
     }
 
+    /**
+     * 根据 父ID查询菜单
+     * @param parentId
+     * @return
+     */
+    public List<Menu> fetchMenuByParentId(Long parentId) {
+        Map<String, Object> query = new HashMap<>();
+        query.put("parentId", parentId);
+        List<Menu> menuList = menuDao.findEqList(query);
+
+        return menuList;
+    }
+
+    public List<Menu> fetchMenuByParentId(Long parentId, List<Long> menuIdList) {
+        List<Menu> menuList = fetchMenuByParentId(parentId);
+        if (!(null == menuIdList)) {
+            return menuList;
+        }
+
+        List<Menu> userMenuList = new ArrayList<>();
+        for (Menu menu : menuList) {
+            if (menuIdList.contains(menu.getId())) {
+                userMenuList.add(menu);
+            }
+        }
+        return userMenuList;
+    }
+
+    public List<Menu> fetchMenuAllList(List<Long> menuIdList) {
+        //查询根菜单列表
+        List<Menu> rootMenuList = fetchMenuByParentId(ROOTID, menuIdList);
+        //递归获取子菜单
+        fetchMenuTreeList(rootMenuList, menuIdList);
+
+        return rootMenuList;
+    }
+
+    /**
+     * 递归
+     * @param menuList
+     * @param menuIdList
+     * @return
+     */
+    private List<Menu> fetchMenuTreeList(List<Menu> menuList, List<Long> menuIdList) {
+        List<Menu> subMenuList = new ArrayList<>();
+
+        for (Menu menu : menuList) {
+            if (menu.getType() == MenuType.DIRECTORY.getType()) { //目录
+                menu.setList(fetchMenuTreeList(fetchMenuByParentId(menu.getId(), menuIdList), menuIdList));
+            }
+            subMenuList.add(menu);
+        }
+        return subMenuList;
+    }
+
     public String fetchMenuByParentId(String id) {
         List<Menu> oneMenuList = new ArrayList<>();
         Integer parentId = Integer.valueOf(id);
@@ -289,4 +344,13 @@ public class MenuService extends SimpleCoreService<Menu> {
     public PageUtils getPage() {
         return menuDao.findPage();
     }
+
+    public List<Menu> findNotEqButtonMenu() {
+        Integer button = MenuType.BUTTON.getType();
+        Map<String, Object> query = new HashMap<>();
+        query.put("type", button);
+        List<Menu> menuList = menuDao.findNotEqList(query);
+        return menuList;
+    }
+
 }

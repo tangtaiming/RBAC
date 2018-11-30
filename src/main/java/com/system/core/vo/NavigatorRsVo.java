@@ -1,5 +1,8 @@
 package com.system.core.vo;
 
+import com.rbac.application.orm.Menu;
+import com.rbac.application.service.MenuService;
+import com.system.util.enumerate.MenuType;
 import nu.xom.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -23,7 +26,11 @@ public class NavigatorRsVo {
 
     private final String NAVIGATOR = "navigator";
 
+    private MenuService menuService = new MenuService();
+
     private static List<String> permissionList;
+
+    private static LinkedList navigatorTree;
 
     public NavigatorRsVo() {
 
@@ -34,15 +41,18 @@ public class NavigatorRsVo {
      * @return
      */
     public LinkedList getNavAll() {
-        try {
-            return navigator(true);
-        } catch (ParsingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+//        try {
+//            return navigator(true);
+//        } catch (ParsingException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+        if (null == navigatorTree) {
+            navigatorByMysql(true);
         }
-
-        return null;
+        return navigatorTree;
     }
 
     /**
@@ -50,9 +60,36 @@ public class NavigatorRsVo {
      * @param all
      * @return
      */
-//    public LinkedList navigatorByMysql(boolean all) {
-//
-//    }
+    public LinkedList navigatorByMysql(boolean all) {
+        navigatorTree = new LinkedList<>();
+        List<Menu> menuList = menuService.fetchMenuAllList(new ArrayList<>());
+        if (!CollectionUtils.isEmpty(menuList)) {
+            //查询一级菜单
+            for (Menu first : menuList) {
+                String firstNavName = first.getName();
+                List<Menu> secondNav = (List<Menu>) first.getList();
+                if (!CollectionUtils.isEmpty(secondNav)) {
+                    //second navigator data
+                    LinkedHashMap<String, LinkedHashSet<HashMap>> secondNavData = new LinkedHashMap<>();
+                    for (Menu second : secondNav) {
+                        String secondNavName = second.getName();
+                        String secondLink = second.getUrl();
+                        HashMap<String, Object> linkHashMap = new HashMap<>();
+                        linkHashMap.put("title", secondNavName);
+                        linkHashMap.put("link", secondLink);
+                        //third navigator data
+                        LinkedHashSet<HashMap> thirdNavData = new LinkedHashSet<>();
+                        thirdNavData.add(linkHashMap);
+                        secondNavData.put(secondNavName, thirdNavData);
+                    }
+                    LinkedHashMap<String, LinkedHashMap<String, LinkedHashSet<HashMap>>> firstNavData = new LinkedHashMap<>();
+                    firstNavData.put(firstNavName, secondNavData);
+                    navigatorTree.add(firstNavData);
+                }
+            }
+        }
+        return navigatorTree;
+    }
 
     /**
      * 导航菜单
