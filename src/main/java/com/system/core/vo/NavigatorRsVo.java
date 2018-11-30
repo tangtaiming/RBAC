@@ -32,6 +32,8 @@ public class NavigatorRsVo {
 
     private static LinkedList navigatorTree;
 
+    private static List<Menu> navigator;
+
     public NavigatorRsVo() {
 
     }
@@ -40,7 +42,7 @@ public class NavigatorRsVo {
      * 获取所有导航菜单
      * @return
      */
-    public LinkedList getNavAll() {
+    public List<Menu> getNavAll() {
 //        try {
 //            return navigator(true);
 //        } catch (ParsingException e) {
@@ -49,10 +51,19 @@ public class NavigatorRsVo {
 //            e.printStackTrace();
 //        }
 //        return null;
-        if (null == navigatorTree) {
-            navigatorByMysql(true);
+//        if (null == navigatorTree) {
+//            navigatorTree = navigatorByMysql(true);
+//        }
+//        return navigatorTree;
+        if (null == navigator) {
+            navigator = navigatorMenuByMysql(true);
         }
-        return navigatorTree;
+        return navigator;
+    }
+
+    public List<Menu> navigatorMenuByMysql(boolean all) {
+        navigator = menuService.fetchMenuAllList(new ArrayList<>());
+        return navigator;
     }
 
     /**
