@@ -89,7 +89,7 @@ public class MenuService extends SimpleCoreService<Menu> {
 
     public List<Menu> fetchMenuByParentId(Long parentId, List<Long> menuIdList) {
         List<Menu> menuList = fetchMenuByParentId(parentId);
-        if (!(null == menuIdList)) {
+        if (null == menuIdList) {
             return menuList;
         }
 
@@ -109,6 +109,12 @@ public class MenuService extends SimpleCoreService<Menu> {
         fetchMenuTreeList(rootMenuList, menuIdList);
 
         return rootMenuList;
+    }
+
+    public List<Menu> fetchUserMenuList(Integer userId) {
+
+
+        return null;
     }
 
     /**

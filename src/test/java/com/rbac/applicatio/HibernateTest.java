@@ -27,6 +27,7 @@ import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -196,7 +197,8 @@ public class HibernateTest {
     @Test
     public void findMenuList() {
         MenuService menuService = new MenuService();
-        List<Menu> menuList = menuService.fetchMenuAllList(new ArrayList<>());
+
+        List<Menu> menuList = menuService.fetchMenuAllList(Arrays.asList(23L, 29L));
         System.out.println(JsonUtils.toJson(menuList));
     }
 

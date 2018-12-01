@@ -1,9 +1,11 @@
 package com.system.core.vo;
 
 import com.rbac.application.orm.Menu;
+import com.rbac.application.orm.RoleMenu;
 import com.rbac.application.service.MenuService;
 import com.rbac.application.service.RoleMenuService;
 import com.rbac.application.service.RoleService;
+import com.rbac.application.service.UserService;
 import com.system.core.session.RbacSession;
 import com.system.util.base.JsonUtils;
 import com.system.util.enumerate.MenuType;
@@ -32,9 +34,9 @@ public class NavigatorRsVo {
 
     private MenuService menuService = new MenuService();
 
-    private static List<Long> privilegeMenu;
+    private UserService userService = new UserService();
 
-    private static LinkedList navigatorTree;
+    private RoleMenuService roleMenuService = new RoleMenuService();
 
     private static List<Menu> navigator;
 
@@ -66,13 +68,25 @@ public class NavigatorRsVo {
     }
 
     public List<Menu> navigatorMenuByMysql(boolean all) {
-//        privilegeMenu
-        if (CollectionUtils.isEmpty(privilegeMenu)) {
+        List<Long> privilegeMenu = new ArrayList<>();
+        if (CollectionUtils.isEmpty(navigator)) {
             RbacSession session = new RbacSession();
-            String privilegeMenuStr = (String) session.get("privilegeMenu");
-            privilegeMenu = (List<Long>) JsonUtils.fromJson(privilegeMenuStr, List.class, Long.class);
+            String secretKey = (String) session.get("secretKey");
+            String[] secretKeyArr = StringUtils.split(secretKey, "#");
+            String userId = secretKeyArr[1];
+            List<Integer> userRoleList = userService.findUserRoleColumnRoleIdByUserId(Integer.valueOf(userId));
+            if (CollectionUtils.isNotEmpty(userRoleList)) {
+                for (Integer roleId : userRoleList) {
+                    List<RoleMenu> roleMenuList = roleMenuService.findRoleMenuByRoleId(roleId);
+                    if (!CollectionUtils.isEmpty(roleMenuList)) {
+                        for (RoleMenu roleMenu : roleMenuList) {
+                            privilegeMenu.add(roleMenu.getMenuId());
+                        }
+                    }
+                }
+            }
         }
-        navigator = menuService.fetchMenuAllList(Optional.ofNullable(privilegeMenu).orElse(new ArrayList<>()));
+        navigator = menuService.fetchMenuAllList(privilegeMenu);
         return navigator;
     }
 
@@ -82,7 +96,6 @@ public class NavigatorRsVo {
      * @return
      */
     public LinkedList navigatorByMysql(boolean all) {
-        navigatorTree = new LinkedList<>();
         List<Menu> menuList = menuService.fetchMenuAllList(new ArrayList<>());
         if (!CollectionUtils.isEmpty(menuList)) {
             //查询一级菜单
@@ -105,11 +118,11 @@ public class NavigatorRsVo {
                     }
                     LinkedHashMap<String, LinkedHashMap<String, LinkedHashSet<HashMap>>> firstNavData = new LinkedHashMap<>();
                     firstNavData.put(firstNavName, secondNavData);
-                    navigatorTree.add(firstNavData);
+//                    navigatorTree.add(firstNavData);
                 }
             }
         }
-        return navigatorTree;
+        return null;
     }
 
     /**

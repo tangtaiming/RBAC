@@ -71,6 +71,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         allowRequestUrl.add("/test/page");
         allowRequestUrl.add("/test/page2");
         allowRequestUrl.add("/test/savePage2");
+        allowRequestUrl.add("/");
 
         ignoreRequestUrl = new ArrayList<>();
         ignoreRequestUrl.add("/admin/vlogin");
@@ -80,6 +81,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         ignoreRequestUrl.add("/test/page");
         ignoreRequestUrl.add("/test/page2");
         ignoreRequestUrl.add("/test/savePage2");
+        ignoreRequestUrl.add("/");
     }
 
     @Override
@@ -163,9 +165,6 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
                         }
                     }
                 }
-
-                RbacSession session = new RbacSession();
-                session.put("privilegeMenu", JsonUtils.toJson(menuIdList));
             }
         }
 
