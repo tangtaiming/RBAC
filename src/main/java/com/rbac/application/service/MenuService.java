@@ -324,6 +324,10 @@ public class MenuService extends SimpleCoreService<Menu> {
         return null;
     }
 
+    public Menu findMenuOne(Long id) {
+        return menuDao.findOne(id);
+    }
+
     public String deleteMenu(String menuId) {
         LOG.warn("Delete {} success", menuId);
         Menu deleteMenu = menuDao.findOne(Long.valueOf(menuId));

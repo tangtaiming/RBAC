@@ -3,15 +3,14 @@ package com.system.core.interceptor;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
-import com.rbac.application.orm.Access;
+import com.rbac.application.orm.Menu;
+import com.rbac.application.orm.RoleMenu;
 import com.rbac.application.orm.User;
-import com.rbac.application.service.AccessService;
-import com.rbac.application.service.RoleService;
-import com.rbac.application.service.UserService;
+import com.rbac.application.service.*;
 import com.system.core.session.RbacSession;
 import com.system.util.base.AutoTokenUtils;
 import com.system.util.base.JsonUtils;
-import com.system.util.base.MD5Utils;
+import com.system.util.enumerate.MenuType;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -46,6 +44,10 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
     private RoleService roleService = new RoleService();
 
     private AccessService accessService = new AccessService();
+
+    private RoleMenuService roleMenuService = new RoleMenuService();
+
+    private MenuService menuService = new MenuService();
 
     private User user;
 
@@ -128,12 +130,11 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
             return true;
         }
 
-        return inArray(url, findRolePrivilege(null));
+        return inArray(url, findRolePrivilege(user.getId()));
     }
 
     private boolean inArray(String verificationData, List<String> array) {
-        return true;
-//        return array.contains(verificationData);
+        return array.contains(verificationData);
     }
 
     private List<String> findRolePrivilege(Integer userId) {
@@ -141,32 +142,32 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
             userId = user.getId();
         }
 
-        privilegeUrls = new ArrayList<>();
-//        if (CollectionUtils.isEmpty(privilegeUrls)) {
-//            privilegeUrls = new ArrayList<>();
-//            List<Integer> userRoleList = userService.findUserRoleColumnRoleIdByUserId(userId);
-//            if (CollectionUtils.isNotEmpty(userRoleList)) {
-//                List<Integer> roleAccessList = new ArrayList<>();
-//                for (Integer roleId : userRoleList) {
-//                    List<Integer> findCurrentRoleAccess = roleService.findRoleAccessColumnAccessIdByRoleId(roleId);
-//                    if (CollectionUtils.isNotEmpty(findCurrentRoleAccess)) {
-//                        roleAccessList.addAll(findCurrentRoleAccess);
-//                    }
-//                }
-//                //获取集合权限对应的链接
-//                if (CollectionUtils.isNotEmpty(roleAccessList)) {
-//                    for (Integer accessId : roleAccessList) {
-//                        Access access = accessService.findAccessOne(accessId);
-//                        if (null != access) {
-//                            List<String> privilegeUrlList = new ArrayList<>();
-//                            String urls = access.getUrls();
-//                            privilegeUrlList = mergePrivilegeUrls(urls);
-//                            privilegeUrls.addAll(privilegeUrlList);
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        if (CollectionUtils.isEmpty(privilegeUrls)) {
+            privilegeUrls = new ArrayList<>();
+            List<Integer> userRoleList = userService.findUserRoleColumnRoleIdByUserId(userId);
+            if (CollectionUtils.isNotEmpty(userRoleList)) {
+//                List<String> accessUrlList = new ArrayList<>();
+                List<Long> menuIdList = new ArrayList<>();
+                for (Integer roleId : userRoleList) {
+                    List<RoleMenu> roleMenuList = roleMenuService.findRoleMenuByRoleId(roleId);
+                    if (!CollectionUtils.isEmpty(roleMenuList)) {
+                        for (RoleMenu roleMenu : roleMenuList) {
+                            Menu menu = menuService.findMenuOne(roleMenu.getMenuId());
+                            if (!(null == menu) && !(menu.getType() == MenuType.DIRECTORY.getType())) {
+                                LOG.info("User url: " + menu.getUrl());
+                                privilegeUrls.add(menu.getUrl());
+                            }
+                            if (!(null == menu)) {
+                                menuIdList.add(menu.getId());
+                            }
+                        }
+                    }
+                }
+
+                RbacSession session = new RbacSession();
+                session.put("privilegeMenu", JsonUtils.toJson(menuIdList));
+            }
+        }
 
         return privilegeUrls;
     }

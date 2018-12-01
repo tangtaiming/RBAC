@@ -2,6 +2,10 @@ package com.system.core.vo;
 
 import com.rbac.application.orm.Menu;
 import com.rbac.application.service.MenuService;
+import com.rbac.application.service.RoleMenuService;
+import com.rbac.application.service.RoleService;
+import com.system.core.session.RbacSession;
+import com.system.util.base.JsonUtils;
 import com.system.util.enumerate.MenuType;
 import nu.xom.*;
 import org.apache.commons.collections.CollectionUtils;
@@ -28,7 +32,7 @@ public class NavigatorRsVo {
 
     private MenuService menuService = new MenuService();
 
-    private static List<String> permissionList;
+    private static List<Long> privilegeMenu;
 
     private static LinkedList navigatorTree;
 
@@ -62,7 +66,13 @@ public class NavigatorRsVo {
     }
 
     public List<Menu> navigatorMenuByMysql(boolean all) {
-        navigator = menuService.fetchMenuAllList(new ArrayList<>());
+//        privilegeMenu
+        if (CollectionUtils.isEmpty(privilegeMenu)) {
+            RbacSession session = new RbacSession();
+            String privilegeMenuStr = (String) session.get("privilegeMenu");
+            privilegeMenu = (List<Long>) JsonUtils.fromJson(privilegeMenuStr, List.class, Long.class);
+        }
+        navigator = menuService.fetchMenuAllList(Optional.ofNullable(privilegeMenu).orElse(new ArrayList<>()));
         return navigator;
     }
 

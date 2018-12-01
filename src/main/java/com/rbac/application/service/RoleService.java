@@ -11,8 +11,10 @@ import com.rbac.application.orm.Menu;
 import com.rbac.application.orm.Role;
 import com.rbac.application.orm.RoleAccess;
 import com.rbac.application.orm.RoleMenu;
+import com.system.core.session.RbacSession;
 import com.system.util.base.JsonUtils;
 import com.system.util.base.PageUtils;
+import com.system.util.enumerate.MenuType;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +43,10 @@ public class RoleService extends SimpleCoreService<Role> {
     private MenuService menuService = new MenuService();
 
     private RoleMenuService roleMenuService = new RoleMenuService();
+
+    private UserService userService = new UserService();
+
+    private static List<String> privilegeUrls;
 
     private String toMenuJson(List<Long> choseMenu) {
         List<Menu> menuList = menuService.findMenuAllList();
@@ -79,6 +85,50 @@ public class RoleService extends SimpleCoreService<Role> {
         LOG.info("Find role size: " + roleList.size());
         return roleList;
     }
+
+//    public List<String> findRolePrivilege(Integer userId) {
+//        if (CollectionUtils.isEmpty(privilegeUrls)) {
+//            privilegeUrls = new ArrayList<>();
+//            List<Integer> userRoleList = userService.findUserRoleColumnRoleIdByUserId(userId);
+//            if (CollectionUtils.isNotEmpty(userRoleList)) {
+////                List<String> accessUrlList = new ArrayList<>();
+//                for (Integer roleId : userRoleList) {
+//                    List<RoleMenu> roleMenuList = roleMenuService.findRoleMenuByRoleId(roleId);
+//                    if (!CollectionUtils.isEmpty(roleMenuList)) {
+//                        for (RoleMenu roleMenu : roleMenuList) {
+//                            Menu menu = menuService.findMenuOne(roleMenu.getMenuId());
+//                            if (!(null == menu) && !(menu.getType() == MenuType.DIRECTORY.getType())) {
+//                                LOG.info("User url: " + menu.getUrl());
+//                                privilegeUrls.add(menu.getUrl());
+//                            }
+//                        }
+//                    }
+//                }
+//
+////                List<Integer> roleAccessList = new ArrayList<>();
+////                for (Integer roleId : userRoleList) {
+////                    List<Integer> findCurrentRoleAccess = roleService.findRoleAccessColumnAccessIdByRoleId(roleId);
+////                    if (CollectionUtils.isNotEmpty(findCurrentRoleAccess)) {
+////                        roleAccessList.addAll(findCurrentRoleAccess);
+////                    }
+////                }
+////                //获取集合权限对应的链接
+////                if (CollectionUtils.isNotEmpty(roleAccessList)) {
+////                    for (Integer accessId : roleAccessList) {
+////                        Access access = accessService.findAccessOne(accessId);
+////                        if (null != access) {
+////                            List<String> privilegeUrlList = new ArrayList<>();
+////                            String urls = access.getUrls();
+////                            privilegeUrlList = mergePrivilegeUrls(urls);
+////                            privilegeUrls.addAll(privilegeUrlList);
+////                        }
+////                    }
+////                }
+//            }
+//        }
+//
+//        return privilegeUrls;
+//    }
 
     public boolean saveRole(SaveRoleReVo role) {
         Integer roleId = role.getId();
@@ -254,5 +304,13 @@ public class RoleService extends SimpleCoreService<Role> {
     @Override
     public PageUtils getPage() {
         return roleDao.findPage();
+    }
+
+    public static List<String> getPrivilegeUrls() {
+        return privilegeUrls;
+    }
+
+    public static void setPrivilegeUrls(List<String> privilegeUrls) {
+        RoleService.privilegeUrls = privilegeUrls;
     }
 }
