@@ -6,6 +6,7 @@ import com.rbac.application.action.vo.ResponseVo;
 import com.rbac.application.orm.User;
 import com.rbac.application.service.UserService;
 import com.system.core.session.RbacSession;
+import com.system.core.vo.NavigatorRsVo;
 import com.system.util.base.AutoTokenUtils;
 import com.system.util.base.JsonUtils;
 import com.system.util.base.MD5Utils;
@@ -112,6 +113,8 @@ public class LoginAction extends RbacAction {
                 ServletActionContext.getResponse().addCookie(cookie);
             }
         }
+        NavigatorRsVo navigatorRsVo = new NavigatorRsVo();
+        navigatorRsVo.cleanNav();
         return SUCCESS;
     }
 

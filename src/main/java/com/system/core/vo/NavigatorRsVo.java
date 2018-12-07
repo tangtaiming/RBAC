@@ -61,10 +61,14 @@ public class NavigatorRsVo {
 //            navigatorTree = navigatorByMysql(true);
 //        }
 //        return navigatorTree;
-        if (null == navigator) {
+        if (CollectionUtils.isEmpty(navigator)) {
             navigator = navigatorMenuByMysql(true);
         }
         return navigator;
+    }
+
+    public void cleanNav() {
+        navigator = null;
     }
 
     public List<Menu> navigatorMenuByMysql(boolean all) {
@@ -72,15 +76,27 @@ public class NavigatorRsVo {
         if (CollectionUtils.isEmpty(navigator)) {
             RbacSession session = new RbacSession();
             String secretKey = (String) session.get("secretKey");
-            String[] secretKeyArr = StringUtils.split(secretKey, "#");
-            String userId = secretKeyArr[1];
-            List<Integer> userRoleList = userService.findUserRoleColumnRoleIdByUserId(Integer.valueOf(userId));
-            if (CollectionUtils.isNotEmpty(userRoleList)) {
-                for (Integer roleId : userRoleList) {
-                    List<RoleMenu> roleMenuList = roleMenuService.findRoleMenuByRoleId(roleId);
-                    if (!CollectionUtils.isEmpty(roleMenuList)) {
-                        for (RoleMenu roleMenu : roleMenuList) {
-                            privilegeMenu.add(roleMenu.getMenuId());
+            if (!StringUtils.isEmpty(secretKey)) {
+                String[] secretKeyArr = StringUtils.split(secretKey, "#");
+                String userId = secretKeyArr[1];
+                //超级管理员
+                if (userId.equals("1")) {
+                    List<Menu> rootMenu = menuService.fetchMenuByParentId(MenuService.ROOTID);
+                    if (!(CollectionUtils.isEmpty(rootMenu))) {
+                        for (Menu menu : rootMenu) {
+                            privilegeMenu.add(menu.getId());
+                        }
+                    }
+                } else {
+                    List<Integer> userRoleList = userService.findUserRoleColumnRoleIdByUserId(Integer.valueOf(userId));
+                    if (CollectionUtils.isNotEmpty(userRoleList)) {
+                        for (Integer roleId : userRoleList) {
+                            List<RoleMenu> roleMenuList = roleMenuService.findRoleMenuByRoleId(roleId);
+                            if (!CollectionUtils.isEmpty(roleMenuList)) {
+                                for (RoleMenu roleMenu : roleMenuList) {
+                                    privilegeMenu.add(roleMenu.getMenuId());
+                                }
+                            }
                         }
                     }
                 }
