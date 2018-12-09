@@ -281,7 +281,7 @@ public class UserService extends SimpleCoreService<User> {
         return userDao.findDataList();
     }
 
-    @Override
+   @Override
     public List<User> getDataList() {
         return userDao.findDataList();
     }

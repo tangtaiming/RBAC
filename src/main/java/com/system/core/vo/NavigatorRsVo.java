@@ -79,30 +79,15 @@ public class NavigatorRsVo {
             if (!StringUtils.isEmpty(secretKey)) {
                 String[] secretKeyArr = StringUtils.split(secretKey, "#");
                 String userId = secretKeyArr[1];
-                //超级管理员
-                if (userId.equals("1")) {
-                    List<Menu> rootMenu = menuService.fetchMenuByParentId(MenuService.ROOTID);
-                    if (!(CollectionUtils.isEmpty(rootMenu))) {
-                        for (Menu menu : rootMenu) {
-                            privilegeMenu.add(menu.getId());
-                        }
+                List<Menu> menuList = menuService.findUserMenu(Integer.valueOf(userId));
+                if (!CollectionUtils.isEmpty(menuList)) {
+                    for (Menu menu : menuList) {
+                        privilegeMenu.add(menu.getId());
                     }
-                } else {
-                    List<Integer> userRoleList = userService.findUserRoleColumnRoleIdByUserId(Integer.valueOf(userId));
-                    if (CollectionUtils.isNotEmpty(userRoleList)) {
-                        for (Integer roleId : userRoleList) {
-                            List<RoleMenu> roleMenuList = roleMenuService.findRoleMenuByRoleId(roleId);
-                            if (!CollectionUtils.isEmpty(roleMenuList)) {
-                                for (RoleMenu roleMenu : roleMenuList) {
-                                    privilegeMenu.add(roleMenu.getMenuId());
-                                }
-                            }
-                        }
-                    }
+                    navigator = menuList;
                 }
             }
         }
-        navigator = menuService.fetchMenuAllList(privilegeMenu);
         return navigator;
     }
 

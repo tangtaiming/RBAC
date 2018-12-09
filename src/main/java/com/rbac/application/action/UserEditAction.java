@@ -58,18 +58,18 @@ public class UserEditAction extends EditAction<UserVo> {
 
     public void validateSaveUser() {
         if (StringUtils.isEmpty(userReVo.getName())) {
-            addFieldError(ERROR_KEY, "保存用户名称不能为空");
+            addFieldError(ERROR_KEY, ResultUtils.fail("保存用户名称不能为空"));
             return;
         }
         if (StringUtils.isEmpty(userReVo.getEmail())) {
-            addFieldError(ERROR_KEY, "保存用户邮箱不能为空");
+            addFieldError(ERROR_KEY, ResultUtils.fail("保存用户邮箱不能为空"));
             return;
         }
 
         if (null == userReVo.getId()) {
             User findUser = userService.findUserByName(userReVo.getName());
             if (null != findUser) {
-                addFieldError(ERROR_KEY, "保存用户名称已经存在，请进行数据修改!");
+                addFieldError(ERROR_KEY, ResultUtils.fail("保存用户名称已经存在，请进行数据修改!"));
                 return;
             }
         }

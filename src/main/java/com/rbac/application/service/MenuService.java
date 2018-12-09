@@ -6,6 +6,7 @@ import com.rbac.application.action.vo.SaveMenuRsVo;
 import com.rbac.application.action.vo.ValidateSaveMenuRsVo;
 import com.rbac.application.dao.MenuDao;
 import com.rbac.application.orm.Menu;
+import com.rbac.application.orm.RoleMenu;
 import com.system.core.exception.RbacException;
 import com.system.util.base.JsonUtils;
 import com.system.util.base.PageUtils;
@@ -34,6 +35,10 @@ public class MenuService extends SimpleCoreService<Menu> {
     public static final Long ROOTID = 0L;
 
     public static final String ROOTNAME = "一级菜单";
+
+    private UserService userService = new UserService();
+
+    private RoleMenuService roleMenuService = new RoleMenuService();
 
     public List<Menu> findMenuAllList() {
         return menuDao.findAllList();
@@ -361,6 +366,34 @@ public class MenuService extends SimpleCoreService<Menu> {
         query.put("type", button);
         List<Menu> menuList = menuDao.findNotEqList(query);
         return menuList;
+    }
+
+    public List<Menu> findUserMenu(Integer userId) {
+        //超级管理员
+        if (userId.equals(1)) {
+            return fetchMenuAllList(null);
+        }
+
+        //用户菜单列表
+        List<Long> menuIdList = findUserMenuAll(userId);
+        return fetchMenuAllList(menuIdList);
+    }
+
+    public List<Long> findUserMenuAll(Integer userId) {
+        List<Long> privilegeMenu = new ArrayList<>();
+        List<Integer> userRoleList = userService.findUserRoleColumnRoleIdByUserId(userId);
+        if (CollectionUtils.isNotEmpty(userRoleList)) {
+            for (Integer roleId : userRoleList) {
+                List<RoleMenu> roleMenuList = roleMenuService.findRoleMenuByRoleId(roleId);
+                if (!CollectionUtils.isEmpty(roleMenuList)) {
+                    for (RoleMenu roleMenu : roleMenuList) {
+                        privilegeMenu.add(roleMenu.getMenuId());
+                    }
+                }
+            }
+        }
+
+        return privilegeMenu;
     }
 
 }

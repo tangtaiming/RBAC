@@ -71,7 +71,6 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         allowRequestUrl.add("/test/page");
         allowRequestUrl.add("/test/page2");
         allowRequestUrl.add("/test/savePage2");
-        allowRequestUrl.add("/");
 
         ignoreRequestUrl = new ArrayList<>();
         ignoreRequestUrl.add("/admin/vlogin");
@@ -81,7 +80,6 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         ignoreRequestUrl.add("/test/page");
         ignoreRequestUrl.add("/test/page2");
         ignoreRequestUrl.add("/test/savePage2");
-        ignoreRequestUrl.add("/");
     }
 
     @Override
@@ -146,24 +144,10 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
 
         if (CollectionUtils.isEmpty(privilegeUrls)) {
             privilegeUrls = new ArrayList<>();
-            List<Integer> userRoleList = userService.findUserRoleColumnRoleIdByUserId(userId);
-            if (CollectionUtils.isNotEmpty(userRoleList)) {
-//                List<String> accessUrlList = new ArrayList<>();
-                List<Long> menuIdList = new ArrayList<>();
-                for (Integer roleId : userRoleList) {
-                    List<RoleMenu> roleMenuList = roleMenuService.findRoleMenuByRoleId(roleId);
-                    if (!CollectionUtils.isEmpty(roleMenuList)) {
-                        for (RoleMenu roleMenu : roleMenuList) {
-                            Menu menu = menuService.findMenuOne(roleMenu.getMenuId());
-                            if (!(null == menu) && !(menu.getType() == MenuType.DIRECTORY.getType())) {
-                                LOG.info("User url: " + menu.getUrl());
-                                privilegeUrls.add(menu.getUrl());
-                            }
-                            if (!(null == menu)) {
-                                menuIdList.add(menu.getId());
-                            }
-                        }
-                    }
+            List<Menu> userMenuList = menuService.findUserMenu(userId);
+            if (!(CollectionUtils.isEmpty(userMenuList))) {
+                for (Menu menu : userMenuList) {
+                    privilegeUrls.add(menu.getUrl());
                 }
             }
         }
