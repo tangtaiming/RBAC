@@ -376,6 +376,18 @@ public class MenuService extends SimpleCoreService<Menu> {
 
         //用户菜单列表
         List<Long> menuIdList = findUserMenuAll(userId);
+        List<Menu> menuList = fetchMenuAllList(menuIdList);
+        List<Menu> userMenuList = new ArrayList<>();
+        for (Menu menuRow : menuList) {
+            List<Menu> menuChildList = (List<Menu>) menuRow.getList();
+            if (!CollectionUtils.isEmpty(menuChildList)) {
+                for (Menu menuChildRow : menuChildList) {
+                    List<Menu> buttonMenu = new ArrayList<>();
+
+                }
+            }
+        }
+
         return fetchMenuAllList(menuIdList);
     }
 

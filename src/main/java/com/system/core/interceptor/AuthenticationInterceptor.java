@@ -72,6 +72,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         allowRequestUrl.add("/test/page2");
         allowRequestUrl.add("/test/savePage2");
 
+
         ignoreRequestUrl = new ArrayList<>();
         ignoreRequestUrl.add("/admin/vlogin");
         ignoreRequestUrl.add("/admin/signOut");
@@ -80,6 +81,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         ignoreRequestUrl.add("/test/page");
         ignoreRequestUrl.add("/test/page2");
         ignoreRequestUrl.add("/test/savePage2");
+        ignoreRequestUrl.add("/");
     }
 
     @Override
@@ -142,13 +144,24 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
             userId = user.getId();
         }
 
-        if (CollectionUtils.isEmpty(privilegeUrls)) {
-            privilegeUrls = new ArrayList<>();
-            List<Menu> userMenuList = menuService.findUserMenu(userId);
-            if (!(CollectionUtils.isEmpty(userMenuList))) {
-                for (Menu menu : userMenuList) {
-                    privilegeUrls.add(menu.getUrl());
+        privilegeUrls = new ArrayList<>();
+        List<Menu> userMenuList = menuService.findUserMenu(userId);
+        if (!(CollectionUtils.isEmpty(userMenuList))) {
+            for (Menu menu : userMenuList) {
+                List<Menu> childMenuList = (List<Menu>) menu.getList();
+                privilegeUrls.add(menu.getUrl());
+                if (!CollectionUtils.isEmpty(childMenuList)) {
+                    for (Menu childRow : childMenuList) {
+                        privilegeUrls.add(childRow.getUrl());
+                        List<Menu> child2MenuList = (List<Menu>) childRow.getList();
+                        if (!CollectionUtils.isEmpty(child2MenuList)) {
+                            for (Menu child2Row : childMenuList) {
+                                privilegeUrls.add(child2Row.getUrl());
+                            }
+                        }
+                    }
                 }
+
             }
         }
 

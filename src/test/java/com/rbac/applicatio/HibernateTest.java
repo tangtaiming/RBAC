@@ -198,7 +198,7 @@ public class HibernateTest {
     public void findMenuList() {
         MenuService menuService = new MenuService();
 
-        List<Menu> menuList = menuService.fetchMenuAllList(Arrays.asList(23L, 29L));
+        List<Menu> menuList = menuService.findUserMenu(1);
         System.out.println(JsonUtils.toJson(menuList));
     }
 
