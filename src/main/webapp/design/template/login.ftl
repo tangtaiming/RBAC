@@ -28,23 +28,23 @@
     <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg">登陆用户</p>
-        <form action="/admin/doLogin" method="post">
+        <form action="/admin/login" method="post">
             <div class="form-group has-feedback">
-                <input name="userVo.loginName" type="text" class="form-control" placeholder="用户">
+                <input name="username" type="text" class="form-control" placeholder="用户">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <input name="userVo.password" type="password" class="form-control" placeholder="密码">
+                <input name="password" type="password" class="form-control" placeholder="密码">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div class="row">
-                <div class="col-xs-8">
-                    <div class="checkbox icheck">
-                        <label>
-                            <input name="rememberMe" type="checkbox"> 记住我
-                        </label>
-                    </div>
-                </div>
+                <#--<div class="col-xs-8">-->
+                    <#--<div class="checkbox icheck">-->
+                        <#--<label>-->
+                            <#--<input name="rememberMe" type="checkbox"> 记住我-->
+                        <#--</label>-->
+                    <#--</div>-->
+                <#--</div>-->
                 <!-- /.col -->
                 <div class="col-xs-4">
                     <button id="submit-button" type="submit" class="btn btn-primary btn-block btn-flat">登陆</button>

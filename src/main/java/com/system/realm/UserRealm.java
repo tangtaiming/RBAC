@@ -1,13 +1,13 @@
 package com.system.realm;
 
+import com.rbac.application.orm.User;
 import com.rbac.application.service.UserService;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 
 /**
  * <p>@Author tangtaiming</p>
@@ -32,24 +32,23 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         String username = (String) authenticationToken.getPrincipal();
 
-//        User user = userService.findByUsername(username);
+        User user = userService.findByUsername(username);
         //没有找到账号
-//        if (null == user) {
-//            throw new UnknownAccountException();
-//        }
-//
-//        //账号锁定
-//        if (Boolean.TRUE.equals(user.getLocked())) {
-//            throw new LockedAccountException();
-//        }
+        if (null == user) {
+            throw new UnknownAccountException();
+        }
 
-//        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-//                user.getName(),
-//                user.getPassword(),
-//                ByteSource.Util.bytes(user.getCredentialsSalt()),
-//                getName()
-//        );
-        return null;
+        //账号锁定
+        if (Boolean.TRUE.equals(user.getLocked())) {
+            throw new LockedAccountException();
+        }
+
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
+                user.getName(),
+                user.getPassword(),
+                getName()
+        );
+        return authenticationInfo;
     }
 
     @Override

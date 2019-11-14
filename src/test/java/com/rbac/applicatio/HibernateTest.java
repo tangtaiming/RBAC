@@ -157,7 +157,7 @@ public class HibernateTest {
         String currentDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT));
 
         for (int x = 0; x < cycleTime.size(); x++) {
-            String name = "印象笔记-英语笔记-第六天";
+            String name = "四级词汇-英语单词-19年06月01日";
             LocalDateTime localDateTime = LocalDateTime.parse(currentDateTime, DateTimeFormatter.ofPattern(FORMAT));
             Long cycle = cycleTime.get(x);
             System.out.println(localDateTime.plusMinutes(cycle).format(DateTimeFormatter.ofPattern(FORMAT)));
@@ -166,7 +166,7 @@ public class HibernateTest {
             review.setName(name);
             review.setReviewDate(reviseDate);
             review.setCreateDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern(FORMAT)));
-            review.setMessage(null);
+            review.setMessage("百词斩");
             reviewService.saveReview(review);
         }
     }

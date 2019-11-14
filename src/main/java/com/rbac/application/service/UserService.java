@@ -281,6 +281,15 @@ public class UserService extends SimpleCoreService<User> {
         return userDao.findDataList();
     }
 
+    /**
+     * 登录名查询数据
+     * @param username
+     * @return
+     */
+    public User findByUsername(String username) {
+        return userDao.findUserByName(username);
+    }
+
    @Override
     public List<User> getDataList() {
         return userDao.findDataList();

@@ -39,6 +39,16 @@ public class User implements Serializable {
      */
     private String password;
 
+    /**
+     * 是否锁定
+     */
+    private Integer locked;
+
+    /**
+     * 盐
+     */
+    private String credentialsSalt;
+
     public User() {}
 
     public User(Integer id, String name, String email) {
@@ -109,5 +119,21 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Integer getLocked() {
+        return locked;
+    }
+
+    public void setLocked(Integer locked) {
+        this.locked = locked;
+    }
+
+    public String getCredentialsSalt() {
+        return credentialsSalt;
+    }
+
+    public void setCredentialsSalt(String credentialsSalt) {
+        this.credentialsSalt = credentialsSalt;
     }
 }
