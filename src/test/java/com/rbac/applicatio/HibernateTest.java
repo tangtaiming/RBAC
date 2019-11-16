@@ -1,17 +1,22 @@
 package com.rbac.applicatio;
 
+import com.rbac.application.action.vo.SaveUserReVo;
 import com.rbac.application.dao.MenuDao;
 import com.rbac.application.dao.RoleDao;
 import com.rbac.application.orm.Menu;
 import com.rbac.application.orm.Review;
+import com.rbac.application.orm.User;
 import com.rbac.application.service.MenuService;
 import com.rbac.application.service.ReviewService;
 import com.rbac.application.service.UserService;
+import com.system.converter.Converter;
+import com.system.converter.impl.SaveUserReVoConverter;
 import com.system.core.dao.BaseDao;
 import com.system.core.vo.NavigatorRsVo;
 import com.system.util.base.DumperUtils;
 import com.system.util.base.HibernateUtils;
 import com.system.util.base.JsonUtils;
+import com.system.util.base.PasswordUtls;
 import org.apache.commons.collections.map.LinkedMap;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -207,6 +212,31 @@ public class HibernateTest {
         NavigatorRsVo navigatorRsVo = new NavigatorRsVo();
 
         DumperUtils.dump(navigatorRsVo.getNavAll());
+    }
+
+    @Test
+    public void findUserTestSuccess() {
+        UserService userService = new UserService();
+        User user = userService.findUserByName("admin");
+        DumperUtils.dump(user);
+    }
+
+    @Test
+    public void createUserTestSuccess() {
+        UserService userService = new UserService();
+        SaveUserReVo saveUserReVo = new SaveUserReVo();
+        saveUserReVo.setName("admin");
+        saveUserReVo.setEmail("12@qq.com");
+        saveUserReVo.setPassword("123456");
+        userService.saveUser(saveUserReVo);
+    }
+
+    @Test
+    public void changePasswordTestSuccess() {
+        UserService userService = new UserService();
+        User user = userService.findUserByName("admin");
+        user.setPassword("123456");
+        userService.changePassword(user);
     }
 
 }

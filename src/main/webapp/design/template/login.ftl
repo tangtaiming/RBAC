@@ -28,7 +28,7 @@
     <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg">登陆用户</p>
-        <form action="/admin/login" method="post">
+        <form action="/admin/doLogin" method="post">
             <div class="form-group has-feedback">
                 <input name="username" type="text" class="form-control" placeholder="用户">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>

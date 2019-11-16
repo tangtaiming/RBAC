@@ -5,10 +5,7 @@ import com.rbac.application.dao.UserDao;
 import com.rbac.application.dao.UserRoleDao;
 import com.rbac.application.orm.User;
 import com.rbac.application.orm.UserRole;
-import com.system.util.base.JsonUtils;
-import com.system.util.base.MD5Utils;
-import com.system.util.base.PageUtils;
-import com.system.util.base.ResultUtils;
+import com.system.util.base.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
@@ -159,6 +156,8 @@ public class UserService extends SimpleCoreService<User> {
         Integer admin = -1;
         //1 代表对于账号开启使用状态， 0 表示账号冻结
         Integer status = 1;
+        //1 代表账号正常, 0 代表账号锁定
+        Integer locked = 1;
         List<Integer> roles = Optional.ofNullable(user.getRoles()).orElse(new ArrayList<>());
         boolean saveFalg = false;
         if (null != userId) {
@@ -175,6 +174,7 @@ public class UserService extends SimpleCoreService<User> {
             String email = user.getEmail();
             String name = user.getName();
             String password = user.getPassword();
+            createUser.setLocked(locked);
             createUser.setEmail(email);
             createUser.setName(name);
             createUser.setAdmin(admin);
@@ -182,6 +182,8 @@ public class UserService extends SimpleCoreService<User> {
             createUser.setCreateDate(currentTime);
             createUser.setUpdateDate(currentTime);
             createUser.setPassword(password);
+            PasswordUtls passwordUtls = new PasswordUtls();
+            passwordUtls.encryptPassword(createUser);
             Integer guid = (Integer) userDao.save(createUser);
             if (null != guid) {
                 saveFalg = true;
@@ -290,7 +292,19 @@ public class UserService extends SimpleCoreService<User> {
         return userDao.findUserByName(username);
     }
 
-   @Override
+    /**
+     * 修改密码
+     * @param user
+     * @return
+     */
+    public boolean changePassword(User user) {
+        PasswordUtls passwordUtls = new PasswordUtls();
+        passwordUtls.encryptPassword(user);
+        userDao.update(user);
+        return true;
+    }
+
+    @Override
     public List<User> getDataList() {
         return userDao.findDataList();
     }

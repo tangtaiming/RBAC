@@ -16,7 +16,7 @@ import org.apache.shiro.util.ByteSource;
  **/
 public class UserRealm extends AuthorizingRealm {
 
-    private UserService userService;
+    private UserService userService = new UserService();
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
@@ -39,13 +39,15 @@ public class UserRealm extends AuthorizingRealm {
         }
 
         //账号锁定
-        if (Boolean.TRUE.equals(user.getLocked())) {
+        Integer locked = user.getLocked();
+        if (null != locked && Boolean.TRUE.equals(user.getLocked())) {
             throw new LockedAccountException();
         }
 
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
                 user.getName(),
                 user.getPassword(),
+                ByteSource.Util.bytes(user.getCredentialsSalt()),
                 getName()
         );
         return authenticationInfo;

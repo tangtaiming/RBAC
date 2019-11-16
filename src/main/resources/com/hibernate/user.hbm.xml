@@ -26,5 +26,7 @@
         <property name="createDate" column="create_date"></property>
         <property name="updateDate" column="update_date"></property>
         <property name="password" column="password"></property>
+        <property name="locked" column="locked"></property>
+        <property name="salt" column="salt"></property>
     </class>
 </hibernate-mapping>

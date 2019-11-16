@@ -68,7 +68,7 @@ public class SaveUserReVo {
     }
 
     public String getPassword() {
-        return MD5Utils.encoder(password);
+        return password;
     }
 
     public void setPassword(String password) {

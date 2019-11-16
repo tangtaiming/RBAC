@@ -49,6 +49,8 @@ public class User implements Serializable {
      */
     private String credentialsSalt;
 
+    private String salt;
+
     public User() {}
 
     public User(Integer id, String name, String email) {
@@ -130,10 +132,14 @@ public class User implements Serializable {
     }
 
     public String getCredentialsSalt() {
-        return credentialsSalt;
+        return name + salt;
     }
 
-    public void setCredentialsSalt(String credentialsSalt) {
-        this.credentialsSalt = credentialsSalt;
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }
